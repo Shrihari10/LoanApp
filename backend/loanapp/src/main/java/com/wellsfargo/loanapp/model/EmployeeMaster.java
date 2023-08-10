@@ -2,6 +2,8 @@ package com.wellsfargo.loanapp.model;
 
 import java.sql.Date;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,19 +19,24 @@ public class EmployeeMaster {
 	
 	@Id
 	@Column(length = 6)
-	private String employeeId;
+	public String employeeId;
 	
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private String employeeName;
 	
-	@Column(length = 25)
+	@Column(length = 25, nullable = false)
 	private String designation;
 	
-	@Column(length = 25)
+	@Column(length = 25, nullable = false)
 	private String department;
 	
+	@Column(nullable = false)
 	private char gender;
+	
+	@Column(nullable = false)
 	private Date dateOfBirth;
+	
+	@Column(nullable = false)
 	private Date dateOfJoining;
 	
 	
