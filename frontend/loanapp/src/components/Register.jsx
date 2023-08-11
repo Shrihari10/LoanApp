@@ -22,12 +22,12 @@ const Register = ({user,setUser}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const requestBody = {
-      name,
+      employeeName: name,
       designation,
       department,
       gender,
-      dob,
-      doj
+      dateOfBirth: dob,
+      dateOfJoining: doj
     };
 
     axios.post("http://localhost:8080/saveEmployee", requestBody)
