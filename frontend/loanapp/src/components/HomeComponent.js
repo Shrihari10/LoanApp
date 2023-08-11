@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-function HomeComponent({user,setUser}) {
+function HomeComponent({user}) {
 
   const [display,setDisplay] = useState("")
   

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Form, Button, Container, Row, Col} from "react-bootstrap";
+import {Form, Button, Container} from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ user, setUser}) => {
+const Login = ({ user, loginUser}) => {
     const [employeeID, setEmployeeID] = useState("");
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
@@ -22,12 +22,12 @@ const Login = ({ user, setUser}) => {
             password
         };
         
-        setUser(employeeID);
+        loginUser(employeeID);
 
         // axios.post("http://localhost:8080/login", requestBody)
         //     .then((res) => {
-        //         // setUser(res.data.username);
-        //         setUser("Admin");
+        //         // loginUser(res.data.username);
+        //         
         //         alert("Login Successful");
         //     })
         //     .catch((err) => {
@@ -44,12 +44,12 @@ const Login = ({ user, setUser}) => {
             password
         };
         
-        setUser(employeeID);
+        loginUser(employeeID);
 
         // axios.post("http://localhost:8080/login", requestBody)
         //     .then((res) => {
-        //         // setUser(res.data.username);
-        //         setUser("Admin");
+        //         // loginUser(res.data.username);
+        //         
         //         alert("Login Successful");
         //     })
         //     .catch((err) => {

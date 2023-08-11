@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Register = ({user,setUser}) => {
+const Register = ({user,loginUser}) => {
   const [name, setName] = useState('');
   const [designation, setDesignation] = useState('');
   const [department, setDepartment] = useState('');
