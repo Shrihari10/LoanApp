@@ -27,7 +27,8 @@ const Register = ({user,loginUser}) => {
       department,
       gender,
       dateOfBirth: dob,
-      dateOfJoining: doj
+      dateOfJoining: doj,
+      password
     };
 
     axios.post("http://localhost:8080/saveEmployee", requestBody)
@@ -113,6 +114,13 @@ const Register = ({user,loginUser}) => {
             type="date"
             value={doj}
             onChange={(e) => setDoj(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"  
           />
         </Form.Group>
 
