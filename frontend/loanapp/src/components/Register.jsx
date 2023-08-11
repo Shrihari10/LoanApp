@@ -1,117 +1,123 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 const Register = () => {
-    const [name, setName] = useState('');
-    const [designation, setDesignation] = useState('');
-    const [department, setDepartment] = useState('');
-    const [gender, setGender] = useState('');
-    const [dob, setDob] = useState('');
-    const [doj, setDoj] = useState('');
+  const [name, setName] = useState('');
+  const [designation, setDesignation] = useState('');
+  const [department, setDepartment] = useState('');
+  const [gender, setGender] = useState('');
+  const [dob, setDob] = useState('');
+  const [doj, setDoj] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const requestBody = {
-            employeeName: name,
-            designation,
-            department,
-            gender,
-            dateOfBirth: dob,
-            dateOfJoining: doj
-        }
-        console.log(JSON.stringify(requestBody));
-        // console.log(typeof requestBody.dob);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = {
+      name,
+      designation,
+      department,
+      gender,
+      dob,
+      doj
+    };
 
-        axios.post("http://localhost:8080/saveEmployee", requestBody)
-        .then((res) =>{
-            alert("created  user");
-        })
-        .catch((err)=>{
-          console.log(err);
-            alert("error==="+err);
-        })
-    }
+    axios.post("http://localhost:8080/saveEmployee", requestBody)
+      .then((res) => {
+        alert("Created user");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error: " + err);
+      });
+  };
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <h3 className='text-warning bg-danger'>Register</h3>
-        <div className="mb-3">
-          <label>Name</label>
-          <input
+  return (
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center" style={{ width: '50%' }}>
+        <h3 className="text-warning bg-danger text-center mb-3">Register</h3>
+        <Form.Group controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="text"
-            className="form-control"
             placeholder="Name"
-            onChange={(e) => {setName(e.target.value)}}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-        </div>
-        <div className="mb-3">
-          <label>Designation</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Designation"
-            onChange={(e) => {setDesignation(e.target.value)}}
-          />
-        </div>
-        <div className="mb-3">
-          <label>Department</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Department"
-            onChange={(e) => {setDepartment(e.target.value)}}
-          />
-        </div>
-        <div className="mb-3">
-          <label>Gender</label>
-          <input
-            type="radio"
-            className="form-control"
-            value="M"
-            name="gender"
-            id="genderm"
-            onChange={(e) => {setGender(e.target.value)}}
-          />
-          <label for="genderm">male</label>
-          <input
-            type="radio"
-            className="form-control"
-            value="F"
-            id="genderf"
-            name="gender"
-            onChange={(e) => {setGender(e.target.value)}}
-          />
-          <label for="genderf">female</label>
+        </Form.Group>
 
-        </div>
-        <div className="mb-3">
-          <label>Date of Birth</label>
-          <input
-            type="date"
-            className="form-control"
-            placeholder="Date of Birth"
-            onChange={(e) => {setDob(e.target.value)}}
+        <Form.Group controlId="designation">
+          <Form.Label>Designation</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Designation"
+            value={designation}
+            onChange={(e) => setDesignation(e.target.value)}
           />
-        </div>
-        <div className="mb-3">
-          <label>Date of Joining</label>
-          <input
-            type="date"
-            className="form-control"
-            placeholder="Date of Joining"
-            onChange={(e) => {setDoj(e.target.value)}}
+        </Form.Group>
+
+        <Form.Group controlId="department">
+          <Form.Label>Department</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Department"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
           />
-        </div>
-        <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
+        </Form.Group>
+
+        <Form.Group controlId="gender">
+          <Form.Label>Gender</Form.Label>
+          <div>
+            <Form.Check
+              type="radio"
+              label="Male"
+              name="gender"
+              value="M"
+              checked={gender === 'M'}
+              onChange={(e) => setGender(e.target.value)}
+              inline
+            />
+            <Form.Check
+              type="radio"
+              label="Female"
+              name="gender"
+              value="F"
+              checked={gender === 'F'}
+              onChange={(e) => setGender(e.target.value)}
+              inline
+            />
+          </div>
+        </Form.Group>
+
+        <Form.Group controlId="dob">
+          <Form.Label>Date of Birth</Form.Label>
+          <Form.Control
+            type="date"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="doj">
+          <Form.Label>Date of Joining</Form.Label>
+          <Form.Control
+            type="date"
+            value={doj}
+            onChange={(e) => setDoj(e.target.value)}
+          />
+        </Form.Group>
+
+        <div className="text-center">
+          <Button variant="primary" type="submit">
             Sign Up
-          </button>
+          </Button>
+          <p className="forgot-password mt-3">
+            Already registered? <a href="/sign-in">Sign In</a>
+          </p>
         </div>
-        <p className="forgot-password text-right">
-          Already registered <a href="/sign-in">sign in?</a>
-        </p>
-      </form>
-    )
-}
+      </Form>
+    </Container>
+  );
+};
 
 export default Register;

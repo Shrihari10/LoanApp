@@ -3,30 +3,39 @@ import LoginComponent from './LoginComponent'
 import AboutUsComponent from './AboutUsComponent'
 import HomeComponent from './HomeComponent'
 import Register from './Register'
-import { Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import NotFoundComponent from './NotFoundComponent';
 
 const MainComponent = () => {
-
   return (
-    <div>
-        <h3>MainComponent</h3>
-        <Link to="home">HOME</Link>
-        {' '}
-        <Link to="login">LOGIN</Link>
-        {' '}
-        <Link to="register">REGISTER</Link>
-        {' '}
-        <Link to="aboutus">ABOUT US</Link>
-        {' '}
-        <Routes>
-            <Route exact path="/home" element={<HomeComponent/>} />
-            <Route exact path="/login" element={<LoginComponent/>} />
-            <Route exact path="/register" element={<Register/>} />
-            <Route exact path="/aboutus" element={<AboutUsComponent/>} />
-            <Route path="*" element={<NotFoundComponent/>} />
-        </Routes>
-    </div>
+      <div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+          <div className="container">
+            <Link to="/" className="navbar-brand">Loan App</Link>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item"><Link to="/" className="nav-link">Home</Link></li>
+                <li className="nav-item"><Link to="/about" className="nav-link">About Us</Link></li>
+                <li className="nav-item"><Link to="/login" className="nav-link">Login</Link></li>
+                <li className="nav-item"><Link to="/register" className="nav-link">Register</Link></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div className="auth-wrapper">
+          <div className="auth-inner">
+            <Routes>
+              <Route path="/" element={<HomeComponent />} />
+              <Route path="/about" element={<AboutUsComponent />} />
+              <Route path="/login" element={<LoginComponent />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NotFoundComponent />} />
+            </Routes>
+          </div>
+        </div>
+      </div>
+    
+    
   )
 
 }
