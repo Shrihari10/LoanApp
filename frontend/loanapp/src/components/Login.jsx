@@ -1,31 +1,66 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Button, Container, Row, Col} from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ user, setUser}) => {
     const [employeeID, setEmployeeID] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("")
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        if(user!=null && user.length > 0)
+        {
+            navigate('/');
+        }
+    },[user])
+
+    const handleUserLogin = (e) => {
         e.preventDefault();
         const requestBody = {
             employeeID,
             password
         };
+        
+        setUser(employeeID);
 
-        axios.post("http://localhost:8080/login", requestBody)
-            .then((res) => {
-                alert("Login Successful");
-            })
-            .catch((err) => {
-                console.log(err);
-                alert("Error: " + err);
-            });
+        // axios.post("http://localhost:8080/login", requestBody)
+        //     .then((res) => {
+        //         // setUser(res.data.username);
+        //         setUser("Admin");
+        //         alert("Login Successful");
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         alert("Error: " + err);
+        //     });
+    };
+
+    
+    const handleAdminLogin = (e) => {
+        e.preventDefault();
+        const requestBody = {
+            employeeID,
+            password
+        };
+        
+        setUser(employeeID);
+
+        // axios.post("http://localhost:8080/login", requestBody)
+        //     .then((res) => {
+        //         // setUser(res.data.username);
+        //         setUser("Admin");
+        //         alert("Login Successful");
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         alert("Error: " + err);
+        //     });
     };
 
     return (
         <Container className="d-flex justify-content-center align-items-center min-vh-100">
-            <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center" style={{width: '50%'}}>
+            <Form  className="p-3 bg-light align-items-center" style={{width: '50%'}}>
                 <h3 className="text-warning bg-danger text-center mb-3">Login</h3>
                 <Form.Group controlId="employeeID">
                     <Form.Label>Employee ID</Form.Label>
@@ -44,13 +79,18 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <br/>
                 </Form.Group>
                 <div className="text-center">
-                    <Button variant="primary" type="submit">
-                        Login
+                    <Button variant="primary" type="submit" onClick={handleUserLogin}>
+                        Login as User
+                    </Button>
+                    {' '}
+                    <Button variant="danger" type="submit" onClick={handleAdminLogin}>
+                        Login as Admin
                     </Button>
                     <p className="forgot-password text-right">
-                        Forgot <a href="#">password?</a>
+                        <a href="#">Forgot password?</a>
                     </p>
                 </div>
             </Form>

@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const Register = ({user,setUser}) => {
   const [name, setName] = useState('');
   const [designation, setDesignation] = useState('');
   const [department, setDepartment] = useState('');
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
   const [doj, setDoj] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(user!=null && user.length > 0)
+    {
+        navigate('/');
+    }
+  },[user])
 
   const handleSubmit = (e) => {
     e.preventDefault();
