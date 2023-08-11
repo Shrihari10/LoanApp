@@ -1,17 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-import MainComponent from './components/MainComponent';
-import { BrowserRouter } from 'react-router-dom/dist';
 
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./App.css"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Register from "./components/Register"
+import { Navbar, Nav } from 'react-bootstrap';  
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-      <MainComponent/>
-      </div>
-    </BrowserRouter>
-  );
+    <div className="App">
+      <Navbar bg="light" expand="lg" className="Nav" >
+        <Navbar.Brand href="/home" className="Brand">Loan App</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+
+  )
 }
 
-export default App;
+export default App
