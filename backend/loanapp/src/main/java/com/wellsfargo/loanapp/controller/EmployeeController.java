@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wellsfargo.loanapp.model.LoginModel;
 import com.wellsfargo.loanapp.model.EmployeeMaster;
 import com.wellsfargo.loanapp.service.EmployeeService;
 
@@ -17,10 +18,15 @@ public class EmployeeController {
 	EmployeeService employeeService;
 	
 	@PostMapping("/saveEmployee")
-	public EmployeeMaster saveEmployee(@RequestBody EmployeeMaster employee)
+	public String saveEmployee(@RequestBody EmployeeMaster employee)
 	{
 	
 		EmployeeMaster createdEmployee = employeeService.saveEmployee(employee);
-		return createdEmployee;
+		return "Created user with employeeID: " + createdEmployee.getEmployeeID();
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestBody LoginModel loginModel) {
+		return employeeService.employeeLogin(loginModel);
 	}
 }
