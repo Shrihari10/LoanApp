@@ -1,6 +1,8 @@
 package com.wellsfargo.loanapp.model;
 
-import java.sql.Date;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -43,7 +45,10 @@ public class EmployeeIssueDetails{
 	)
 	private ItemMaster item;
 	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date issueDate;
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date returnDate;
 	
 }
