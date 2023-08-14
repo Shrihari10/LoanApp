@@ -5,6 +5,7 @@ import Register from './Register'
 import { Routes, Route } from 'react-router-dom'
 import NotFoundComponent from './NotFoundComponent';
 import Login from './Login'
+import ApplyLoan from './ApplyLoan'
 import NavbarComponent from './NavbarComponent'
 
 const MainComponent = () => {
@@ -37,6 +38,7 @@ const MainComponent = () => {
               <Route path="/register" element={<Register  user={user} loginUser = {loginUser}/>} />
               <Route path="/login" element={<Login  user={user} loginUser = {loginUser}/>} />
               <Route path="*" element={<NotFoundComponent />} />
+              <Route path="/loan/apply" element={<ApplyLoan />}/>
             </Routes>
           </div>
         </div>

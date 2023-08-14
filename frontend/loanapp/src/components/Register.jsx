@@ -36,6 +36,7 @@ const Register = ({user,loginUser}) => {
       .then((res) => {
         alert(res.data);
         navigate('/login');
+        console.log(JSON.stringify(res.data)); 
       })
       .catch((err) => {
         console.log(err);
