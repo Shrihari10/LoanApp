@@ -61,8 +61,8 @@ const Login = ({ user, loginUser}) => {
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center min-vh-100">
-            <Form  className=" bg-light align-items-center" style={{width: '50%'}}>
+        <Container className="d-flex justify-content-center align-items-center">
+            <Form  className=" bg-light align-items-center" style={{width: '50%',marginTop:'30px',borderRadius:'10px'}}>
                 <h3 className="text-warning bg-danger text-center  mb-3 py-2 " tyle={{width: '100%'}}>Login</h3>
               <div className="p-4 text-left">
                 <Form.Group controlId="employeeID">
