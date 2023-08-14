@@ -45,8 +45,8 @@ const Register = ({user,loginUser}) => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center" style={{ width: '50%' }}>
+    <Container className="d-flex justify-content-center align-items-center ">
+      <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center form-inline" style={{ width: '50%',marginTop:'30px',borderRadius:'10px' }}>
         <h3 className="text-warning bg-danger text-center mb-3">Register</h3>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
