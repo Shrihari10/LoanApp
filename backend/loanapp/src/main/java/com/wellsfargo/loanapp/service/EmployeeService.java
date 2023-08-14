@@ -11,6 +11,7 @@ import com.wellsfargo.loanapp.dao.EmployeeRepository;
 import com.wellsfargo.loanapp.model.Admin;
 import com.wellsfargo.loanapp.model.EmployeeMaster;
 import com.wellsfargo.loanapp.model.LoginModel;
+import com.wellsfargo.loanapp.utils.Utils;
 
 @Service
 public class EmployeeService {
@@ -20,14 +21,9 @@ public class EmployeeService {
 	
 	public EmployeeMaster saveEmployee(EmployeeMaster employee)
 	{
-		employee.employeeID = generateUniqueId();
+		employee.employeeID = Utils.generateUniqueId();
 		EmployeeMaster createdEmployee = employeeRepository.save(employee);
 		return createdEmployee;
-	}
-
-	private String generateUniqueId() {
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		return uuid.substring(0,6);
 	}
 	
 public String employeeLogin(LoginModel loginModel) {
