@@ -32,7 +32,6 @@ public class EmployeeCardService {
 		Optional<LoanCardMaster> loanCard = loanCardRepository.findById(loanCardId); 
 		Optional<EmployeeMaster> employee = employeeRepository.findById(employeeId);
 		
-		System.out.println(loanCard+" mnckn "+employee+" "+employeeId);
 		if(loanCard.isPresent() && employee.isPresent())
 		{
 			EmployeeCardDetails employeeCardDetails = new EmployeeCardDetails(Utils.generateUniqueId(),employee.get(),loanCard.get(),new Date() );

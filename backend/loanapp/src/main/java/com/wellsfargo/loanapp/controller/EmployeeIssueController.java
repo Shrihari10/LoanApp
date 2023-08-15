@@ -18,7 +18,7 @@ public class EmployeeIssueController {
 	@Autowired
 	private EmployeeIssueService employeeIssueService;
 	
-	@PostMapping("/")
+	@PostMapping("/add")
 	public EmployeeIssueDetails addEmployeeCard(String employeeId, String itemId)
 	{
 		return employeeIssueService.addEmployeeIssue(employeeId,itemId);

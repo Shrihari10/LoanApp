@@ -26,7 +26,7 @@ public class ItemMaster {
 	
 	@Column(length = 6)
 	private int itemValuation;
-
+	
 	public String getItemId() {
 		return itemId;
 	}

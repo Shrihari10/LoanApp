@@ -17,7 +17,7 @@ public class EmployeeCardController {
 	@Autowired
 	private EmployeeCardService employeeCardService;
 	
-	@PostMapping("/")
+	@PostMapping("/add")
 	public EmployeeCardDetails addEmployeeCard(String employeeId, String loanCardId)
 	{
 		return employeeCardService.addEmployeeCard(employeeId,loanCardId);

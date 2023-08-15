@@ -23,19 +23,18 @@ public class LoanService {
 		EmployeeCardDetails employeeCard = employeeCardService.addEmployeeCard(employeeId, loanCardId);
 		EmployeeIssueDetails employeeIssue = employeeIssueService.addEmployeeIssue(employeeId, itemId);
 		
-		System.out.println(employeeCard+" "+employeeIssue);
 		if(employeeCard!=null && employeeIssue!=null)
 		{
 			return "Loan Application successfull";
 		}
 		else if(employeeCard!=null)
 		{
-			return "Loan Application Unsuccessful: Invalid Loan Type";
+			return "Loan Application Unsuccessful: Invalid Item for employee";
 		}
 		if(employeeIssue!=null)
 		{
-			return "Loan Application Unsuccessful: Invalid Item";
+			return "Loan Application Unsuccessful: Invalid Loan Type for employee";
 		}
-		return "Loan Application Unsuccessful: Invalid Loan Type and Item";
+		return "Loan Application Unsuccessful: Invalid Loan Type and Item for employee";
 	}
 }
