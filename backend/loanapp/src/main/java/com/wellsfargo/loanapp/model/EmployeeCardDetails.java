@@ -16,14 +16,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class EmployeeCardDetails {
 	
 	@Id
-	@GeneratedValue
-	private int id;
+	private String employeeCardId;
 	
 	@ManyToOne(
 			cascade = CascadeType.ALL,
@@ -47,4 +43,55 @@ public class EmployeeCardDetails {
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date cardIssueDate;
+
+	
+	public String getEmployeeCardId() {
+		return employeeCardId;
+	}
+
+	public void setEmployeeCardId(String employeeCardId) {
+		this.employeeCardId = employeeCardId;
+	}
+
+	public EmployeeMaster getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(EmployeeMaster employee) {
+		this.employee = employee;
+	}
+
+	public LoanCardMaster getLoanCard() {
+		return loanCard;
+	}
+
+	public void setLoanCard(LoanCardMaster loanCard) {
+		this.loanCard = loanCard;
+	}
+
+	public Date getCardIssueDate() {
+		return cardIssueDate;
+	}
+
+	public void setCardIssueDate(Date cardIssueDate) {
+		this.cardIssueDate = cardIssueDate;
+	}
+
+	
+	
+
+	public EmployeeCardDetails(String employeeCardId, EmployeeMaster employee, LoanCardMaster loanCard,
+			Date cardIssueDate) {
+		super();
+		this.employeeCardId = employeeCardId;
+		this.employee = employee;
+		this.loanCard = loanCard;
+		this.cardIssueDate = cardIssueDate;
+	}
+
+	public EmployeeCardDetails() {
+		super();
+	}
+	
+	
 }

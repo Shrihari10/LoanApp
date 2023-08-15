@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.LoanCardRepository;
 import com.wellsfargo.loanapp.model.LoanCardMaster;
+import com.wellsfargo.loanapp.utils.Utils;
 
 @Service
 public class LoanCardService {
@@ -17,5 +18,10 @@ public class LoanCardService {
 	public List<LoanCardMaster> getAllLoanCards()
 	{
 		return loanCardRepository.findAll();
+	}
+
+	public LoanCardMaster saveLoanCard(LoanCardMaster loanCard) {
+		loanCard.setLoanId(Utils.generateUniqueId());
+		return loanCardRepository.save(loanCard);
 	}
 }
