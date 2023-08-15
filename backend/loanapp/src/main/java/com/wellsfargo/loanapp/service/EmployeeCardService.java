@@ -1,6 +1,7 @@
 package com.wellsfargo.loanapp.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,4 +44,10 @@ public class EmployeeCardService {
 			return null;
 		}
 	}
+
+	public List<EmployeeCardDetails> getAllEmployeeCard(String employeeId) {
+		Optional<EmployeeMaster> employee = employeeRepository.findById(employeeId);
+		return employeeCardRepository.findByEmployee(employee.get());
+	}
+
 }
