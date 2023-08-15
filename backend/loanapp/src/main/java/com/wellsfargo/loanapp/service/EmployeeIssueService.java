@@ -1,6 +1,7 @@
 package com.wellsfargo.loanapp.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,10 @@ public class EmployeeIssueService {
 			{
 				return null;
 			}
+		}
+
+		public List<EmployeeIssueDetails> getAllEmployeeIssue(String employeeId) {
+			Optional<EmployeeMaster> employee = employeeRepository.findById(employeeId);
+			return employeeIssueRepository.findByEmployee(employee.get());
 		}
 }
