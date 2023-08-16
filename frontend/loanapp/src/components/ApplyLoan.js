@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 
 function ApplyLoan() {
+let [loanCards, setLoanCards ] = useState([]);
+
     let [empId, setEmpId] = useState(sessionStorage.getItem("username"));
     let [items, setItems] = useState([]);
     let [itemCategory, setItemCategory] = useState([]);
@@ -14,9 +17,11 @@ function ApplyLoan() {
     let [selectedItemMake, setSelectedItemMake] = useState('');
 
     useEffect(()=>{
-        axios.get("http://localhost:8080/item/all")
+        axios.get("http://localhost:8080/loanCard/all")
       .then((res) => {
-        setItems(res.data);
+        console.log(res.data);
+        setLoanCards(res.data);
+        setItemCategory(res.data.map(obj => obj["loanType"]));
       })
       .catch((err) => {
         console.log(err);
@@ -24,21 +29,33 @@ function ApplyLoan() {
       });
     }, []);
 
-    useEffect(() => {
-      // const categories = getUniqueValuesByKey(items, "itemCategory");
-      console.log(items);
-      let categories = items.map(obj => obj['itemCategory']);
-      categories = [...new Set(categories)];
-      console.log(categories);
-      setItemCategory(categories);
-    }, [items])
+    useEffect(()=>{
+        axios.get("http://localhost:8080/item/all")
+      .then((res) => {
+        setItems(res.data);
+        console.log(items);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error: " + err);
+      });
+    }, []);
+
+    // useEffect(() => {
+    //   // const categories = getUniqueValuesByKey(items, "itemCategory");
+    //   console.log(items);
+    //   let categories = items.map(obj => obj['itemCategory']);
+    //   categories = [...new Set(categories)];
+    //   console.log(categories);
+    //   setItemCategory(categories);
+    // }, [items])
 
     useEffect(() => {
       const filteredItemMakes = items.filter((item) => item.itemCategory == selectedItemCategory).map(obj => obj['itemMake']);
       console.log(filteredItemMakes);
       setItemMake([...new Set(filteredItemMakes)]);
       setSelectedItemMake('');
-    }, [selectedItemCategory])
+    }, [selectedItemCategory, items])
 
     useEffect(() => {
       const filteredItemDescription = items.filter((item) => item.itemCategory == selectedItemCategory && item.itemMake == selectedItemMake).map(obj => obj['itemDescription']);
@@ -52,25 +69,39 @@ function ApplyLoan() {
       setItemValue(filteredItemValue.length > 0 ? filteredItemValue[0] : '');
     }, [selectedItemDescription])
 
-    
 
-    // const getUniqueValuesByKey = (list, key) =>{
-    //   const uniqueValues =new Set();
+    const handleSubmit = (e) =>{
+            e.preventDefault();
+        let filteredLoanCards = loanCards.filter((obj) => (obj["loanType"] === selectedItemCategory));
+        if (filteredLoanCards.length == 0) {
+            alert('please choose category');
+            return;
+        }
+        const loanCardId = filteredLoanCards[0].loanId; 
 
-    //   list.forEach(obj=>{
-    //       if(obj.hasOwnProperty(key)){
-    //         uniqueValues.add(obj[key]);
-    //       }
-    //       return Array.from(uniqueValues)
-    //   });
-    // }
-    const handleSubmit = () =>{
+        let filteredItems = items.filter((obj) => (obj["itemCategory"] === selectedItemCategory && obj["itemMake"] === selectedItemMake && obj["itemDescription"] === selectedItemDescription));
+        if (filteredItems.length == 0) {
+            alert('please choose all fields');
+            return;
+        }
+        let itemId = filteredItems[0].itemId;
 
+        const requestBody = {
+            employeeId: empId,
+            loanCardId: loanCardId,
+            itemId: itemId
+        };
+
+        axios.post("http://localhost:8080/loan/apply", requestBody)
+        .then((res) => {
+            alert(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 
 
-
-    
 
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
