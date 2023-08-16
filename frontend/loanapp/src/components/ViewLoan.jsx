@@ -26,10 +26,10 @@ const ViewLoan = ({ user, loginUser}) => {
     const navigate = useNavigate();
 
     const fetchLoanDetails = (user) => {
-        axios.get(`http://localhost:8080/employeeIssue/${user}/all`)
+        axios.get(`http://localhost:8080/employeeCard/${user}/all`)
         .then((res) => {
             setLoanDetails(res.data);
-            // console.log(res.data);
+            console.log(res.data);
         })
         .catch((err) => {
             console.log(err);
@@ -41,17 +41,27 @@ const ViewLoan = ({ user, loginUser}) => {
        <>
        <h1>Loan</h1>
          <table className="table table-bordered">
-            {
-                loanDetails.map((loan) => () => {
-                    <tr>
-                        <td>{loan.item}</td>
-                        <td>{loan.issueId}</td>
-                        <td>{loan.issueDate}</td>
-                        <td>{loan.returnDate}</td>
+            <thead>
+                <tr>
+                    <th>Card Issue Date</th>
+                    
+                    <th>Duration of Years</th>
+                    <th>Loan ID</th>
+                    <th>Loan Type</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {loanDetails.map((loan) => (
+                    <tr key={loan.loanID}>
+                        <td>{loan.cardIssueDate}</td>
+                        
+                        <td>{loan.loanCard.durationOfYears}</td>
+                        <td>{loan.loanCard.loanId}</td>
+                        <td>{loan.loanCard.loanType}</td>
                     </tr>
-                }
-                )
-            }
+                ))}
+            </tbody>
+
             </table>   
        </>
     );
