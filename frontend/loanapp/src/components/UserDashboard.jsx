@@ -6,6 +6,14 @@ import { Button } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
 
 function UserDashboard() {
+    const [user, setUser] = React.useState("");
+    React.useEffect(() => {
+        const loggedInUser = sessionStorage.getItem("username");
+        if (loggedInUser) {
+            setUser(loggedInUser);
+        }
+    }, [user]);  
+
   return (
     <Container className="d-flex justify-content-center align-items-center ">
     <CardGroup  style={{ width: '80%',marginTop:'30px',borderRadius:'10px' }}>
@@ -14,7 +22,7 @@ function UserDashboard() {
         <Card.Body>
           <Card.Title>
             
-            <Link to="/loan/view">
+            <Link to={`/loan/${user}/all`}>
                 <Button variant="primary">View Loans</Button>
             </Link>
           </Card.Title>
