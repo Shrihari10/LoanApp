@@ -50,4 +50,24 @@ public EmployeeMaster getEmployeeDetails(String employeeId) {
 		return null;
 	}
 }
+
+public String updateEmployeeDetails(String employeeId, EmployeeMaster employee) {
+	
+	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
+	if (optionalEmployee.isPresent()) {
+		EmployeeMaster updatedEmployee = optionalEmployee.get();
+		updatedEmployee.setDateOfBirth(employee.getDateOfBirth());
+		updatedEmployee.setDateOfJoining(employee.getDateOfJoining());
+		updatedEmployee.setDepartment(employee.getDepartment());
+		updatedEmployee.setDesignation(employee.getDesignation());
+		updatedEmployee.setEmployeeName(employee.getEmployeeName());
+		updatedEmployee.setGender(employee.getGender());
+		updatedEmployee.setPassword(employee.getPassword());
+		employeeRepository.save(updatedEmployee);
+		return "Employee Deatils Updated";
+	} else {
+		return "Employee with " + employeeId +" not found!!! " ;
+	}
+}
+
 }
