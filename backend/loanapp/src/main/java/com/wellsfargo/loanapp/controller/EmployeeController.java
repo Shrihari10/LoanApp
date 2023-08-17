@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.loanapp.model.LoginModel;
@@ -56,8 +57,8 @@ public class EmployeeController {
 	}
 	
 	@PutMapping("/{employeeId}")
-	public String updateEmployeeDetails( @PathVariable String employeeId,@RequestBody EmployeeMaster employee) {
-		return employeeService.updateEmployeeDetails(employeeId,employee);
+	public String updateEmployeeDetails(@RequestParam String userName, @PathVariable String employeeId,@RequestBody EmployeeMaster employee) {
+		return employeeService.updateEmployeeDetails(userName,employeeId,employee);
 		
 	}
 	

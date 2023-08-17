@@ -14,14 +14,21 @@ public class LoanCardService {
 	
 	@Autowired
 	LoanCardRepository loanCardRepository;
+	
+	@Autowired
+	AdminService adminService;
 
 	public List<LoanCardMaster> getAllLoanCards()
 	{
 		return loanCardRepository.findAll();
 	}
 
-	public LoanCardMaster saveLoanCard(LoanCardMaster loanCard) {
-		loanCard.setLoanId(Utils.generateUniqueId());
-		return loanCardRepository.save(loanCard);
+	public LoanCardMaster saveLoanCard(String userName, LoanCardMaster loanCard) {
+		if(adminService.verfiyAdminUsername(userName))
+		{
+			loanCard.setLoanId(Utils.generateUniqueId());
+			return loanCardRepository.save(loanCard);
+		}
+		return null;
 	}
 }

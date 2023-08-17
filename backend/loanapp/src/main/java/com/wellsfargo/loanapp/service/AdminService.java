@@ -25,4 +25,13 @@ public class AdminService {
 		}
 		return "Invalid user";
 	}
+	
+	public boolean verfiyAdminUsername(String userName)
+	{
+		Optional<Admin> optionalAdmin = adminRepository.findById(userName);
+		if (optionalAdmin.isPresent()) {
+			return true;
+		}
+		return false;
+	}
 }
