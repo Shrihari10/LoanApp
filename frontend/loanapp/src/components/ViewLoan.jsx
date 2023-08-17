@@ -1,69 +1,82 @@
-import React, {useEffect, useState} from "react";
-import {Form, Button, Container} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ViewLoan = ({ user, loginUser}) => {
+const ViewLoan = ({ user, loginUser }) => {
 
     const [loanDetails, setLoanDetails] = useState([]);
-    const [username, setUsername] = useState("");
-   
+    const [designation, setDesignation] = useState("");
+    const [department, setDepartment] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if(user!=null && user.length > 0)
-        {
-            
-            // console.log(user);
-            const loanDetails=fetchLoanDetails(user);
-            //show loan details in table
-            
+        axios.get(`http://localhost:8080/employee/${user}`)
+            .then((res) => {
+                setDesignation(res.data.designation);
+                setDepartment(res.data.department);
+                //console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Error: " + err);
+            });
+    }, []);
 
-        }else {
+
+    useEffect(() => {
+        if (user != null && user.length > 0) {
+            const loanDetails = fetchLoanDetails(user);
+        } else {
             navigate('/login');
         }
-        
-    },[user]);
-    const navigate = useNavigate();
+
+    }, [user]);
 
     const fetchLoanDetails = (user) => {
         axios.get(`http://localhost:8080/employeeCard/${user}/all`)
-        .then((res) => {
-            setLoanDetails(res.data);
-            console.log(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-            alert("Error: " + err);
-        });
+            .then((res) => {
+                setLoanDetails(res.data);
+                //console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Error: " + err);
+            });
     };
 
     return (
-       <>
-       <h1>Loan</h1>
-         <table className="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Card Issue Date</th>
-                    
-                    <th>Duration of Years</th>
-                    <th>Loan ID</th>
-                    <th>Loan Type</th>
-                </tr>
-            </thead>
-            <tbody> 
-                {loanDetails.map((loan) => (
-                    <tr key={loan.loanID}>
-                        <td>{loan.cardIssueDate}</td>
-                        
-                        <td>{loan.loanCard.durationOfYears}</td>
-                        <td>{loan.loanCard.loanId}</td>
-                        <td>{loan.loanCard.loanType}</td>
+        <div style={{ width: '100%' }}>
+            <h1>Loan</h1>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-evenly' }}>
+                    <span> Employee ID : {user}</span>
+                
+                    <span>Designation : {designation}</span>
+                
+                    <span>Department : {department}</span>
+            </div>
+            <table className="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Loan ID</th>
+                        <th>Loan Type</th>
+                        <th>Duration of Years</th>
+                        <th>Card Issue Date</th>
                     </tr>
-                ))}
-            </tbody>
+                </thead>
+                <tbody>
+                    {loanDetails.map((loan) => (
+                        <tr key={loan.loanID}>
+                            <td>{loan.loanCard.loanId}</td>
+                            <td>{loan.loanCard.loanType}</td>
+                            <td>{loan.loanCard.durationOfYears}</td>
+                            <td>{loan.cardIssueDate}</td>
+                        </tr>
+                    ))}
+                </tbody>
 
-            </table>   
-       </>
+            </table>
+        </div>
     );
 };
 

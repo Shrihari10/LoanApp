@@ -1,5 +1,6 @@
 package com.wellsfargo.loanapp.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,15 +31,24 @@ public class EmployeeIssueService {
 		
 		@Autowired
 		private EmployeeRepository employeeRepository;
+		
+		@Autowired
+		private LoanCardRepository loanCardRepository;
 
-		public EmployeeIssueDetails addEmployeeIssue(String employeeId, String itemId) {
+		public EmployeeIssueDetails addEmployeeIssue(String employeeId, String itemId, String loanCardId) {
 			
 			Optional<ItemMaster> item = itemRepository.findById(itemId); 
 			Optional<EmployeeMaster> employee = employeeRepository.findById(employeeId);
+			Optional<LoanCardMaster> loanCard = loanCardRepository.findById(loanCardId);
 			
-			if(item.isPresent() && employee.isPresent())
+			if(item.isPresent() && employee.isPresent() && loanCard.isPresent())
 			{
-				EmployeeIssueDetails employeeIssueDetails = new EmployeeIssueDetails(Utils.generateUniqueId(),employee.get(),item.get(),new Date(),null);
+				int numberOfYears = loanCard.get().getDurationOfYears();
+				Calendar c = Calendar.getInstance();
+				c.setTime(new Date());
+				c.add(Calendar.YEAR, numberOfYears);
+				Date returnDate = c.getTime();
+				EmployeeIssueDetails employeeIssueDetails = new EmployeeIssueDetails(Utils.generateUniqueId(),employee.get(),item.get(),new Date(),returnDate);
 				employeeIssueRepository.save(employeeIssueDetails);
 				return employeeIssueDetails;
 			}
