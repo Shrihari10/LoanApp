@@ -39,4 +39,15 @@ public String employeeLogin(LoginModel loginModel) {
 	}
 	return "Invalid user";
 	}
+
+public EmployeeMaster getEmployeeDetails(String employeeId) {
+	// TODO Auto-generated method stub
+	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
+	if (optionalEmployee.isPresent()) {
+		EmployeeMaster employeeMaster= optionalEmployee.get();
+		return employeeMaster;
+	} else {
+		return null;
+	}
+}
 }

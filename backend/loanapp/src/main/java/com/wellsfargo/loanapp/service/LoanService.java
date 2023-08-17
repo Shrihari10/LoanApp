@@ -21,7 +21,7 @@ public class LoanService {
 	public String applyLoan(String employeeId, String loanCardId, String itemId)
 	{
 		EmployeeCardDetails employeeCard = employeeCardService.addEmployeeCard(employeeId, loanCardId);
-		EmployeeIssueDetails employeeIssue = employeeIssueService.addEmployeeIssue(employeeId, itemId);
+		EmployeeIssueDetails employeeIssue = employeeIssueService.addEmployeeIssue(employeeId, itemId, loanCardId);
 		
 		if(employeeCard!=null && employeeIssue!=null)
 		{
