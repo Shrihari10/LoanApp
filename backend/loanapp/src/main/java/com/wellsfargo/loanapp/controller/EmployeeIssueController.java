@@ -23,9 +23,9 @@ public class EmployeeIssueController {
 	private EmployeeIssueService employeeIssueService;
 	
 	@PostMapping("/add")
-	public EmployeeIssueDetails addEmployeeCard(String employeeId, String itemId)
+	public EmployeeIssueDetails addEmployeeCard(String employeeId, String itemId, String loanCardId)
 	{
-		return employeeIssueService.addEmployeeIssue(employeeId,itemId);
+		return employeeIssueService.addEmployeeIssue(employeeId,itemId,loanCardId);
 	}
 	
 	@GetMapping("/{employeeId}/all")
