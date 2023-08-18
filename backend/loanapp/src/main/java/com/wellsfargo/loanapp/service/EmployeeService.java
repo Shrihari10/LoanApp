@@ -68,7 +68,6 @@ public String updateEmployeeDetails(String userName, String employeeId, Employee
 			updatedEmployee.setDesignation(employee.getDesignation());
 			updatedEmployee.setEmployeeName(employee.getEmployeeName());
 			updatedEmployee.setGender(employee.getGender());
-			updatedEmployee.setPassword(employee.getPassword());
 			employeeRepository.save(updatedEmployee);
 			return "Employee Details Updated";
 		} else {
