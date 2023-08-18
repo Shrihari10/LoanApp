@@ -115,7 +115,7 @@ return (
       </Modal.Footer>
     </Modal>
 
-    <table className="table table-bordered">
+    <table className="table table-striped">
        <thead>
            <tr>
                <th>Loan ID</th>
