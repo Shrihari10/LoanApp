@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AboutUsComponent from './AboutUsComponent'
 import HomeComponent from './HomeComponent'
 import Register from './Register'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import NotFoundComponent from './NotFoundComponent';
 import Login from './Login'
 import ApplyLoan from './ApplyLoan'
@@ -24,6 +24,7 @@ const MainComponent = () => {
   const [user,setUser] = useState("");
   const [role, setRole] = useState("");
 
+    const navigate = useNavigate();
 
   useEffect(() => {
     const username = sessionStorage.getItem("username");
@@ -45,6 +46,7 @@ const MainComponent = () => {
     sessionStorage.removeItem("role");
     setUser("");
     setRole("");
+    navigate('/');
   }
 
   return (

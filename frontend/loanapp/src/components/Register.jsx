@@ -34,7 +34,7 @@ const Register = ({user,loginUser}) => {
 
     axios.post("http://localhost:8080/employee/add", requestBody)
       .then((res) => {
-        alert(res.data);
+        alert("Registered new employee with Id:" + res.data.employeeID);
         navigate('/login');
         console.log(JSON.stringify(res.data)); 
       })
