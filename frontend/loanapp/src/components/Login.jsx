@@ -9,14 +9,14 @@ const Login = ({ user, role, loginUser}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(role, " ", user);
+        // console.log(role, " ", user);
          if(role ==="admin"){
-            navigate('/admin/dashboard');
+            navigate('/');
         }
         else if(role ==="user"){
-            navigate('/dashboard');
+            navigate('/');
         }
-    },[role])
+    },[user])
 
     const handleUserLogin = (e) => {
         e.preventDefault();

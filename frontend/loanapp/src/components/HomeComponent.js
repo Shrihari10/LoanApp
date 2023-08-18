@@ -1,38 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import UserDashboard from './UserDashboard';
+import AdminDashboard from './AdminDashboard';
+import {useNavigate} from 'react-router-dom';
 
-function HomeComponent({user}) {
+function HomeComponent({user,role}) {
 
   const [display,setDisplay] = useState("")
+  
+  const navigate = useNavigate();
   
   useEffect(() =>{ 
     if(user!=null && user.length > 0)
     {
-      setDisplay("Hello "+user+", Welcome to Loan App!");
+      if(role == 'admin')
+      {
+        setDisplay(<AdminDashboard/>);
+      }
+      else
+      {
+        setDisplay(<UserDashboard/>);
+      }
     }
     else
     {
-      setDisplay("Hello Guest User, Please Login!");
+      // setDisplay("Hello Guest User, Please Login!");
+      navigate("/login");
     }
 
   },[user]);
 
 
- //display user dashboard if user is logged in
-  if(user!=null && user.length > 0)
-  {
-    return (
-      <div>
-        <UserDashboard user={user}/>
-      </div>
-    )
-    }else {
-      return (
-        <div>
-          <h1>{display}</h1>
-        </div>
-      )
-    }
+ 
+  return (
+    <div>
+      <h1>{display}</h1>
+    </div>
+  )
 
 }
 
