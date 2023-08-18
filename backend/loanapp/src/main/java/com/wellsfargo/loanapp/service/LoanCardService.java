@@ -42,6 +42,7 @@ public class LoanCardService {
 				LoanCardMaster updatedLoanCard = optionalLoanCard.get();
 				updatedLoanCard.setDurationOfYears(loanCard.getDurationOfYears());
 				updatedLoanCard.setLoanType(loanCard.getLoanType());
+				loanCardRepository.save(updatedLoanCard);
 				return "Loan Card with Id "+loanCardId+" details Updated";
 			} else {
 				return "Loan Card with Id " + loanCardId +" not found!!! " ;
