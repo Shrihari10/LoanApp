@@ -65,7 +65,7 @@ public class EmployeeController {
 		
 	}
 	
-	@GetMapping("/all}")
+	@GetMapping("/all")
 	public List<EmployeeMaster> getAllEmployeeDetails(@RequestParam String userName) {
 		return employeeService.getAllEmployeeDetails(userName);
 		
