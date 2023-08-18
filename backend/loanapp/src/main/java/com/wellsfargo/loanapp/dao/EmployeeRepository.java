@@ -7,5 +7,6 @@ import com.wellsfargo.loanapp.model.EmployeeMaster;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeMaster,String>{
+
 	
 }

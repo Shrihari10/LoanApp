@@ -27,6 +27,7 @@ import com.wellsfargo.loanapp.service.LoanService;
 @RunWith(SpringRunner.class)
 @WebMvcTest
 public class ApplyLoanTest {
+	
 	@Autowired
 	private MockMvc mvc;
 	
