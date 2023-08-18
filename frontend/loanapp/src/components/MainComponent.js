@@ -55,7 +55,7 @@ const MainComponent = () => {
         <div className="auth-wrapper">
           <div className="auth-inner">
             <Routes>
-              <Route path="/" element={<HomeComponent user={user} />} />
+              <Route path="/" element={<HomeComponent user={user} role={role}/>} />
               <Route path="/about" element={<AboutUsComponent />} />
               <Route path="/register" element={<Register  user={user} loginUser = {loginUser}/>} />
               <Route path="/login" element={<Login  user={user} role={role} loginUser = {loginUser}/>} />
