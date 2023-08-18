@@ -3,17 +3,20 @@ import {Form, Button, Container} from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ user, loginUser}) => {
+const Login = ({ user, role, loginUser}) => {
     const [employeeID, setEmployeeID] = useState("");
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(user!=null && user.length > 0)
-        {
-            navigate('/');
+        console.log(role, " ", user);
+         if(role ==="admin"){
+            navigate('/admin/dashboard');
         }
-    },[user])
+        else if(role ==="user"){
+            navigate('/dashboard');
+        }
+    },[role])
 
     const handleUserLogin = (e) => {
         e.preventDefault();
@@ -28,7 +31,7 @@ const Login = ({ user, loginUser}) => {
             .then((res) => {
                 alert(res.data);
                 if (res.data.includes('success')) {
-                    loginUser(employeeID);
+                    loginUser(employeeID, "user");
                 }
             })
             .catch((err) => {
@@ -51,7 +54,7 @@ const Login = ({ user, loginUser}) => {
             .then((res) => {
                 alert(res.data);
                 if (res.data.includes('success')) {
-                    loginUser(employeeID);
+                    loginUser(employeeID, "admin");
                 }
             })
             .catch((err) => {

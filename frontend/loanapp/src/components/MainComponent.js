@@ -10,24 +10,41 @@ import NavbarComponent from './NavbarComponent'
 import ViewLoan from './ViewLoan'
 import UserDashboard from './UserDashboard'
 import ViewItem from './ViewItem'
+import GuardedRoute from './GuardedRoute'
+import AdminDashboard from './AdminDashboard'
+import AdminEmployeeAdd from './admin/AdminEmployeeAdd'
+import AdminEmployeeEdit from './admin/AdminEmployeeEdit'
+import AdminLoanAdd from './admin/AdminLoanAdd'
+import AdminLoanEdit from './admin/AdminLoanEdit'
+import AdminItemAdd from './admin/AdminItemAdd'
+import AdminItemEdit from './admin/AdminItemEdit'
 
 const MainComponent = () => {
 
   const [user,setUser] = useState("");
+  const [role, setRole] = useState("");
+
 
   useEffect(() => {
     const username = sessionStorage.getItem("username");
-    setUser(username)
+    const userRole = sessionStorage.getItem("role");
+        setUser(username);
+        setRole(userRole);
   },[])
 
-  const loginUser = (username) =>{
+  const loginUser = (username, userRole) =>{
+    
     sessionStorage.setItem("username",username);
-    setUser(username)
+    sessionStorage.setItem("role", userRole);
+    setUser(username);
+    setRole(userRole);
   }
 
   const logoutUser = () =>{
     sessionStorage.removeItem("username");
-    setUser("")
+    sessionStorage.removeItem("role");
+    setUser("");
+    setRole("");
   }
 
   return (
@@ -39,13 +56,37 @@ const MainComponent = () => {
               <Route path="/" element={<HomeComponent user={user} />} />
               <Route path="/about" element={<AboutUsComponent />} />
               <Route path="/register" element={<Register  user={user} loginUser = {loginUser}/>} />
-              <Route path="/login" element={<Login  user={user} loginUser = {loginUser}/>} />
+              <Route path="/login" element={<Login  user={user} role={role} loginUser = {loginUser}/>} />
               <Route path="/loan/:username/all" element={<ViewLoan user={user} />} />
               <Route path="/loan/apply" element={<ApplyLoan user={user} />} />
               <Route path="*" element={<NotFoundComponent />} />
               <Route path="/loan/apply" element={<ApplyLoan />}/>
               <Route path="/dashboard" element={<UserDashboard />} />
               <Route path="/items" element={<ViewItem />} />
+              
+              <Route path="/admin/dashboard"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/dashboard" element = {<AdminDashboard/>} />
+              </Route>
+              <Route path="/admin/employee/add"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/employee/add" element = {<AdminEmployeeAdd/>} />
+              </Route>
+              <Route path="/admin/employee/edit"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/employee/edit" element = {<AdminEmployeeEdit/>} />
+              </Route>
+              <Route path="/admin/loan/add"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/loan/add" element = {<AdminLoanAdd/>} />
+              </Route>
+              <Route path="/admin/loan/edit"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/loan/edit" element = {<AdminLoanEdit/>} />
+              </Route>
+              <Route path="/admin/item/add"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/item/add" element = {<AdminItemAdd/>} />
+              </Route>
+              <Route path="/admin/item/edit"  element={<GuardedRoute isAuth={role==="admin"}/>}>
+                <Route path="/admin/item/edit" element = {<AdminItemEdit/>} />
+              </Route>
+
+
             </Routes>
           </div>
         </div>
