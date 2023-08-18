@@ -50,7 +50,7 @@ function AdminEmployeeEdit() {
   return (
       <>
       <h1>Employee List</h1>
-      <table className="table table-bordered">
+      <table className="table table-striped">
             <thead>
                 <tr>
                     <th>Employee ID</th>
