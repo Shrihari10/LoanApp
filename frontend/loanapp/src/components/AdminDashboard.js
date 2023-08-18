@@ -17,7 +17,7 @@ function AdminDashboard() {
 
   return (
     <Container className="d-flex justify-content-center align-items-center ">
-      <CardGroup style={{ width: '80%', marginTop: '30px', borderRadius: '10px' }}>
+      <CardGroup style={{ width: '97%', marginTop: '30px', borderRadius: '10px',padding:'10px' }}>
         <Card>
 
           <Card.Body>
@@ -27,10 +27,10 @@ function AdminDashboard() {
               </Card.Text>
 
             </Card.Title>
-            <Link to="/admin/employee/add">
+            <Link to="/admin/employee/add" style={{padding:'10px'}}>
               <Button variant="primary">Add Employee</Button>
             </Link>
-            <Link to="/admin/employee/edit">
+            <Link to="/admin/employee/edit"style={{padding:'10px'}}>
               <Button variant="primary">Edit employee</Button>
             </Link>
 
@@ -48,10 +48,10 @@ function AdminDashboard() {
               </Card.Text>
 
             </Card.Title>
-            <Link to="/admin/loan/add">
+            <Link to="/admin/loan/add"style={{padding:'10px'}}>
               <Button variant="primary">Add Loan Card</Button>
             </Link>
-            <Link to="/admin/loan/edit">
+            <Link to="/admin/loan/edit"style={{padding:'10px'}}>
               <Button variant="primary">Edit Loan Card</Button>
             </Link>
 
@@ -70,10 +70,10 @@ function AdminDashboard() {
               </Card.Text>
 
             </Card.Title>
-            <Link to="/admin/item/add">
+            <Link to="/admin/item/add"style={{padding:'10px'}}>
               <Button variant="primary">Add Items</Button>
             </Link>
-            <Link to="/admin/item/edit">
+            <Link to="/admin/item/edit"style={{padding:'10px'}}>
               <Button variant="primary">Edit Items</Button>
             </Link>
 
