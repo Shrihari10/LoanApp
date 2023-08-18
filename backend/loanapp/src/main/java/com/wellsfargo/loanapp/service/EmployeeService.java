@@ -1,5 +1,6 @@
 package com.wellsfargo.loanapp.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,6 +71,28 @@ public String updateEmployeeDetails(String userName, String employeeId, Employee
 			updatedEmployee.setPassword(employee.getPassword());
 			employeeRepository.save(updatedEmployee);
 			return "Employee Details Updated";
+		} else {
+			return "Employee with " + employeeId +" not found!!! " ;
+		}
+	}
+	return "Access Denied: Admin level access only!!!";
+}
+
+public List<EmployeeMaster> getAllEmployeeDetails(String userName) {
+	if(adminService.verfiyAdminUsername(userName))
+	{
+		return employeeRepository.findAll();
+	}
+	return null;
+}
+
+public String deleteEmployee(String userName, String employeeId) {
+	if(adminService.verfiyAdminUsername(userName))
+	{
+		Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
+		if (optionalEmployee.isPresent()) {
+			employeeRepository.delete(optionalEmployee.get());
+			return "Employee with Id "+  employeeId +"Deleted Successfully !!!";
 		} else {
 			return "Employee with " + employeeId +" not found!!! " ;
 		}
