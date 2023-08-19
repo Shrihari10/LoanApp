@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.AdminRepository;
 import com.wellsfargo.loanapp.model.Admin;
-import com.wellsfargo.loanapp.model.GenericResponse;
 
 @Service
 public class AdminService {

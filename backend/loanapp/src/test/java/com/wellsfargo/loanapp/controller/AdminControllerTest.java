@@ -1,11 +1,13 @@
 package com.wellsfargo.loanapp.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,45 +23,47 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wellsfargo.loanapp.model.Admin;
 import com.wellsfargo.loanapp.model.ItemMaster;
-import com.wellsfargo.loanapp.service.ItemService;
+import com.wellsfargo.loanapp.service.AdminService;
 import com.wellsfargo.loanapp.service.ResponseGenerator;
 
-@WebMvcTest(ItemController.class)
-public class ItemControllerTest {
+@WebMvcTest(AdminController.class)
+public class AdminControllerTest {
 	
 	@Autowired
 	private MockMvc mvc;
 	
 	@MockBean
-	private ItemService itemService;
+	AdminService adminService;
 	
 	ObjectMapper objectMapper = new ObjectMapper();
 	
-	public ItemMaster getItem()
+	public Admin getAdmin()
 	{
-		return new ItemMaster();
+		return new Admin();
 	}
 	
 	@Test
-	public void getAllItems_shouldHaveCorrectRequestAndResponseMapping() throws Exception {
+	public void adminLogin_shouldHaveCorrectRequestAndResponseMapping() throws Exception {
+		String json = "{ \"username\" : \"admin\", \"password\" : \"password\"}";
+		Admin admin = getAdmin();
 		
-		List<ItemMaster> itemList = new ArrayList<>();
-		itemList.add(getItem());
+		ResponseEntity<Admin> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,admin);
 		
-		ResponseEntity<List<ItemMaster>> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,itemList);
+		when(adminService.validateAdmin(any())).thenReturn(response);
 		
-		when(itemService.getAllItems()).thenReturn(response);
-		
-		MvcResult result = mvc.perform(get("/item/all").accept(MediaType.APPLICATION_JSON))
+		MvcResult result = mvc.perform(post("/admin/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("utf-8")
+				.content(json)
+				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(content().json(objectMapper.writeValueAsString(response.getBody())))
 				.andReturn();
 		
-		verify(itemService,times(1)).getAllItems();
-		
+		verify(adminService,times(1)).validateAdmin(any());
 		
 	}
-
 }
