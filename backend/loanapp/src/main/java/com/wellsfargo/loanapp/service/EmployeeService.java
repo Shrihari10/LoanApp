@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -23,39 +25,39 @@ public class EmployeeService {
 	@Autowired
 	AdminService adminService;
 	
-	public EmployeeMaster saveEmployee(EmployeeMaster employee)
+	public ResponseEntity<EmployeeMaster> saveEmployee(EmployeeMaster employee)
 	{
 		employee.employeeID = Utils.generateUniqueId();
 		EmployeeMaster createdEmployee = employeeRepository.save(employee);
-		return createdEmployee;
+		return ResponseGenerator.generateResponse(HttpStatus.CREATED, "Employee created successfully !!!", createdEmployee);
 	}
 	
-public String employeeLogin(LoginModel loginModel) {
+public ResponseEntity<EmployeeMaster> employeeLogin(LoginModel loginModel) {
 		
 	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(loginModel.employeeID);
 	if (optionalEmployee.isPresent()) {
 		EmployeeMaster employeeMaster= optionalEmployee.get();
 		if (employeeMaster.getPassword().equals(loginModel.password)) {
-			return "Logging in successful";
+			return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee login successfull !!!", employeeMaster);
 		} else {
-			return "Invalid password";
+			return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee login failed : Invalid Password !!!", null);
 		}
 	}
-	return "Invalid user";
+	return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee login failed : Invalid User !!!", null);
 	}
 
-public EmployeeMaster getEmployeeDetails(String employeeId) {
+public ResponseEntity<EmployeeMaster> getEmployeeDetails(String employeeId) {
 	// TODO Auto-generated method stub
 	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
 	if (optionalEmployee.isPresent()) {
 		EmployeeMaster employeeMaster= optionalEmployee.get();
-		return employeeMaster;
+		return ResponseGenerator.generateResponse(HttpStatus.OK, "", employeeMaster);
 	} else {
-		return null;
+		return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Employee with "+employeeId+" not found !!!", null);
 	}
 }
 
-public String updateEmployeeDetails(String userName, String employeeId, EmployeeMaster employee) {
+public ResponseEntity<EmployeeMaster> updateEmployeeDetails(String userName, String employeeId, EmployeeMaster employee) {
 	
 	if(adminService.verfiyAdminUsername(userName))
 	{
@@ -68,35 +70,36 @@ public String updateEmployeeDetails(String userName, String employeeId, Employee
 			updatedEmployee.setDesignation(employee.getDesignation());
 			updatedEmployee.setEmployeeName(employee.getEmployeeName());
 			updatedEmployee.setGender(employee.getGender());
-			employeeRepository.save(updatedEmployee);
-			return "Employee Details Updated";
+			updatedEmployee  = employeeRepository.save(updatedEmployee);
+			return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee Details Updated", updatedEmployee);
 		} else {
-			return "Employee with " + employeeId +" not found!!! " ;
+		    return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Employee with " + employeeId +" not found!!! ", null);
 		}
 	}
-	return "Access Denied: Admin level access only!!!";
+	return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED,"Access Denied: Admin level access only!!!", null);
 }
 
-public List<EmployeeMaster> getAllEmployeeDetails(String userName) {
+public ResponseEntity<List<EmployeeMaster>> getAllEmployeeDetails(String userName) {
 	if(adminService.verfiyAdminUsername(userName))
 	{
-		return employeeRepository.findAll();
+		List<EmployeeMaster> employees = employeeRepository.findAll();
+		return ResponseGenerator.generateResponse(HttpStatus.OK,"", employees);
 	}
-	return null;
+	return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED,"Access Denied: Admin level access only!!!", null);
 }
 
-public String deleteEmployee(String userName, String employeeId) {
+public ResponseEntity<EmployeeMaster> deleteEmployee(String userName, String employeeId) {
 	if(adminService.verfiyAdminUsername(userName))
 	{
 		Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
 		if (optionalEmployee.isPresent()) {
 			employeeRepository.delete(optionalEmployee.get());
-			return "Employee with Id "+  employeeId +"Deleted Successfully !!!";
+			return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee with Id "+  employeeId +"Deleted Successfully !!!", null);
 		} else {
-			return "Employee with " + employeeId +" not found!!! " ;
+			return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Employee with " + employeeId +" not found!!! ", null);
 		}
 	}
-	return "Access Denied: Admin level access only!!!";
+	return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED,"Access Denied: Admin level access only!!!", null);
 }
 
 }

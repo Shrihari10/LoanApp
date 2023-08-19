@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.EmployeeCardRepository;
@@ -58,8 +60,9 @@ public class EmployeeIssueService {
 			}
 		}
 
-		public List<EmployeeIssueDetails> getAllEmployeeIssue(String employeeId) {
+		public ResponseEntity<List<EmployeeIssueDetails>> getAllEmployeeIssue(String employeeId) {
 			Optional<EmployeeMaster> employee = employeeRepository.findById(employeeId);
-			return employeeIssueRepository.findByEmployee(employee.get());
+			List<EmployeeIssueDetails> employeeIssueList = employeeIssueRepository.findByEmployee(employee.get());
+			return ResponseGenerator.generateResponse(HttpStatus.OK,"", employeeIssueList);
 		}
 }

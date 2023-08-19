@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.LoanCardRepository;
-import com.wellsfargo.loanapp.model.EmployeeMaster;
 import com.wellsfargo.loanapp.model.LoanCardMaster;
 import com.wellsfargo.loanapp.utils.Utils;
 
@@ -20,21 +21,23 @@ public class LoanCardService {
 	@Autowired
 	AdminService adminService;
 
-	public List<LoanCardMaster> getAllLoanCards()
+	public ResponseEntity<List<LoanCardMaster>> getAllLoanCards()
 	{
-		return loanCardRepository.findAll();
+		List<LoanCardMaster> loanCardList = loanCardRepository.findAll();
+		return ResponseGenerator.generateResponse(HttpStatus.OK, null, loanCardList);
 	}
 
-	public LoanCardMaster saveLoanCard(String userName, LoanCardMaster loanCard) {
+	public ResponseEntity<LoanCardMaster> saveLoanCard(String userName, LoanCardMaster loanCard) {
 		if(adminService.verfiyAdminUsername(userName))
 		{
 			loanCard.setLoanId(Utils.generateUniqueId());
-			return loanCardRepository.save(loanCard);
+			loanCard = loanCardRepository.save(loanCard);
+			return ResponseGenerator.generateResponse(HttpStatus.CREATED, "Loan Card created successfully !!!", loanCard);
 		}
-		return null;
+		return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorized Access: Invalid Admin username !!!", null);
 	}
 
-	public String updateLoanCard(String userName, String loanCardId, LoanCardMaster loanCard) {
+	public ResponseEntity<LoanCardMaster> updateLoanCard(String userName, String loanCardId, LoanCardMaster loanCard) {
 		if(adminService.verfiyAdminUsername(userName))
 		{
 			Optional<LoanCardMaster> optionalLoanCard = loanCardRepository.findById(loanCardId);
@@ -42,26 +45,26 @@ public class LoanCardService {
 				LoanCardMaster updatedLoanCard = optionalLoanCard.get();
 				updatedLoanCard.setDurationOfYears(loanCard.getDurationOfYears());
 				updatedLoanCard.setLoanType(loanCard.getLoanType());
-				loanCardRepository.save(updatedLoanCard);
-				return "Loan Card with Id "+loanCardId+" details Updated";
+				updatedLoanCard = loanCardRepository.save(updatedLoanCard);
+				return ResponseGenerator.generateResponse(HttpStatus.OK, "Loan Card with Id "+loanCardId+" details Updated", updatedLoanCard);
 			} else {
-				return "Loan Card with Id " + loanCardId +" not found!!! " ;
+				return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Loan Card with Id " + loanCardId +" not found!!! ", null);
 			}
 		}
-		return "Access Denied: Admin level access only!!!";
+		return  ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorized Access: Invalid Admin username !!!", null);
 	}
 
-	public String deleteLoanCard(String userName, String loanCardId) {
+	public ResponseEntity<LoanCardMaster> deleteLoanCard(String userName, String loanCardId) {
 		if(adminService.verfiyAdminUsername(userName))
 		{
 			Optional<LoanCardMaster> optionalLoanCard = loanCardRepository.findById(loanCardId);
 			if (optionalLoanCard.isPresent()) {
 				loanCardRepository.delete(optionalLoanCard.get());
-				return "Loan Card with Id "+loanCardId+" deleted successfully !!!";
+				return ResponseGenerator.generateResponse(HttpStatus.OK, "Loan Card with Id "+loanCardId+" deleted successfully !!!", null);
 			} else {
-				return "Loan Card with Id " + loanCardId +" not found !!! " ;
+				return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Loan Card with Id " + loanCardId +" not found!!! ", null);
 			}
 		}
-		return "Access Denied: Admin level access only!!!";
+		return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorized Access: Invalid Admin username !!!", null);
 	}
 }

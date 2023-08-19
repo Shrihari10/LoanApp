@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.wellsfargo.loanapp.dao.AdminRepository;
 import com.wellsfargo.loanapp.dao.ItemRepository;
 import com.wellsfargo.loanapp.model.ItemMaster;
-import com.wellsfargo.loanapp.model.LoanCardMaster;
 import com.wellsfargo.loanapp.utils.Utils;
 
 @Service
@@ -21,21 +21,22 @@ public class ItemService {
 	@Autowired
 	AdminService adminService;
 
-	public List<ItemMaster> getAllItems()
+	public ResponseEntity<List<ItemMaster>> getAllItems()
 	{
-		return itemRepository.findAll();
+		List<ItemMaster> items = itemRepository.findAll();
+		return ResponseGenerator.generateResponse(HttpStatus.OK, null, items);
 	}
 
-	public ItemMaster saveItem(String userName, ItemMaster item) {
+	public ResponseEntity<ItemMaster> saveItem(String userName, ItemMaster item) {
 		if(adminService.verfiyAdminUsername(userName))
 		{
 			item.setItemId(Utils.generateUniqueId());
-			return itemRepository.save(item);
+			return  ResponseGenerator.generateResponse(HttpStatus.CREATED, "Item added successfully", itemRepository.save(item));        
 		}
-		return null;
+		return  ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorised access: Invalid Admin Username", null);        
 	}
 
-	public String updateItem(String userName, String itemId, ItemMaster item) {
+	public ResponseEntity<ItemMaster> updateItem(String userName, String itemId, ItemMaster item) {
 		if(adminService.verfiyAdminUsername(userName))
 		{
 			Optional<ItemMaster> optionaItem = itemRepository.findById(itemId);
@@ -46,27 +47,27 @@ public class ItemService {
 				updatedItem.setItemDescription(item.getItemDescription());
 				updatedItem.setItemMake(item.getItemMake());
 				updatedItem.setItemValuation(item.getItemValuation());
-				itemRepository.save(updatedItem);
-				return "Item with Id "+itemId+" details Updated";
+				updatedItem = itemRepository.save(updatedItem);
+				return ResponseGenerator.generateResponse(HttpStatus.OK,"Item with Id "+itemId+" details Updated",updatedItem);
 			} else {
-				return "Item with Id " + itemId +" not found!!! " ;
+				return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,"Item with Id " + itemId +" not found!!! ", null);
 			}
 		}
-		return "Access Denied: Admin level access only!!!";
+		return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorised access: Invalid Admin Username", null);  
 	}
 
-	public String deleteItem(String userName, String itemId) {
+	public ResponseEntity<ItemMaster> deleteItem(String userName, String itemId) {
 		if(adminService.verfiyAdminUsername(userName))
 		{
 			Optional<ItemMaster> optionaItem = itemRepository.findById(itemId);
 			if (optionaItem.isPresent()) {
 				itemRepository.delete(optionaItem.get());
-				return "Item with Id "+itemId+" deleted successfully";
+				return ResponseGenerator.generateResponse(HttpStatus.OK,"Item with Id "+itemId+" deleted successfully",null);
 			} else {
-				return "Item with Id " + itemId +" not found!!! " ;
+				return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,"Item with Id " + itemId +" not found!!! ", null);
 			}
 		}
-		return "Access Denied: Admin level access only!!!";
+		return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorised access: Invalid Admin Username", null);  
 	}
 	
 

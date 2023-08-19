@@ -3,6 +3,7 @@ package com.wellsfargo.loanapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,27 +29,26 @@ public class LoanCardController {
 	public LoanCardService loanCardService;
 	
 	@GetMapping("/all")
-	public List<LoanCardMaster> getAllLoanCards()
+	public ResponseEntity<List<LoanCardMaster>> getAllLoanCards()
 	{
 		return loanCardService.getAllLoanCards();
 	}
 	
 	@PostMapping("/add")
-	public LoanCardMaster saveLoanCard(@RequestParam String userName, @RequestBody LoanCardMaster loanCard)
+	public ResponseEntity<LoanCardMaster> saveLoanCard(@RequestParam String userName, @RequestBody LoanCardMaster loanCard)
 	{
 	
-		LoanCardMaster createdLoanCard = loanCardService.saveLoanCard(userName,loanCard);
-		return createdLoanCard;
+		return loanCardService.saveLoanCard(userName,loanCard);
 	}
 	
 	@PutMapping("/{loanCardId}")
-	public String updateLoanCard(@RequestParam String userName, @PathVariable String loanCardId,@RequestBody LoanCardMaster loanCard) {
+	public ResponseEntity<LoanCardMaster> updateLoanCard(@RequestParam String userName, @PathVariable String loanCardId,@RequestBody LoanCardMaster loanCard) {
 		return loanCardService.updateLoanCard(userName,loanCardId,loanCard);
 		
 	}
 
 	@DeleteMapping("/{loanCardId}")
-	public String deleteLoanCard(@RequestParam String userName, @PathVariable String loanCardId) {
+	public ResponseEntity<LoanCardMaster> deleteLoanCard(@RequestParam String userName, @PathVariable String loanCardId) {
 		return loanCardService.deleteLoanCard(userName,loanCardId);
 		
 	}

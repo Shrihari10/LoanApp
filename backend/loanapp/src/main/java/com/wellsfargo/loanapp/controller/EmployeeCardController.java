@@ -3,6 +3,7 @@ package com.wellsfargo.loanapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class EmployeeCardController {
 	}
 	
 	@GetMapping("/{employeeId}/all")
-	public List<EmployeeCardDetails> getAllEmployeeCard(@PathVariable("employeeId") String employeeId)
+	public ResponseEntity<List<EmployeeCardDetails>> getAllEmployeeCard(@PathVariable("employeeId") String employeeId)
 	{
 		return employeeCardService.getAllEmployeeCard(employeeId);
 	}

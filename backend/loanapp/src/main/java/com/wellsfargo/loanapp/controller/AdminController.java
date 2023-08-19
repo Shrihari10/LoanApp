@@ -1,6 +1,7 @@
 package com.wellsfargo.loanapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class AdminController {
 	AdminService adminService;
 	
 	@PostMapping("/login")
-	public String adminLogin(@RequestBody Admin adminLogin) {
+	public ResponseEntity<Admin> adminLogin(@RequestBody Admin adminLogin) {
 		return adminService.validateAdmin(adminLogin);
 	}
 }
