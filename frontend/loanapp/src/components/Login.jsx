@@ -29,8 +29,8 @@ const Login = ({ user, role, loginUser}) => {
 
         axios.post("http://localhost:8080/employee/login", requestBody)
             .then((res) => {
-                alert(res.data);
-                if (res.data.includes('success')) {
+                alert(res.data.message);
+                if (res.data.message.includes('successfull')) {
                     loginUser(employeeID, "user");
                 }
             })
@@ -52,8 +52,8 @@ const Login = ({ user, role, loginUser}) => {
 
         axios.post("http://localhost:8080/admin/login", requestBody)
             .then((res) => {
-                alert(res.data);
-                if (res.data.includes('success')) {
+                alert(res.data.message);
+                if (res.data.message.includes('Successfully')) {
                     loginUser(employeeID, "admin");
                 }
             })

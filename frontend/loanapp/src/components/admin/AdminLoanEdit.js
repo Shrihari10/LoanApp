@@ -18,7 +18,7 @@ function AdminLoanEdit() {
   const fetchAllLoanCards = () => {
     axios.get(`http://localhost:8080/loanCard/all`)
         .then((res) => {
-            setLoanCards(res.data);
+            setLoanCards(res.data.body);
             //console.log(res.data);
         })
         .catch((err) => {
@@ -30,7 +30,7 @@ function AdminLoanEdit() {
   const handleDelete = (loanId) => {
     axios.delete(`http://localhost:8080/loanCard/${loanId}?userName=${userName}`)
     .then((res) => {
-      alert(res.data);
+      alert(res.data.message);
       fetchAllLoanCards();
     }).catch((err) => {
       console.log(err);
@@ -58,7 +58,7 @@ function AdminLoanEdit() {
       };
       axios.put(`http://localhost:8080/loanCard/${editingLoanId}?userName=${userName}`, requestBody)
       .then((res) => {
-        alert(res.data);
+        alert(res.data.message);
         fetchAllLoanCards();
         handleClose();
       }).catch((err) => {

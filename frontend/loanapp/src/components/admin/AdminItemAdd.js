@@ -15,7 +15,7 @@ const AdminItemAdd = () => {
     axios.get("http://localhost:8080/loanCard/all")
   .then((res) => {
     
-    const loanCard = res.data.map((loanCard) => loanCard.loanType);
+    const loanCard = res.data.body.map((loanCard) => loanCard.loanType);
     setLoanCards(loanCard);
   })
   .catch((err) => {

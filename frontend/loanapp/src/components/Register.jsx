@@ -34,9 +34,9 @@ const Register = ({user,loginUser}) => {
 
     axios.post("http://localhost:8080/employee/add", requestBody)
       .then((res) => {
-        alert("Registered new employee with Id:" + res.data.employeeID);
+        alert("Registered new employee with Id:" + res.data.body.employeeID);
         navigate('/login');
-        console.log(JSON.stringify(res.data)); 
+        console.log(JSON.stringify(res.data.body)); 
       })
       .catch((err) => {
         console.log(err);

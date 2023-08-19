@@ -13,8 +13,8 @@ const ViewLoan = ({ user, loginUser }) => {
     useEffect(() => {
         axios.get(`http://localhost:8080/employee/${user}`)
             .then((res) => {
-                setDesignation(res.data.designation);
-                setDepartment(res.data.department);
+                setDesignation(res.data.body.designation);
+                setDepartment(res.data.body.department);
                 //console.log(res.data);
             })
             .catch((err) => {
@@ -36,7 +36,7 @@ const ViewLoan = ({ user, loginUser }) => {
     const fetchLoanDetails = (user) => {
         axios.get(`http://localhost:8080/employeeCard/${user}/all`)
             .then((res) => {
-                setLoanDetails(res.data);
+                setLoanDetails(res.data.body);
                 //console.log(res.data);
             })
             .catch((err) => {

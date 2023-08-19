@@ -27,7 +27,7 @@ const AdminEmployeeAdd = ({user}) => {
 
     axios.post("http://localhost:8080/employee/add", requestBody)
       .then((res) => {
-        alert("Employee created with Id: " + res.data.employeeID);
+        alert("Employee created with Id: " + res.data.body.employeeID);
         navigate("/admin/employee/edit");
         console.log(JSON.stringify(res.data)); 
       })

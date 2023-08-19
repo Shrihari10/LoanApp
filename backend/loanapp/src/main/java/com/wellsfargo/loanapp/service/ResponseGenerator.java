@@ -12,33 +12,29 @@ public class ResponseGenerator {
 
     private static class ResponseWrapper<T> {
         private String message;
-        private T data;
-
-        public ResponseWrapper(String message, T data) {
-            this.message = message;
-            this.data = data;
-        }
+        private T body;
+        
+        public ResponseWrapper(String message, T body) {
+			super();
+			this.message = message;
+			this.body = body;
+		}
         
         public ResponseWrapper() {
 			super();
 		}
-
+        
 		public String getMessage() {
 			return message;
 		}
-
 		public void setMessage(String message) {
 			this.message = message;
 		}
-
-		public T getData() {
-			return data;
+		public T getBody() {
+			return body;
 		}
-
-		public void setData(T data) {
-			this.data = data;
+		public void setBody(T body) {
+			this.body = body;
 		}
-
-        // Getters and setters
     }
 }

@@ -19,9 +19,9 @@ let [loanCards, setLoanCards ] = useState([]);
     useEffect(()=>{
         axios.get("http://localhost:8080/loanCard/all")
       .then((res) => {
-        console.log(res.data);
-        setLoanCards(res.data);
-        setItemCategory(res.data.map(obj => obj["loanType"]));
+        console.log(res.data.message);
+        setLoanCards(res.data.body);
+        setItemCategory(res.data.body.map(obj => obj["loanType"]));
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +32,7 @@ let [loanCards, setLoanCards ] = useState([]);
     useEffect(()=>{
         axios.get("http://localhost:8080/item/all")
       .then((res) => {
-        setItems(res.data);
+        setItems(res.data.body);
         console.log(items);
       })
       .catch((err) => {
@@ -94,7 +94,7 @@ let [loanCards, setLoanCards ] = useState([]);
 
         axios.post("http://localhost:8080/loan/apply", requestBody)
         .then((res) => {
-            alert(res.data);
+            alert(res.data.message);
         })
         .catch((err) => {
             console.log(err);

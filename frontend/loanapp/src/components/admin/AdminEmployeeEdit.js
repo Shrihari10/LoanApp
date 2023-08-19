@@ -24,7 +24,7 @@ function AdminEmployeeEdit() {
   const fetchAllEmployee = () => {
     axios.get(`http://localhost:8080/employee/all?userName=${userName}`)
       .then((res) => {
-        setEmployees(res.data);
+        setEmployees(res.data.body);
         console.log(res.data);
       })
       .catch((err) => {
@@ -38,7 +38,7 @@ function AdminEmployeeEdit() {
 
     axios.delete(`http://localhost:8080/employee/${id}?userName=${userName}`)
       .then((res) => {
-        alert(res.data);
+        alert(res.data.message);
         fetchAllEmployee();
       })
       .catch((err) => {
@@ -78,7 +78,7 @@ function AdminEmployeeEdit() {
     };
     axios.put(`http://localhost:8080/employee/${editingEmployeeId}?userName=${userName}`, requestBody)
       .then((res) => {
-        alert(res.data);
+        alert(res.data.message);
         fetchAllEmployee();
         handleClose();
       })

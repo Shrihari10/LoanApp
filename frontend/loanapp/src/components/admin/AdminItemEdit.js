@@ -19,7 +19,7 @@ function AdminItemEdit() {
     axios.get(`http://localhost:8080/item/all`)
         .then((res) => {
           // console.log(res.data);
-          setItemCards(res.data);
+          setItemCards(res.data.body);
         })
         .catch((err) => {
           console.log(err);
@@ -34,7 +34,7 @@ function AdminItemEdit() {
   const handleDelete = (itemId) => {
     axios.delete(`http://localhost:8080/item/${itemId}?userName=${userName}`)
     .then((res) => {
-      alert(res.data);
+      alert(res.data.message);
       fetchAllItemCards();
     }).catch((err) => {
       console.log(err);
@@ -67,7 +67,7 @@ function AdminItemEdit() {
     };
     axios.put(`http://localhost:8080/item/${editingItemId}?userName=${userName}`, requestBody)
     .then((res) => {
-      alert(res.data);
+      alert(res.data.message);
       fetchAllItemCards();
       handleClose();
     }).catch((err) => {
