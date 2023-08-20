@@ -4,8 +4,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +43,14 @@ public class ItemControllerTest {
 	
 	public ItemMaster getItem()
 	{
-		return new ItemMaster();
+		ItemMaster item = new ItemMaster();
+		item.setItemId("123456");
+		item.setIssueStatus('1');
+		item.setItemCategory("Furniture");
+		item.setItemDescription("Description");
+		item.setItemMake("Wooden");
+		item.setItemValuation(2000);
+		return item;
 	}
 	
 	@Test
@@ -60,6 +72,70 @@ public class ItemControllerTest {
 		verify(itemService,times(1)).getAllItems();
 		
 		
+	}
+	
+	@Test
+	public void saveItem_shouldHaveCorrectRequestAndResponseMapping() throws Exception {
+		String jsonContent = "{\"itemDescription\":\"Description\",\"issueStatus\":\"1\",\"itemMake\":\"Wooden\",\"itemCategory\":\"Furniture\",\"itemValuation\":2000}";
+		ItemMaster item = getItem();
+		String userName = "admin";
+		
+		ResponseEntity<ItemMaster> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,item);
+		
+		when(itemService.saveItem(eq(userName), any(ItemMaster.class))).thenReturn(response);
+		
+		MvcResult result = mvc.perform(post("/item/add?userName=admin")
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("utf-8")
+				.content(jsonContent)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(content().json(objectMapper.writeValueAsString(response.getBody())))
+				.andExpect(status().isOk())
+				.andReturn();
+		
+		verify(itemService,times(1)).saveItem(eq(userName), any(ItemMaster.class));
+	}
+	
+	@Test
+	public void updateItem_shouldHaveCorrectRequestAndResponseMapping() throws Exception {
+		String jsonContent = "{\"itemDescription\":\"Description\",\"issueStatus\":\"1\",\"itemMake\":\"Wooden\",\"itemCategory\":\"Furniture\",\"itemValuation\":2000}";
+		ItemMaster item = getItem();
+		String itemId = item.getItemId();
+		String userName = "admin";
+		
+		ResponseEntity<ItemMaster> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,item);
+		
+		when(itemService.updateItem(eq(userName), eq(itemId), any(ItemMaster.class))).thenReturn(response);
+		
+		MvcResult result = mvc.perform(put("/item/123456?userName=admin")
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("utf-8")
+				.content(jsonContent)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(content().json(objectMapper.writeValueAsString(response.getBody())))
+				.andExpect(status().isOk())
+				.andReturn();
+		
+		verify(itemService,times(1)).updateItem(eq(userName), eq(itemId), any(ItemMaster.class));
+	}
+	
+	@Test
+	public void deleteItem_shouldHaveCorrectRequestAndResponseMapping() throws Exception {
+		ItemMaster item = getItem();
+		String itemId = "123456";
+		String userName = "admin";
+		
+		ResponseEntity<ItemMaster> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,item);
+		
+		when(itemService.deleteItem(eq(userName), eq(itemId))).thenReturn(response);
+		
+		MvcResult result = mvc.perform(delete("/item/123456?userName=admin")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(content().json(objectMapper.writeValueAsString(response.getBody())))
+				.andExpect(status().isOk())
+				.andReturn();
+		
+		verify(itemService,times(1)).deleteItem(eq(userName), eq(itemId));
 	}
 
 }
