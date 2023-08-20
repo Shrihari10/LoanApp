@@ -107,7 +107,7 @@ public class ItemControllerTest {
 		
 		when(itemService.updateItem(eq(userName), eq(itemId), any(ItemMaster.class))).thenReturn(response);
 		
-		MvcResult result = mvc.perform(put("/item/123456?userName=admin")
+		MvcResult result = mvc.perform(put("/item/"+itemId+"?userName=admin")
 				.contentType(MediaType.APPLICATION_JSON)
 				.characterEncoding("utf-8")
 				.content(jsonContent)
@@ -122,14 +122,14 @@ public class ItemControllerTest {
 	@Test
 	public void deleteItem_shouldHaveCorrectRequestAndResponseMapping() throws Exception {
 		ItemMaster item = getItem();
-		String itemId = "123456";
+		String itemId = item.getItemId();
 		String userName = "admin";
 		
 		ResponseEntity<ItemMaster> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,item);
 		
 		when(itemService.deleteItem(eq(userName), eq(itemId))).thenReturn(response);
 		
-		MvcResult result = mvc.perform(delete("/item/123456?userName=admin")
+		MvcResult result = mvc.perform(delete("/item/"+itemId+"?userName=admin")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(content().json(objectMapper.writeValueAsString(response.getBody())))
 				.andExpect(status().isOk())
