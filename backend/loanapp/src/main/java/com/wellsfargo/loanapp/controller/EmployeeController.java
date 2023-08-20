@@ -45,7 +45,7 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<EmployeeMaster> login(@RequestBody LoginModel loginModel) {
+	public ResponseEntity<EmployeeMaster> employeeLogin(@RequestBody LoginModel loginModel) {
 		return employeeService.employeeLogin(loginModel);
 	}
 	
