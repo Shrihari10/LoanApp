@@ -22,11 +22,11 @@ public class EmployeeCardController {
 	@Autowired
 	private EmployeeCardService employeeCardService;
 	
-	@PostMapping("/add")
-	public EmployeeCardDetails addEmployeeCard(String employeeId, String loanCardId)
-	{
-		return employeeCardService.addEmployeeCard(employeeId,loanCardId);
-	}
+//	@PostMapping("/add")
+//	public EmployeeCardDetails addEmployeeCard(String employeeId, String loanCardId)
+//	{
+//		return employeeCardService.addEmployeeCard(employeeId,loanCardId);
+//	}
 	
 	@GetMapping("/{employeeId}/all")
 	public ResponseEntity<List<EmployeeCardDetails>> getAllEmployeeCard(@PathVariable("employeeId") String employeeId)
