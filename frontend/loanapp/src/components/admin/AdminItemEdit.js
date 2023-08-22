@@ -1,8 +1,19 @@
 import React from 'react'
-import {Button,Modal,Form} from 'react-bootstrap';
+import {Modal,Form} from 'react-bootstrap';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate} from 'react-router-dom';
+//import chakra ui
+import { ChakraProvider } from "@chakra-ui/react"
+import { extendTheme } from "@chakra-ui/react"
+import { Heading, Text } from "@chakra-ui/react"
+import { Card, CardBody, CardFooter, CardHeader } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
+
+import { SimpleGrid } from "@chakra-ui/react"
+import {Stack,HStack} from "@chakra-ui/react"
+import {EditIcon,DeleteIcon,CloseIcon,CheckIcon} from "@chakra-ui/icons"
+
 
 function AdminItemEdit() {
   const userName = sessionStorage.getItem("username");
@@ -80,80 +91,115 @@ function AdminItemEdit() {
   const handleOpen = () => setShowEditForm(true);
 
   return (
+
     <>
-      <h1>Item Management</h1>
-      <Modal show={showEditForm} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Item</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={(e) => e.preventDefault() } className="p-3 bg-light align-items-center" style={{ width: '50%' }}>
+    
+    <Modal show={showEditForm} onHide={handleClose}
+      zIndex="2"
+      >
+      <Modal.Header closeButton>
+        <Modal.Title>Edit Item</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={(e) => e.preventDefault() } className=" bg-light align-items-center" >
+          <Form.Group className="mb-3" controlId="Item">
+            <Form.Label>Item ID</Form.Label>
+            <Form.Control type="text" placeholder="Enter Item ID" value={editingItemId} disabled />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="Item">
+            <Form.Label>Item Description</Form.Label>
+            <Form.Control type="text" placeholder="Enter Item Description" value={editingItemDescription} onChange={(e) => setEditingItemDescription(e.target.value)} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="Item">
+            <Form.Label>Item Category</Form.Label>
+            <Form.Control type="text" placeholder="Enter Item Category" value={editingItemCategory} onChange={(e) => setEditingItemCategory(e.target.value)} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="Item">
+            <Form.Label>Item Make</Form.Label>
+            <Form.Control type="text" placeholder="Enter Item Make" value={editingItemMake} onChange={(e) => setEditingItemMake(e.target.value)} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="Item">
+            <Form.Label>Item Valuation</Form.Label>
+            <Form.Control type="text" placeholder="Enter Item Valuation" value={editingItemValuation} onChange={(e) => setEditingItemValuation(e.target.value)} />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+          <Button variant="outline" colorScheme="red" onClick={handleClose}>
+            <CloseIcon/>  
+            Close 
+          </Button>
+          <Button variant="outline" colorScheme="green" onClick={handleEditSubmit}>
+            <CheckIcon/>
+            Save Changes
+          </Button>
+        </Modal.Footer>
 
-            <Form.Group className="mb-3" controlId="Item">
-              <Form.Label>Item ID</Form.Label>
-              <Form.Control type="text" placeholder="Enter Item ID" value={editingItemId} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="Item">
-              <Form.Label>Item Description</Form.Label>
-              <Form.Control type="text" placeholder="Enter Item Description" value={editingItemDescription} onChange={(e) => setEditingItemDescription(e.target.value)} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="Item">
-              <Form.Label>Item Category</Form.Label>
-              <Form.Control type="text" placeholder="Enter Item Category" value={editingItemCategory} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="Item">
-              <Form.Label>Item Make</Form.Label>
-              <Form.Control type="text" placeholder="Enter Item Make" value={editingItemMake} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="Item">
-              <Form.Label>Item Valuation</Form.Label>
-              <Form.Control type="text" placeholder="Enter Item Valuation" value={editingItemValuation} onChange={(e) => setEditingItemValuation(e.target.value)} />
-            </Form.Group>
+    </Modal>
+    {/* card */}
+    <div className="d-flex justify-content-center align-items-center " style={{paddingTop:'2em',padding:'2rem'}}>
+    <div className=" justify-content-center align-items-center " >
+    <SimpleGrid columns={1} spacing={2} >
+
+      
+      <Card borderBottomWidth="10px" align="flex-start"  borderRadius="lg"   textAlign="left" direction={{ base: 'column', sm: 'row' } }
+        overflow='hidden' 
+        variant='outline'
+        position="sticky"
+        top="1"
+        zIndex="1"
+        padding="0.5em"
+        boxShadow="lg"
+        backgroundColor="gray.100"
+        >
+        <CardHeader fontSize="md" fontWeight="bold" width="10em">Item ID</CardHeader>
+        <CardHeader fontSize="md" fontWeight="bold" width="10em"> Description</CardHeader>
+        <CardBody paddingInline={10} textAlign="left" >
+          <HStack spacing={10} align="start">
+            <Text fontSize="md" width="10em">Category</Text>
+            <Text fontSize="md" width="10em">Make</Text>
+            <Text fontSize="md" width="10em"> Valuation</Text>
+          </HStack>
+        </CardBody>
+        <CardFooter paddingInline={10} >
+          <Stack direction="row" spacing={6} align="center">
+            <Text fontSize="md" width="10em">Actions</Text>
+          </Stack>
+        </CardFooter>
+      </Card>
+      {itemCards.map((itemCard) => (
+
+        <Card key={itemCard.itemId} borderWidth="1px" align="flex-start" borderRadius="sm" direction={{ base: 'column', sm: 'row' } }
+        overflow='hidden'
+        variant='outline'>
+          <CardHeader width="10em">{itemCard.itemId}
           
+          </CardHeader>
+          <CardHeader fontSize="md"  fontWeight="bold" width="10em">{itemCard.itemDescription} </CardHeader>
+          <CardBody paddingInline={10} textAlign="left" >
+            <HStack spacing={10} align="start">
+              <Text fontSize="md" width="10em">{itemCard.itemCategory}</Text>
+              <Text fontSize="md" width="10em">{itemCard.itemMake}</Text>
+              <Text fontSize="md" width="10em" >{itemCard.itemValuation}</Text>
+            </HStack>
+          </CardBody>
+
+
+          <CardFooter paddingInline={10} >
+            <Stack direction="row" spacing={6} align="center">
+            <Button colorScheme="blue" size="sm" variant="ghost" onClick={() => handleEdit(itemCard.itemId)}><EditIcon/>Edit</Button>
+              <Button colorScheme="red" size="sm" variant="ghost" onClick={() => handleDelete(itemCard.itemId)}><DeleteIcon/>Delete</Button>
+            </Stack>
            
-          </Form>
+          </CardFooter>
+        </Card>
 
+      ))}
+    </SimpleGrid>
+      </div>
+    </div>
 
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleEditSubmit}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-      </Modal>
-
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Item ID</th>
-            <th>Item Description</th>
-            <th>Item Category</th>
-            <th>Item Make</th>
-            <th>Item Valuation</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {itemCards.map((itemCard) => (
-            <tr key={itemCard.itemId}>
-              <td>{itemCard.itemId}</td>
-              <td>{itemCard.itemDescription}</td>
-              <td>{itemCard.itemCategory}</td>
-              <td>{itemCard.itemMake}</td>
-              <td>{itemCard.itemValuation}</td>
-              <td>
-                <Button variant="warning" onClick={() => handleEdit(itemCard.itemId)}>Edit</Button>
-                <Button variant="danger" onClick={() => handleDelete(itemCard.itemId)}>Delete</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </>
-
   )
 }
 
