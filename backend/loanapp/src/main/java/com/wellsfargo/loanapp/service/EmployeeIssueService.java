@@ -13,4 +13,5 @@ public interface EmployeeIssueService {
 
 	EmployeeIssueDetails addEmployeeIssue(String employeeId, String itemId, String loanCardId);
 
+    void updateReturnDate(String itemCategory, Integer newDurationOfYears);
 }

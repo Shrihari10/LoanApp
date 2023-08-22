@@ -64,10 +64,8 @@ public class LoanCardServiceImpl implements LoanCardService{
 				LoanCardMaster updatedLoanCard = optionalLoanCard.get();
 				updatedLoanCard.setDurationOfYears(loanCardDto.getDurationOfYears());
 				updatedLoanCard = loanCardRepository.save(updatedLoanCard);
-				
-				// @Pradeep review this and resolve 
-				
-//				employeeIssueService.updateReturnDate(updatedLoanCard.getLoanType(), updatedLoanCard.getDurationOfYears());
+
+				employeeIssueService.updateReturnDate(updatedLoanCard.getLoanType(), updatedLoanCard.getDurationOfYears());
 				
 				
 				
