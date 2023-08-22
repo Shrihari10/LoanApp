@@ -138,7 +138,6 @@ function AdminItemEdit() {
     </Modal>
     {/* card */}
     <div className="d-flex justify-content-center align-items-center " style={{paddingTop:'2em',padding:'2rem'}}>
-    <div className=" justify-content-center align-items-center " >
     <SimpleGrid columns={1} spacing={2} >
 
       
@@ -197,7 +196,6 @@ function AdminItemEdit() {
       ))}
     </SimpleGrid>
       </div>
-    </div>
 
     </>
   )
