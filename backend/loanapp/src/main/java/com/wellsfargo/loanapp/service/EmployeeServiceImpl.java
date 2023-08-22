@@ -20,16 +20,16 @@ import com.wellsfargo.loanapp.utils.Utils;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-	
+
 	@Autowired
 	EmployeeRepository employeeRepository;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@Autowired
 	AdminService adminService;
-	
+
 	public ResponseEntity<EmployeeDTO> saveEmployee(EmployeeDTO employeeDto)
 	{
 		employeeDto.setEmployeeID(Utils.generateUniqueId());
@@ -38,9 +38,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		EmployeeDTO createdEmployeeDto = modelMapper.map(createdEmployee, EmployeeDTO.class);
 		return ResponseGenerator.generateResponse(HttpStatus.CREATED, "Employee created successfully !!!", createdEmployeeDto);
 	}
-	
+
 public ResponseEntity<EmployeeDTO> employeeLogin(LoginModel loginModel) {
-		
+
 	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(loginModel.employeeID);
 	if (optionalEmployee.isPresent()) {
 		EmployeeMaster employeeMaster= optionalEmployee.get();
@@ -67,7 +67,7 @@ public ResponseEntity<EmployeeDTO> getEmployeeDetails(String employeeId) {
 }
 
 public ResponseEntity<EmployeeDTO> updateEmployeeDetails(String userName, String employeeId, EmployeeDTO employeeDto) {
-	
+
 	if(adminService.verfiyAdminUsername(userName))
 	{
 		Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
