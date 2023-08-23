@@ -3,6 +3,7 @@ package com.wellsfargo.loanapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wellsfargo.loanapp.dao.ItemRepository;
+import com.wellsfargo.loanapp.dto.ItemDTO;
 import com.wellsfargo.loanapp.model.ItemMaster;
-import com.wellsfargo.loanapp.model.LoanCardMaster;
 import com.wellsfargo.loanapp.service.ItemService;
 
 @RestController
@@ -28,27 +28,26 @@ public class ItemController {
 	public ItemService itemService;
 	
 	@GetMapping("/all")
-	public List<ItemMaster> getAllItems()
+	public ResponseEntity<List<ItemDTO>> getAllItems()
 	{
 		return itemService.getAllItems();
 	}
 	
 	@PostMapping("/add")
-	public ItemMaster saveItem(@RequestParam String userName, @RequestBody ItemMaster item)
+	public ResponseEntity<ItemDTO> saveItem(@RequestParam String userName, @RequestBody ItemDTO itemDto)
 	{
 	
-		ItemMaster createdItem = itemService.saveItem(userName, item);
-		return createdItem;
+		return itemService.saveItem(userName, itemDto);
 	}
 	
 	@PutMapping("/{itemId}")
-	public String updateItem(@RequestParam String userName, @PathVariable String itemId,@RequestBody ItemMaster item) {
-		return itemService.updateItem(userName,itemId,item);
+	public ResponseEntity<ItemDTO> updateItem(@RequestParam String userName, @PathVariable String itemId,@RequestBody ItemDTO itemDto) {
+		return itemService.updateItem(userName,itemId,itemDto);
 		
 	}
 	
 	@DeleteMapping("/{itemId}")
-	public String deleteItem(@RequestParam String userName, @PathVariable String itemId) {
+	public ResponseEntity<ItemDTO> deleteItem(@RequestParam String userName, @PathVariable String itemId) {
 		return itemService.deleteItem(userName,itemId);
 		
 	}

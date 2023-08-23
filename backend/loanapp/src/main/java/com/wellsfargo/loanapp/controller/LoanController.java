@@ -1,6 +1,7 @@
 package com.wellsfargo.loanapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class LoanController {
 	private LoanService loanService;
 	
 	@PostMapping("/apply")
-	public String applyLoan(@RequestBody ApplyLoanInputModel applyLoanInputModel)
+	public ResponseEntity<String> applyLoan(@RequestBody ApplyLoanInputModel applyLoanInputModel)
 	{
 		String employeeId = applyLoanInputModel.getEmployeeId();
 		String loanCardId = applyLoanInputModel.getLoanCardId();

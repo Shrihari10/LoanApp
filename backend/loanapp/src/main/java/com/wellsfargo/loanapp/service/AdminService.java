@@ -1,37 +1,13 @@
 package com.wellsfargo.loanapp.service;
 
-import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.wellsfargo.loanapp.dto.AdminDTO;
 
-import com.wellsfargo.loanapp.dao.AdminRepository;
-import com.wellsfargo.loanapp.model.Admin;
+public interface AdminService {
 
-@Service
-public class AdminService {
-	@Autowired
-	AdminRepository adminRepository;
-	
-	public String validateAdmin(Admin adminLogin) {
-		Optional<Admin> optionalAdmin = adminRepository.findById(adminLogin.getUsername());
-		if (optionalAdmin.isPresent()) {
-			Admin admin = optionalAdmin.get();
-			if (admin.getPassword().equals(adminLogin.getPassword())) {
-				return "Logging in successful";
-			} else {
-				return "Invalid password";
-			}
-		}
-		return "Invalid user";
-	}
-	
-	public boolean verfiyAdminUsername(String userName)
-	{
-		Optional<Admin> optionalAdmin = adminRepository.findById(userName);
-		if (optionalAdmin.isPresent()) {
-			return true;
-		}
-		return false;
-	}
+	ResponseEntity<AdminDTO> validateAdmin(AdminDTO adminDto);
+
+	boolean verfiyAdminUsername(String userName);
+
 }

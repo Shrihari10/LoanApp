@@ -11,8 +11,8 @@ const ViewItem = () => {
     useEffect(() => {
         axios.get(`http://localhost:8080/employee/${username}`)
             .then((res) => {
-                setDesignation(res.data.designation);
-                setDepartment(res.data.department);
+                setDesignation(res.data.body.designation);
+                setDepartment(res.data.body.department);
                 //console.log(res.data);
             })
             .catch((err) => {
@@ -24,8 +24,8 @@ const ViewItem = () => {
     useEffect(() => {
         const res = axios.get(`http://localhost:8080/employeeIssue/${username}/all`)
         .then((res) => {
-            setIssues(res.data);
-            console.log(res.data);
+            setIssues(res.data.body);
+            console.log(res.data.body);
         })
         .catch((err) => {
             console.log(err);

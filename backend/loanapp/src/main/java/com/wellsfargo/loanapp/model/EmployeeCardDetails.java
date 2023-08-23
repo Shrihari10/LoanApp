@@ -12,10 +12,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class EmployeeCardDetails {
 	
 	@Id
@@ -43,55 +48,4 @@ public class EmployeeCardDetails {
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date cardIssueDate;
-
-	
-	public String getEmployeeCardId() {
-		return employeeCardId;
-	}
-
-	public void setEmployeeCardId(String employeeCardId) {
-		this.employeeCardId = employeeCardId;
-	}
-
-	public EmployeeMaster getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(EmployeeMaster employee) {
-		this.employee = employee;
-	}
-
-	public LoanCardMaster getLoanCard() {
-		return loanCard;
-	}
-
-	public void setLoanCard(LoanCardMaster loanCard) {
-		this.loanCard = loanCard;
-	}
-
-	public Date getCardIssueDate() {
-		return cardIssueDate;
-	}
-
-	public void setCardIssueDate(Date cardIssueDate) {
-		this.cardIssueDate = cardIssueDate;
-	}
-
-	
-	
-
-	public EmployeeCardDetails(String employeeCardId, EmployeeMaster employee, LoanCardMaster loanCard,
-			Date cardIssueDate) {
-		super();
-		this.employeeCardId = employeeCardId;
-		this.employee = employee;
-		this.loanCard = loanCard;
-		this.cardIssueDate = cardIssueDate;
-	}
-
-	public EmployeeCardDetails() {
-		super();
-	}
-	
-	
 }

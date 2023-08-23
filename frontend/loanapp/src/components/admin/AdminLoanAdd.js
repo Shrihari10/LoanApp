@@ -14,7 +14,7 @@ function AdminLoanAdd() {
       loanType,
       durationOfYears
     }).then((res) => {
-      alert("new loan type created with id " + res.data.loanId);
+      alert("new loan type created with id " + res.data.body.loanId);
       navigate("/admin/loan/edit");
     }).catch((err) => {
       alert("error " + err);
