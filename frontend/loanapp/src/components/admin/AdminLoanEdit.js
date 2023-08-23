@@ -105,125 +105,125 @@ function AdminLoanEdit() {
   const handleClose = () => setShowEditForm(false);
   const handleOpen = () => setShowEditForm(true);
 
-  function CustomTable({ columns, data }) {
-    // Use the state and functions returned from useTable to build your UI
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      prepareRow,
-      page, // Instead of using 'rows', we'll use page,
-      // which has only the rows for the active page
+  // function CustomTable({ columns, data }) {
+  //   // Use the state and functions returned from useTable to build your UI
+  //   const {
+  //     getTableProps,
+  //     getTableBodyProps,
+  //     headerGroups,
+  //     prepareRow,
+  //     page, // Instead of using 'rows', we'll use page,
+  //     // which has only the rows for the active page
 
-      // The rest of these things are super handy, too ;)
-      canPreviousPage,
-      canNextPage,
-      pageOptions,
-      pageCount,
-      gotoPage,
-      nextPage,
-      previousPage,
-      setPageSize,
-      state: { pageIndex, pageSize }
-    } = useTable(
-      {
-        columns,
-        data,
-        initialState: { pageIndex: 2 }
-      },
-      usePagination
-      );
-    return (
-      <>
-        <Table {...getTableProps()}>
-          <Thead>
-            {headerGroups.map(headerGroup => (
-              <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <Th {...column.getHeaderProps()}>{column.render("Header")}</Th>
-                ))}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <Tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
-                  })}
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-        <Flex justifyContent="space-between" alignItems="center" my={5}>
-          <HStack>
-            <Button
-              onClick={() => gotoPage(0)}
-              disabled={!canPreviousPage}
-              leftIcon={<ChevronLeftIcon />}
-            >
-              {"<<"}
-            </Button>
-            <Button
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-              leftIcon={<ArrowLeftIcon />}
-            >
-              {"<"}
-            </Button>
-            <Button
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-              rightIcon={<ArrowRightIcon />}
-            >
-              {">"}
-            </Button>
-            <Button
-              onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
-              rightIcon={<ChevronRightIcon />}
-            >
-              {">>"}
-            </Button>
-          </HStack>
-          <Flex alignItems="center">
-            <Text mr={2}>Go to page:</Text>
-            <NumberInput
-              size="sm"
-              maxW={20}
-              value={pageIndex + 1}
-              onChange={value => {
-                const page = value ? Number(value) - 1 : 0;
-                gotoPage(page);
-              }}
-              min={1}
-            >
-              <NumberInputField />
-            </NumberInput>
-            <Select
-              size="sm"
-              maxW={20}
-              value={pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value));
-              }}
-            >
-              {[10, 20, 30, 40, 50].map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </Select>
-          </Flex>
-        </Flex>
+  //     // The rest of these things are super handy, too ;)
+  //     canPreviousPage,
+  //     canNextPage,
+  //     pageOptions,
+  //     pageCount,
+  //     gotoPage,
+  //     nextPage,
+  //     previousPage,
+  //     setPageSize,
+  //     state: { pageIndex, pageSize }
+  //   } = useTable(
+  //     {
+  //       columns,
+  //       data,
+  //       initialState: { pageIndex: 2 }
+  //     },
+  //     usePagination
+  //     );
+  //   return (
+  //     <>
+  //       <Table {...getTableProps()}>
+  //         <Thead>
+  //           {headerGroups.map(headerGroup => (
+  //             <Tr {...headerGroup.getHeaderGroupProps()}>
+  //               {headerGroup.headers.map(column => (
+  //                 <Th {...column.getHeaderProps()}>{column.render("Header")}</Th>
+  //               ))}
+  //             </Tr>
+  //           ))}
+  //         </Thead>
+  //         <Tbody {...getTableBodyProps()}>
+  //           {page.map((row, i) => {
+  //             prepareRow(row);
+  //             return (
+  //               <Tr {...row.getRowProps()}>
+  //                 {row.cells.map(cell => {
+  //                   return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
+  //                 })}
+  //               </Tr>
+  //             );
+  //           })}
+  //         </Tbody>
+  //       </Table>
+  //       <Flex justifyContent="space-between" alignItems="center" my={5}>
+  //         <HStack>
+  //           <Button
+  //             onClick={() => gotoPage(0)}
+  //             disabled={!canPreviousPage}
+  //             leftIcon={<ChevronLeftIcon />}
+  //           >
+  //             {"<<"}
+  //           </Button>
+  //           <Button
+  //             onClick={() => previousPage()}
+  //             disabled={!canPreviousPage}
+  //             leftIcon={<ArrowLeftIcon />}
+  //           >
+  //             {"<"}
+  //           </Button>
+  //           <Button
+  //             onClick={() => nextPage()}
+  //             disabled={!canNextPage}
+  //             rightIcon={<ArrowRightIcon />}
+  //           >
+  //             {">"}
+  //           </Button>
+  //           <Button
+  //             onClick={() => gotoPage(pageCount - 1)}
+  //             disabled={!canNextPage}
+  //             rightIcon={<ChevronRightIcon />}
+  //           >
+  //             {">>"}
+  //           </Button>
+  //         </HStack>
+  //         <Flex alignItems="center">
+  //           <Text mr={2}>Go to page:</Text>
+  //           <NumberInput
+  //             size="sm"
+  //             maxW={20}
+  //             value={pageIndex + 1}
+  //             onChange={value => {
+  //               const page = value ? Number(value) - 1 : 0;
+  //               gotoPage(page);
+  //             }}
+  //             min={1}
+  //           >
+  //             <NumberInputField />
+  //           </NumberInput>
+  //           <Select
+  //             size="sm"
+  //             maxW={20}
+  //             value={pageSize}
+  //             onChange={e => {
+  //               setPageSize(Number(e.target.value));
+  //             }}
+  //           >
+  //             {[10, 20, 30, 40, 50].map(pageSize => (
+  //               <option key={pageSize} value={pageSize}>
+  //                 Show {pageSize}
+  //               </option>
+  //             ))}
+  //           </Select>
+  //         </Flex>
+  //       </Flex>
 
 
-      </>
-    );
-  }
+  //     </>
+  //   );
+  // }
 
 return (
   <>
@@ -341,7 +341,7 @@ return (
         </Button>
       </Modal.Footer>
     </Modal>
-    <div className="d-flex justify-content-between align-items-center" style={{ paddingTop: '2em', padding: '2rem' }}>
+    <div className="d-flex justify-content-center align-items-center" style={{ paddingTop: '2em', padding: '2rem',width:'100%', }}>
       <SimpleGrid columns={1} spacing={10}>
         <Card borderBottomWidth="10px" align="flex-start" borderRadius="lg" textAlign="left" direction={{ base: 'column', sm: 'row' }}
           overflow='hidden'

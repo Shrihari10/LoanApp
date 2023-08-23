@@ -1,8 +1,16 @@
 import React from 'react'
-import { Button, Modal, Form } from 'react-bootstrap';
+import {  Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChakraProvider } from "@chakra-ui/react"
+import { extendTheme } from "@chakra-ui/react"
+import { Heading, Text } from "@chakra-ui/react"
+import { Card, CardBody, CardFooter, CardHeader } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
+import { SimpleGrid } from "@chakra-ui/react"
+import { Stack, HStack } from "@chakra-ui/react"
+import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons"
 
 function AdminEmployeeEdit() {
   const userName = sessionStorage.getItem("username");
@@ -93,137 +101,159 @@ function AdminEmployeeEdit() {
 
 
   return (
-    <div>
-      <h1>Employee List</h1>
-      <Modal show={showEditForm} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Employee</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={(e) => e.preventDefault()} className="p-3 bg-light align-items-center" style={{ width: '50%' }}>
+    
+    <>
+    <Modal show={showEditForm} onHide={handleClose}
+      zindex="2"
+      >
+      <Modal.Header closeButton>
+        <Modal.Title>Edit Employee</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={(e) => e.preventDefault()} className="p-3 bg-light align-items-center" style={{ width: '50%' }}>
+          <Form.Group controlId="id">
+            <Form.Label>Employee Id</Form.Label>
+            <Form.Control
+              type="text" 
+              value={editingEmployeeId}
+              disabled
+            />
 
-            <Form.Group controlId="id">
-              <Form.Label>Employee Id</Form.Label>
-              <Form.Control
-                type="text"
-                value={editingEmployeeId}
-                disabled
-              />
-            </Form.Group>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Name"
-                value={editingEmployeeName}
-                onChange={(e) => setEditingEmployeeName(e.target.value)}
-              />
-            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              value={editingEmployeeName}
+              onChange={(e) => setEditingEmployeeName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="designation">
+            <Form.Label>Designation</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Designation"
+              value={editingEmployeeDesignation}
+              onChange={(e) => setEditingEmployeeDesignation(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="department">
+            <Form.Label>Department</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Department"
+              value={editingEmployeeDepartment}
+              onChange={(e) => setEditingEmployeeDepartment(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="gender">
+               <Form.Label>Gender</Form.Label>
+               <div>
+                 <Form.Check
+                   type="radio"
+                   label="Male"
+                   name="gender"
+                   value="M"
+                   checked={editingEmployeeGender === 'M'}
+                   onChange={(e) => setEditingEmployeeGender(e.target.value)}
+                   inline
+                 />
+                 <Form.Check
+                   type="radio"
+                   label="Female"
+                   name="gender"
+                   value="F"
+                   checked={editingEmployeeGender === 'F'}
+                   onChange={(e) => setEditingEmployeeGender(e.target.value)}
+                   inline
+                 />
+               </div>
+             </Form.Group>
 
-            <Form.Group controlId="designation">
-              <Form.Label>Designation</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Designation"
-                value={editingEmployeeDesignation}
-                onChange={(e) => setEditingEmployeeDesignation(e.target.value)}
-              />
-            </Form.Group>
+             <Form.Group controlId="dob">
+               <Form.Label>Date of Birth</Form.Label>
+               <Form.Control
+                 type="date"
+                 value={editingEmployeeDob}
+                 onChange={(e) => setEditingEmployeeDob(e.target.value)}
+               />
+             </Form.Group>
 
-            <Form.Group controlId="department">
-              <Form.Label>Department</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Department"
-                value={editingEmployeeDepartment}
-                onChange={(e) => setEditingEmployeeDepartment(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="gender">
-              <Form.Label>Gender</Form.Label>
-              <div>
-                <Form.Check
-                  type="radio"
-                  label="Male"
-                  name="gender"
-                  value="M"
-                  checked={editingEmployeeGender === 'M'}
-                  onChange={(e) => setEditingEmployeeGender(e.target.value)}
-                  inline
-                />
-                <Form.Check
-                  type="radio"
-                  label="Female"
-                  name="gender"
-                  value="F"
-                  checked={editingEmployeeGender === 'F'}
-                  onChange={(e) => setEditingEmployeeGender(e.target.value)}
-                  inline
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="dob">
-              <Form.Label>Date of Birth</Form.Label>
-              <Form.Control
-                type="date"
-                value={editingEmployeeDob}
-                onChange={(e) => setEditingEmployeeDob(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="doj">
-              <Form.Label>Date of Joining</Form.Label>
-              <Form.Control
-                type="date"
-                value={editingEmployeeDoj}
-                onChange={(e) => setEditingEmployeeDoj(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-          <Button variant="primary" onClick={handleEditSubmit}>Save Changes</Button>
-        </Modal.Footer>
+             <Form.Group controlId="doj">
+               <Form.Label>Date of Joining</Form.Label>
+               <Form.Control
+                 type="date"
+                 value={editingEmployeeDoj}
+                 onChange={(e) => setEditingEmployeeDoj(e.target.value)}
+               />
+             </Form.Group>
+           </Form>
+         </Modal.Body>
+         <Modal.Footer>
+           <Button variant="ghost" colorScheme="red" onClick={handleClose}> <CloseIcon/> Close</Button>
+           <Button variant="ghost" colorScheme="green"onClick={handleEditSubmit}> <CheckIcon/> Save Changes</Button>
+         </Modal.Footer>
       </Modal>
 
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
-            <th>Designation</th>
-            <th>Department</th>
-            <th>Gender</th>
-            <th>Date of Birth</th>
-            <th>Date of Joining</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
+      <div className=" justify-content-center align-items-center"style={{ paddingTop: '2em',paddingLeft:'1rem',width: '90%' }}>
+        <SimpleGrid columns={1} spacing={1} >
+        <Card borderBottomWidth="1px" align="flex-start" borderRadius="lg" textAlign="left" direction={{ base: 'column', sm: 'row' }}
+          overflow='hidden'
+          variant='outline'
+          position="sticky"
+          top="1"
+          zIndex="1"
+          padding="0.5em"
+          boxShadow="lg"
+          backgroundColor="gray.100"
+        >
+          <CardHeader
+            fontSize="md"
+            fontWeight="bold"
+            width="9em"
+            >
+            Employee ID
+            </CardHeader>
+            <CardBody fontSize="md" fontWeight="semibold" width="4em">
+              Employee Details
+            </CardBody>
+            
+          </Card>
           {employees.map((employee) => (
-            <tr key={employee.employeeID}>
-              <td>{employee.employeeID}</td>
-              <td>{employee.employeeName}</td>
-              <td>{employee.designation}</td>
-              <td>{employee.department}</td>
-              <td>{employee.gender}</td>
-              <td>{employee.dateOfBirth}</td>
-              <td>{employee.dateOfJoining}</td>
-              <td>
-                <Button variant='primary' onClick={() => handleEdit(employee.employeeID)}>Edit</Button>
-                <Button variant='danger' onClick={() => handleDelete(employee.employeeID)}>Delete</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+            <Card borderBottomWidth="1px" align="left" borderRadius="lg" textAlign="left" direction={{ base: 'column', sm: 'row' }}
+              
+              variant='outline'
+              >
+              <CardHeader
+                fontSize="md"
+                fontWeight="bold"
+                width="7em"
+                >
+                {employee.employeeID}
+              </CardHeader>
+              <CardBody fontSize="md"  width="2em">
+                <Text> Employee Name: {employee.employeeName}</Text>  
+                <Text> Designation: {employee.designation}</Text>
+                <Text> Department: {employee.department}</Text>
+              </CardBody>
+              <CardBody fontSize="md"  width="2em">
+                <Text> Gender: {employee.gender}</Text>
+                <Text> Date of Birth: {employee.dateOfBirth}</Text>
+                <Text> Date of Joining: {employee.dateOfJoining}</Text>
+              </CardBody>
+              <CardFooter fontSize="md" fontWeight="semibold">
+                <HStack >
+                  <Button variant='ghost' colorScheme="blue" onClick={() => handleEdit(employee.employeeID)}> <EditIcon/> Edit</Button>
+                  <Button variant='ghost' colorScheme="red" onClick={() => handleDelete(employee.employeeID)}> <DeleteIcon/> Delete</Button>
+                </HStack>
+              </CardFooter>
 
-      </table>
+              </Card>
+          ))}
+        </SimpleGrid>
       </div>
+    </>
   )
 }
 
