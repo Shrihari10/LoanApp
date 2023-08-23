@@ -14,7 +14,7 @@ import com.wellsfargo.loanapp.service.AdminService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/admin")
+@RequestMapping("/api/v1/admin")
 public class AdminController {
 	@Autowired
 	AdminService adminService;

@@ -21,7 +21,7 @@ import com.wellsfargo.loanapp.service.ItemService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/item")
+@RequestMapping("/api/v1/item")
 public class ItemController {
 	
 	@Autowired

@@ -17,7 +17,7 @@ import com.wellsfargo.loanapp.service.EmployeeCardService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/employeeCard")
+@RequestMapping("/api/v1/employeeCard")
 public class EmployeeCardController {
 	
 	@Autowired

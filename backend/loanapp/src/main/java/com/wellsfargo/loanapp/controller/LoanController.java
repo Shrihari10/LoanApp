@@ -13,7 +13,7 @@ import com.wellsfargo.loanapp.service.LoanService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/loan")
+@RequestMapping("/api/v1/loan")
 public class LoanController {
 	
 	@Autowired
