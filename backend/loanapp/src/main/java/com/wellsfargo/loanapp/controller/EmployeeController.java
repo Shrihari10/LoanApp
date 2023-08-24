@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,16 +39,16 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 	
-	@PostMapping("/add")
-	public ResponseEntity<EmployeeDTO> saveEmployee(@Valid @RequestBody EmployeeDTO employeeDto)
-	{
-		return employeeService.saveEmployee(employeeDto);
-	}
+//	@PostMapping("/add")
+//	public ResponseEntity<EmployeeDTO> saveEmployee(@Valid @RequestBody EmployeeDTO employeeDto)
+//	{
+//		return employeeService.saveEmployee(employeeDto);
+//	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<EmployeeDTO> employeeLogin(@RequestBody LoginModel loginModel) {
-		return employeeService.employeeLogin(loginModel);
-	}
+//	@PostMapping("/login")
+//	public ResponseEntity<EmployeeDTO> employeeLogin(@RequestBody LoginModel loginModel) {
+//		return employeeService.employeeLogin(loginModel);
+//	}
 	
 	@GetMapping("/{employeeId}")
 	public ResponseEntity<EmployeeDTO> getEmployeeDetails(@RequestBody @PathVariable("employeeId") String employeeId ) {
@@ -55,20 +57,20 @@ public class EmployeeController {
 	}
 	
 	@PutMapping("/{employeeId}")
-	public ResponseEntity<EmployeeDTO> updateEmployeeDetails(@RequestParam String userName, @PathVariable String employeeId,@RequestBody EmployeeDTO employeeDto) {
-		return employeeService.updateEmployeeDetails(userName,employeeId,employeeDto);
+	public ResponseEntity<EmployeeDTO> updateEmployeeDetails(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String employeeId, @RequestBody EmployeeDTO employeeDto) {
+		return employeeService.updateEmployeeDetails(userDetails,employeeId,employeeDto);
 		
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(@RequestParam String userName) {
-		return employeeService.getAllEmployeeDetails(userName);
+	public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(@AuthenticationPrincipal UserDetails userDetails) {
+		return employeeService.getAllEmployeeDetails(userDetails);
 		
 	}
 	
 	@DeleteMapping("{employeeId}")
-	public ResponseEntity<EmployeeDTO> deleteEmployee(@RequestParam String userName, @PathVariable String employeeId) {
-		return employeeService.deleteEmployee(userName,employeeId);
+	public ResponseEntity<EmployeeDTO> deleteEmployee(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String employeeId) {
+		return employeeService.deleteEmployee(userDetails,employeeId);
 		
 	}
 	 

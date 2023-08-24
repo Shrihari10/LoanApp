@@ -19,8 +19,8 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
-	@PostMapping("/login")
-	public ResponseEntity<AdminDTO> adminLogin(@RequestBody AdminDTO adminDto) {
-		return adminService.validateAdmin(adminDto);
-	}
+//	@PostMapping("/login")
+//	public ResponseEntity<AdminDTO> adminLogin(@RequestBody AdminDTO adminDto) {
+//		return adminService.validateAdmin(adminDto);
+//	}
 }

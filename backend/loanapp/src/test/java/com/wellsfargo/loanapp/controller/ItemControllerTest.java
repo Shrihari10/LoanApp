@@ -63,8 +63,10 @@ public class ItemControllerTest {
 		ResponseEntity<List<ItemDTO>> response = ResponseGenerator.generateResponse(HttpStatus.OK, null,itemList);
 		
 		when(itemService.getAllItems()).thenReturn(response);
+
+		String bearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMDgxNTciLCJpYXQiOjE2OTI4NzU5MzEsImV4cCI6MTY5Mjk2MjMzMX0.iBe3ePAjjwlZEvnjS6RJ2B0gstbXgWIlRllrkh3e2-Q";
 		
-		MvcResult result = mvc.perform(get("/item/all").accept(MediaType.APPLICATION_JSON))
+		MvcResult result = mvc.perform(get("/item/all").accept(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + bearerToken))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(content().json(objectMapper.writeValueAsString(response.getBody())))

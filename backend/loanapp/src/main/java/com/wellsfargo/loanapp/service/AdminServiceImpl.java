@@ -1,11 +1,16 @@
 package com.wellsfargo.loanapp.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.wellsfargo.loanapp.utils.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.AdminRepository;
@@ -34,8 +39,16 @@ public class AdminServiceImpl implements AdminService{
 		return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Login Failed : Invalid Admin Username", null);
 	}
 	
-	public boolean verfiyAdminUsername(String userName)
+//	public boolean verfiyAdminUsername(String userName)
+//	{
+//		return adminRepository.findById(userName).isPresent();
+//    }
+
+	public boolean verifyAdmin(UserDetails userDetails)
 	{
-		return adminRepository.findById(userName).isPresent();
-    }
+		String employeeId = userDetails.getUsername();
+    	List<? extends GrantedAuthority> role = userDetails.getAuthorities().stream().toList();
+		return role.get(0).toString().equals(Role.ADMIN.name());
+	}
+
 }

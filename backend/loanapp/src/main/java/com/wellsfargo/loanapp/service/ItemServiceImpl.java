@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.ItemRepository;
@@ -35,8 +36,8 @@ public class ItemServiceImpl implements ItemService {
 		return ResponseGenerator.generateResponse(HttpStatus.OK, null, itemsDTO);
 	}
 
-	public ResponseEntity<ItemDTO> saveItem(String userName, ItemDTO itemDto) {
-		if(adminService.verfiyAdminUsername(userName))
+	public ResponseEntity<ItemDTO> saveItem(UserDetails userDetails, ItemDTO itemDto) {
+		if(adminService.verifyAdmin(userDetails))
 		{
 			itemDto.setItemId(Utils.generateUniqueId());
 			ItemMaster item = modelMapper.map(itemDto, ItemMaster.class);
@@ -47,8 +48,8 @@ public class ItemServiceImpl implements ItemService {
 		return  ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorised access: Invalid Admin Username", null);        
 	}
 
-	public ResponseEntity<ItemDTO> updateItem(String userName, String itemId, ItemDTO itemDto) {
-		if(adminService.verfiyAdminUsername(userName))
+	public ResponseEntity<ItemDTO> updateItem(UserDetails userDetails, String itemId, ItemDTO itemDto) {
+		if(adminService.verifyAdmin(userDetails))
 		{
 			Optional<ItemMaster> optionalItem = itemRepository.findById(itemId);
 			if (optionalItem.isPresent()) {
@@ -66,8 +67,8 @@ public class ItemServiceImpl implements ItemService {
 		return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorised access: Invalid Admin Username", null);  
 	}
 
-	public ResponseEntity<ItemDTO> deleteItem(String userName, String itemId) {
-		if(adminService.verfiyAdminUsername(userName))
+	public ResponseEntity<ItemDTO> deleteItem(UserDetails userDetails, String itemId) {
+		if(adminService.verifyAdmin(userDetails))
 		{
 			Optional<ItemMaster> optionalItem = itemRepository.findById(itemId);
 			if (optionalItem.isPresent()) {

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,21 +36,21 @@ public class ItemController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<ItemDTO> saveItem(@RequestParam String userName, @RequestBody ItemDTO itemDto)
+	public ResponseEntity<ItemDTO> saveItem(@AuthenticationPrincipal UserDetails userDetails, @RequestBody ItemDTO itemDto)
 	{
 	
-		return itemService.saveItem(userName, itemDto);
+		return itemService.saveItem(userDetails, itemDto);
 	}
 	
 	@PutMapping("/{itemId}")
-	public ResponseEntity<ItemDTO> updateItem(@RequestParam String userName, @PathVariable String itemId,@RequestBody ItemDTO itemDto) {
-		return itemService.updateItem(userName,itemId,itemDto);
+	public ResponseEntity<ItemDTO> updateItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String itemId,@RequestBody ItemDTO itemDto) {
+		return itemService.updateItem(userDetails,itemId,itemDto);
 		
 	}
 	
 	@DeleteMapping("/{itemId}")
-	public ResponseEntity<ItemDTO> deleteItem(@RequestParam String userName, @PathVariable String itemId) {
-		return itemService.deleteItem(userName,itemId);
+	public ResponseEntity<ItemDTO> deleteItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String itemId) {
+		return itemService.deleteItem(userDetails,itemId);
 		
 	}
 	
