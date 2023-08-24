@@ -37,6 +37,8 @@ const AdminItemAdd = () => {
     }
     if(!item.itemValuation|| item.itemValuation===''){
       newError.itemValuationError = 'Item Valuation is Required';
+    }else if(isNaN(item.itemValuation)){
+      newError.itemValuationError = 'Item Valuation should be a number';
     }
 
     setError(newError);
@@ -58,8 +60,13 @@ const AdminItemAdd = () => {
       }, []);
 
   const handleChange = (e) => {
-    setItem({ ...item, [e.target.name]: e.target.value });
-  };
+    const { id, value } = e.target;
+    setItem((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  }
+
 
   const handleSubmit = (e) => {
 
@@ -95,6 +102,7 @@ const AdminItemAdd = () => {
             {loanCards.map((itemCategory) => (
               <option value={itemCategory}>{itemCategory}</option>
             ))}
+            isInvalid={error.itemCategoryError}
           </Form.Control>
           <Form.Control.Feedback type="invalid">
             {error.itemCategoryError}
@@ -109,7 +117,7 @@ const AdminItemAdd = () => {
             value={item.itemDescription}
             onChange={handleChange}
             error={error.itemDescriptionError}
-           
+           isInvalid={error.itemDescriptionError}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
             {error.itemDescriptionError}
@@ -123,7 +131,7 @@ const AdminItemAdd = () => {
             value={item.itemMake}
             onChange={handleChange}
             error={error.itemMakeError}
-           
+            isInvalid={error.itemMakeError}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
             {error.itemMakeError}
@@ -137,7 +145,7 @@ const AdminItemAdd = () => {
             value={item.itemValuation}
             onChange={handleChange}
             error={error.itemValuationError}
-           
+            isInvalid={error.itemValuationError}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
             {error.itemValuationError}

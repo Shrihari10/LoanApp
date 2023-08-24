@@ -10,6 +10,32 @@ function AdminLoanAdd() {
   const [durationOfYears, setDurationOfYears] = useState("");
   const navigate = useNavigate();
 
+  const [error, setError] = useState({
+    loanTypeError: '',
+    durationOfYearsError: ''
+  });
+
+
+  const validate = () => {
+    let newError = {
+      loanTypeError: '',
+      durationOfYearsError: ''
+    };
+
+    if(!loanType||loanType===''){
+      newError.loanTypeError = 'Loan Type is Required';
+    }
+    if(!durationOfYears || durationOfYears===''){
+      newError.durationOfYearsError = 'Duration of Years is Required';
+    }else if(isNaN(durationOfYears)){
+      newError.durationOfYearsError = 'Duration of Years should be a number';
+    }
+
+    setError(newError);
+    console.log(newError);
+    return Object.values(newError).every((x) => x === '');
+  };
+
   const sendAddLoanCardRequest = () => {
     addLoanCard(userName, {
       loanType,
@@ -24,6 +50,10 @@ function AdminLoanAdd() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const isValid = validate();
+    if(!isValid) {
+      return;
+    }
     sendAddLoanCardRequest();
   }
 
@@ -39,7 +69,11 @@ function AdminLoanAdd() {
             type="text"
             value={loanType}
             onChange={(e) => setLoanType(e.target.value)}
+            isInvalid={error.loanTypeError}
           />
+          <Form.Control.Feedback type="invalid">
+            {error.loanTypeError}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="durationOfYears">
@@ -48,7 +82,12 @@ function AdminLoanAdd() {
             type="number"
             value={durationOfYears}
             onChange={(e) => setDurationOfYears(e.target.value)}
+            isInvalid={error.durationOfYearsError}
           />
+          <Form.Control.Feedback type="invalid">
+            {error.durationOfYearsError}
+          </Form.Control.Feedback>
+          
         </Form.Group>
         
 
