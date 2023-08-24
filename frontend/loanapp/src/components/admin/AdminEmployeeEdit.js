@@ -11,6 +11,7 @@ import { SimpleGrid } from "@chakra-ui/react"
 import { Stack, HStack } from "@chakra-ui/react"
 import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons"
 import { deleteEmployee, editEmployee, getAllEmployees } from '../../api/service';
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 function AdminEmployeeEdit() {
   const userName = sessionStorage.getItem("username");
@@ -99,7 +100,7 @@ function AdminEmployeeEdit() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   }
   
@@ -108,11 +109,11 @@ function AdminEmployeeEdit() {
 
     deleteEmployee(userName, id)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllEmployee();
       })
       .catch((err) => {
-        alert("Error: " + err);
+        failureToast("Error: " + err);
 
       });
   }
@@ -121,7 +122,7 @@ function AdminEmployeeEdit() {
 
     const filteredEmployee = employees.filter((employee) => id === employee.employeeID);
     if(filteredEmployee.length == 0){
-      alert("Invalid Employee selected to edit!")
+      failureToast("Invalid Employee selected to edit!")
     }
 
     setEditingEmployee(filteredEmployee[0]);
@@ -145,12 +146,12 @@ function AdminEmployeeEdit() {
     const requestBody = editingEmployee;
     editEmployee(userName, editingEmployee.employeeID, requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllEmployee();
         handleClose();
       })
       .catch((err) => {
-        alert("Error: " + err);
+        failureToast("Error: " + err);
 
       });
   }

@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from 'react'
+import axios from "axios";
+import { successToast, failureToast } from "../utils/ToastUtils";
 import { getAllEmployeeIssues, getEmployee } from "../api/service";
+
 
 const ViewItem = () => {
   const [issues, setIssues] = useState([]);
@@ -15,7 +18,7 @@ const ViewItem = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   }, []);
 
@@ -27,7 +30,7 @@ const ViewItem = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   }, []);
 

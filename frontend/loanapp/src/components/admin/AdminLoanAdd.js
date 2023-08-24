@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Form, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { addLoanCard } from '../../api/service';
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 function AdminLoanAdd() {
   const userName = sessionStorage.getItem("username");
@@ -14,10 +15,10 @@ function AdminLoanAdd() {
       loanType,
       durationOfYears
     }).then((res) => {
-      alert("new loan type created with id " + res.data.body.loanId);
+      successToast("new loan type created with id " + res.data.body.loanId);
       navigate("/admin/loan/edit");
     }).catch((err) => {
-      alert("error " + err);
+      failureToast("error " + err);
     });
   }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Form,Button, Container } from 'react-bootstrap'
 import { Link,useParams } from 'react-router-dom'
 import { addItem, getAllLoanCards } from '../../api/service';
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 const AdminItemAdd = () => {
   const [username, setUsername] = useState(sessionStorage.getItem("username"));
@@ -52,7 +53,7 @@ const AdminItemAdd = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
       }, []);
 
@@ -70,11 +71,11 @@ const AdminItemAdd = () => {
       .then((response) => {
         // console.log(response);
         // console.log(response.data);
-        alert("Item Added Successfully");
+        successToast("Item Added Successfully");
       })
       .catch((error) => {
         console.log(error);
-        alert("Item Addition Failed");
+        failureToast("Item Addition Failed");
       });
     }
     else {

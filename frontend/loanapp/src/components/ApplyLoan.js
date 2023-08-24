@@ -3,6 +3,7 @@ import { Button, Form, Container } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { Navigate } from "react-router-dom";
 import { applyLoan, getAllItems, getAllLoanCards } from "../api/service";
+import {successToast, failureToast} from '../utils/ToastUtils';
 
 function ApplyLoan() {
   let [loanCards, setLoanCards] = useState([]);
@@ -28,7 +29,7 @@ function ApplyLoan() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   }, []);
 
@@ -39,7 +40,7 @@ function ApplyLoan() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   }, []);
 
@@ -109,7 +110,7 @@ function ApplyLoan() {
       (obj) => obj["loanType"] === selectedItemCategory
     );
     if (filteredLoanCards.length == 0) {
-      alert("please choose category");
+      failureToast("please choose category");
       return;
     }
     const loanCardId = filteredLoanCards[0].loanId;
@@ -121,7 +122,7 @@ function ApplyLoan() {
         obj["itemDescription"] === selectedItemDescription
     );
     if (filteredItems.length == 0) {
-      alert("please choose all fields");
+      failureToast("please choose all fields");
       return;
     }
     let itemId = filteredItems[0].itemId;
@@ -134,11 +135,12 @@ function ApplyLoan() {
 
     applyLoan(requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         navigate(`/loan/all`);
       })
       .catch((err) => {
         console.log(err);
+        failureToast("Error encountered: "+ err);
       });
   };
 

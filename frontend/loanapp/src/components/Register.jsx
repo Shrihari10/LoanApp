@@ -3,6 +3,8 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { addEmployee } from "../api/service";
 
+import {successToast, failureToast} from '../utils/ToastUtils';
+
 const Register = ({ user, loginUser }) => {
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
@@ -100,13 +102,13 @@ const Register = ({ user, loginUser }) => {
 
     addEmployee(requestBody)
       .then((res) => {
-        alert("Registered new employee with Id:" + res.data.body.employeeID);
+        successToast("Registered new employee with Id: " + res.data.body.employeeID);
         navigate("/login");
         console.log(JSON.stringify(res.data.body));
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error Encountered: " + err);
       });
   };
 
