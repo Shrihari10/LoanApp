@@ -108,7 +108,7 @@ const Register = ({ user, loginUser }) => {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error Encountered: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 

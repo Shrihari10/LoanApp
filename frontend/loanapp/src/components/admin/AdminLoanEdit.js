@@ -63,7 +63,7 @@ function AdminLoanEdit() {
         })
         .catch((err) => {
             console.log(err);
-            failureToast("Error: " + err);
+            failureToast("Error encountered: " + err.response.data.message);
         });
   }
 
@@ -74,7 +74,7 @@ function AdminLoanEdit() {
       fetchAllLoanCards();
     }).catch((err) => {
       console.log(err);
-      failureToast("Error: " + err);
+      failureToast("Error encountered: " + err.response.data.message);
     });
   }
 
@@ -120,7 +120,7 @@ function AdminLoanEdit() {
         handleClose();
       }).catch((err) => {
         console.log(err);
-        failureToast("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
 

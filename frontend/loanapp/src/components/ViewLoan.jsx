@@ -20,7 +20,7 @@ const ViewLoan = ({ loginUser }) => {
             })
             .catch((err) => {
                 console.log(err);
-                failureToast("Error encountered: " + err);
+                failureToast("Error encountered: " + err.response.data.message);
             });
     }, []);
 
@@ -41,7 +41,7 @@ const ViewLoan = ({ loginUser }) => {
             })
             .catch((err) => {
                 console.log(err);
-                failureToast("Error: " + err);
+                failureToast("Error encountered: " + err.response.data.message);
             });
     };
 

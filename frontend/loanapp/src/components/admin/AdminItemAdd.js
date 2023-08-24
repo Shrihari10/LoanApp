@@ -55,7 +55,7 @@ const AdminItemAdd = () => {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
       }, []);
 
