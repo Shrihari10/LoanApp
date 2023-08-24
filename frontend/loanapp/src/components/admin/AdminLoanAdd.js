@@ -1,7 +1,8 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Form, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import { addLoanCard } from '../../api/service';
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 function AdminLoanAdd() {
   const userName = sessionStorage.getItem("username");
@@ -9,21 +10,51 @@ function AdminLoanAdd() {
   const [durationOfYears, setDurationOfYears] = useState("");
   const navigate = useNavigate();
 
-  const addLoanCard = () => {
-    axios.post(`http://localhost:8080/loanCard/add?userName=${userName}`, {
+  const [error, setError] = useState({
+    loanTypeError: '',
+    durationOfYearsError: ''
+  });
+
+
+  const validate = () => {
+    let newError = {
+      loanTypeError: '',
+      durationOfYearsError: ''
+    };
+
+    if(!loanType||loanType===''){
+      newError.loanTypeError = 'Loan Type is Required';
+    }
+    if(!durationOfYears || durationOfYears===''){
+      newError.durationOfYearsError = 'Duration of Years is Required';
+    }else if(isNaN(durationOfYears)){
+      newError.durationOfYearsError = 'Duration of Years should be a number';
+    }
+
+    setError(newError);
+    console.log(newError);
+    return Object.values(newError).every((x) => x === '');
+  };
+
+  const sendAddLoanCardRequest = () => {
+    addLoanCard(userName, {
       loanType,
       durationOfYears
     }).then((res) => {
-      alert("new loan type created with id " + res.data.body.loanId);
+      successToast("new loan type created with id " + res.data.body.loanId);
       navigate("/admin/loan/edit");
     }).catch((err) => {
-      alert("error " + err);
+      failureToast("Error encountered: " + err.response.data.message);
     });
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addLoanCard();
+    const isValid = validate();
+    if(!isValid) {
+      return;
+    }
+    sendAddLoanCardRequest();
   }
 
   return (
@@ -38,7 +69,11 @@ function AdminLoanAdd() {
             type="text"
             value={loanType}
             onChange={(e) => setLoanType(e.target.value)}
+            isInvalid={error.loanTypeError}
           />
+          <Form.Control.Feedback type="invalid">
+            {error.loanTypeError}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="durationOfYears">
@@ -47,7 +82,12 @@ function AdminLoanAdd() {
             type="number"
             value={durationOfYears}
             onChange={(e) => setDurationOfYears(e.target.value)}
+            isInvalid={error.durationOfYearsError}
           />
+          <Form.Control.Feedback type="invalid">
+            {error.durationOfYearsError}
+          </Form.Control.Feedback>
+          
         </Form.Group>
         
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react'
-import axios from 'axios';
 import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ChakraProvider } from "@chakra-ui/react"
@@ -10,6 +9,7 @@ import { Button } from "@chakra-ui/react"
 import { SimpleGrid } from "@chakra-ui/react"
 import { Stack, HStack } from "@chakra-ui/react"
 import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons"
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 import {
   Table,
@@ -34,6 +34,7 @@ import {
   ChevronRightIcon,
   ChevronLeftIcon
 } from "@chakra-ui/icons";
+import { deleteLoanCard, editLoanCard, getAllLoanCards } from '../../api/service';
 
 
 
@@ -55,32 +56,32 @@ function AdminLoanEdit() {
 }, []);
 
   const fetchAllLoanCards = () => {
-    axios.get(`http://localhost:8080/loanCard/all`)
+    getAllLoanCards()
         .then((res) => {
             setLoanCards(res.data.body);
             //console.log(res.data);
         })
         .catch((err) => {
             console.log(err);
-            alert("Error: " + err);
+            failureToast("Error encountered: " + err.response.data.message);
         });
   }
 
   const handleDelete = (loanId) => {
-    axios.delete(`http://localhost:8080/loanCard/${loanId}?userName=${userName}`)
+    deleteLoanCard(userName, loanId)
     .then((res) => {
-      alert(res.data.message);
+      successToast(res.data.message);
       fetchAllLoanCards();
     }).catch((err) => {
       console.log(err);
-      alert("Error: " + err);
+      failureToast("Error encountered: " + err.response.data.message);
     });
   }
 
   const handleEdit = (loanId) => {
     const filteredLoanCards = loanCards.filter((loanCard) => loanId == loanCard.loanId);
     if (filteredLoanCards.length == 0) {
-      alert("invalid loan card selected to edit");
+      failureToast("invalid loan card selected to edit");
     }
     const editingLoanCard = filteredLoanCards[0];
     setEditingLoanId(editingLoanCard.loanId);
@@ -112,14 +113,14 @@ function AdminLoanEdit() {
         loanType: editingLoanType,
         durationOfYears: editingDurationOfYears
       };
-      axios.put(`http://localhost:8080/loanCard/${editingLoanId}?userName=${userName}`, requestBody)
+      editLoanCard(userName, editingLoanId, requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllLoanCards();
         handleClose();
       }).catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
 
