@@ -52,11 +52,13 @@ public class AuthenticationService {
     EmployeeMaster createdEmployee = employeeRepository.save(employee);
     var jwtToken = jwtService.generateToken(createdEmployee);
     var refreshToken = jwtService.generateRefreshToken(createdEmployee);
-    System.out.println(jwtToken+" "+refreshToken);
     saveUserToken(createdEmployee, jwtToken);
+    EmployeeDTO createdEmployeeDto = modelMapper.map(createdEmployee,EmployeeDTO.class);
+    createdEmployeeDto.setPassword("");
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .employee(createdEmployeeDto)
         .build();
   }
 
@@ -67,15 +69,18 @@ public class AuthenticationService {
                 loginModel.getPassword()
         )
     );
-    var employee = employeeRepository.findById(loginModel.getEmployeeID())
+    EmployeeMaster employee = employeeRepository.findById(loginModel.getEmployeeID())
         .orElseThrow();
     var jwtToken = jwtService.generateToken(employee);
     var refreshToken = jwtService.generateRefreshToken(employee);
     revokeAllUserTokens(employee);
     saveUserToken(employee, jwtToken);
+    EmployeeDTO employeeDto = modelMapper.map(employee,EmployeeDTO.class);
+    employeeDto.setPassword("");
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .employee(employeeDto)
         .build();
   }
 

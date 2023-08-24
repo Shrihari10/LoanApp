@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.wellsfargo.loanapp.utils.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -54,9 +55,11 @@ public class EmployeeMaster implements UserDetails {
 //	@Column()
 	private String password;
 
+	private Role role;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("employee"));
+		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 
 	@Override

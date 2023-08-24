@@ -2,6 +2,7 @@ package com.wellsfargo.loanapp.dto;
 
 import java.time.LocalDate;
 
+import com.wellsfargo.loanapp.utils.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -41,5 +42,7 @@ public class EmployeeDTO {
 	
 	@NotBlank(message = "password cannot be blank")
 	private String password;
+
+	private Role role;
 
 }

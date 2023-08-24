@@ -57,6 +57,7 @@ public ResponseEntity<EmployeeDTO> employeeLogin(LoginModel loginModel) {
 public ResponseEntity<EmployeeDTO> getEmployeeDetails(String employeeId) {
 	// TODO Auto-generated method stub
 	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
+	System.out.println(optionalEmployee.get());
 	if (optionalEmployee.isPresent()) {
 		EmployeeMaster employeeMaster= optionalEmployee.get();
 		EmployeeDTO employeeDto = modelMapper.map(employeeMaster, EmployeeDTO.class);
