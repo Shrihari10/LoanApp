@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, Form } from "react-bootstrap";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //import chakra ui
@@ -13,6 +12,8 @@ import { Button } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { Stack, HStack } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
+import { deleteItem, editItem, getAllItems } from "../../api/service";
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 function AdminItemEdit() {
   const userName = sessionStorage.getItem("username");
@@ -32,15 +33,14 @@ function AdminItemEdit() {
   });
 
   const fetchAllItemCards = () => {
-    axios
-      .get(`http://localhost:8080/item/all`)
+    getAllItems()
       .then((res) => {
         // console.log(res.data);
         setItemCards(res.data.body);
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 
@@ -49,15 +49,14 @@ function AdminItemEdit() {
   }, []);
 
   const handleDelete = (itemId) => {
-    axios
-      .delete(`http://localhost:8080/item/${itemId}?userName=${userName}`)
+    deleteItem(userName, itemId)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllItemCards();
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 
@@ -66,7 +65,7 @@ function AdminItemEdit() {
       (itemCard) => itemId == itemCard.itemId
     );
     if (filteredItemCards.length == 0) {
-      alert("invalid item card selected to edit");
+      failureToast("invalid item card selected to edit");
     }
     const editingItemCard = filteredItemCards[0];
     setEditingItemId(editingItemCard.itemId);
@@ -115,19 +114,19 @@ function AdminItemEdit() {
       itemMake: editingItemMake,
       itemValuation: editingItemValuation,
     };
-    axios
-      .put(
-        `http://localhost:8080/item/${editingItemId}?userName=${userName}`,
+    editItem(
+        userName,
+        editingItemId,
         requestBody
       )
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllItemCards();
         handleClose();
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 

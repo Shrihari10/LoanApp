@@ -36,10 +36,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	public boolean verfiyAdminUsername(String userName)
 	{
-		Optional<Admin> optionalAdmin = adminRepository.findById(userName);
-		if (optionalAdmin.isPresent()) {
-			return true;
-		}
-		return false;
-	}
+		return adminRepository.findById(userName).isPresent();
+    }
 }

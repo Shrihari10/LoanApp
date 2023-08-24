@@ -1,6 +1,5 @@
 import React from 'react'
 import {  Modal, Form } from 'react-bootstrap';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChakraProvider } from "@chakra-ui/react"
@@ -11,6 +10,8 @@ import { Button } from "@chakra-ui/react"
 import { SimpleGrid } from "@chakra-ui/react"
 import { Stack, HStack } from "@chakra-ui/react"
 import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons"
+import { deleteEmployee, editEmployee, getAllEmployees } from '../../api/service';
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 function AdminEmployeeEdit() {
   const userName = sessionStorage.getItem("username");
@@ -92,28 +93,27 @@ function AdminEmployeeEdit() {
   }, []);
 
   const fetchAllEmployee = () => {
-    axios.get(`http://localhost:8080/employee/all?userName=${userName}`)
+    getAllEmployees(userName)
       .then((res) => {
         setEmployees(res.data.body);
         console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
   
 
   const handleDelete = (id) => {
 
-    axios.delete(`http://localhost:8080/employee/${id}?userName=${userName}`)
+    deleteEmployee(userName, id)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllEmployee();
       })
       .catch((err) => {
-        alert("Error: " + err);
-
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
 
@@ -121,7 +121,7 @@ function AdminEmployeeEdit() {
 
     const filteredEmployee = employees.filter((employee) => id === employee.employeeID);
     if(filteredEmployee.length == 0){
-      alert("Invalid Employee selected to edit!")
+      failureToast("Invalid Employee selected to edit!")
     }
 
     setEditingEmployee(filteredEmployee[0]);
@@ -143,15 +143,14 @@ function AdminEmployeeEdit() {
     }
 
     const requestBody = editingEmployee;
-    axios.put(`http://localhost:8080/employee/${editingEmployee.employeeID}?userName=${userName}`, requestBody)
+    editEmployee(userName, editingEmployee.employeeID, requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllEmployee();
         handleClose();
       })
       .catch((err) => {
-        alert("Error: " + err);
-
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
 
