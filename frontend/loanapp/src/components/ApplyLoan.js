@@ -29,7 +29,7 @@ function ApplyLoan() {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }, []);
 
@@ -40,7 +40,7 @@ function ApplyLoan() {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }, []);
 
@@ -140,7 +140,7 @@ function ApplyLoan() {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error encountered: "+ err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 

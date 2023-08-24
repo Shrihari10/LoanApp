@@ -100,7 +100,7 @@ function AdminEmployeeEdit() {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
   
@@ -113,8 +113,7 @@ function AdminEmployeeEdit() {
         fetchAllEmployee();
       })
       .catch((err) => {
-        failureToast("Error: " + err);
-
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
 
@@ -151,8 +150,7 @@ function AdminEmployeeEdit() {
         handleClose();
       })
       .catch((err) => {
-        failureToast("Error: " + err);
-
+        failureToast("Error encountered: " + err.response.data.message);
       });
   }
 

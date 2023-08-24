@@ -44,7 +44,7 @@ function AdminLoanAdd() {
       successToast("new loan type created with id " + res.data.body.loanId);
       navigate("/admin/loan/edit");
     }).catch((err) => {
-      failureToast("error " + err);
+      failureToast("Error encountered: " + err.response.data.message);
     });
   }
 

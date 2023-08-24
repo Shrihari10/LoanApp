@@ -5,7 +5,6 @@ import { loginAdmin, loginEmployee } from "../api/service";
 import { successToast, failureToast } from "../utils/ToastUtils";
 
 const Login = ({ user, role, loginUser }) => {
-  const [submitAdmin, setSubmitAdmin] = useState(true);
   const [employeeID, setEmployeeID] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -53,13 +52,11 @@ const Login = ({ user, role, loginUser }) => {
     loginEmployee(requestBody)
       .then((res) => {
         successToast(res.data.message);
-        if (res.data.message.includes("successfull")) {
           loginUser(employeeID, "user");
-        }
       })
       .catch((err) => {
-        console.log(err);
-        failureToast("Error encountered: " + err);
+        console.log(err.response);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 
@@ -84,7 +81,7 @@ const Login = ({ user, role, loginUser }) => {
       })
       .catch((err) => {
         console.log(err);
-        failureToast("Error: " + err);
+        failureToast("Error encountered: " + err.response.data.message);
       });
   };
 
@@ -93,7 +90,6 @@ const Login = ({ user, role, loginUser }) => {
       <Form
         noValidate
         validated={validated}
-        onSubmit={submitAdmin ? handleAdminLogin : handleUserLogin}
         className=" bg-light align-items-center"
         style={{ width: "40%", borderRadius: "10px" }}
       >
@@ -152,11 +148,15 @@ const Login = ({ user, role, loginUser }) => {
             <Button
               variant="primary"
               type="submit"
-              onClick={() => setSubmitAdmin(false)}
+              onClick={(e) => handleUserLogin(e)}
             >
               Login as User
             </Button>{" "}
-            <Button variant="danger" type="submit">
+            <Button
+              variant="danger"
+              type="submit"
+              onClick={(e) => handleAdminLogin(e)}
+            >
               Login as Admin
             </Button>
             <p
