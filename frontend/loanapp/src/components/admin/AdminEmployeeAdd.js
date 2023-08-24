@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { successToast, failureToast } from "../../utils/ToastUtils";
+
 import { addEmployee } from '../../api/service';
 
 const AdminEmployeeAdd = ({user}) => {
@@ -56,13 +58,13 @@ const AdminEmployeeAdd = ({user}) => {
     }
     addEmployee(userDetails)
       .then((res) => {
-        alert("Employee created with Id: " + res.data.body.employeeID);
+        successToast("Employee created with ID: " + res.data.body.employeeID);
         navigate("/admin/employee/edit");
         console.log(JSON.stringify(res.data));
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
 
   };

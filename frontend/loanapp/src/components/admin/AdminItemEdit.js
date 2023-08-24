@@ -13,6 +13,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 import { Stack, HStack } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
 import { deleteItem, editItem, getAllItems } from "../../api/service";
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 function AdminItemEdit() {
   const userName = sessionStorage.getItem("username");
@@ -39,7 +40,7 @@ function AdminItemEdit() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   };
 
@@ -50,12 +51,12 @@ function AdminItemEdit() {
   const handleDelete = (itemId) => {
     deleteItem(userName, itemId)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllItemCards();
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   };
 
@@ -64,7 +65,7 @@ function AdminItemEdit() {
       (itemCard) => itemId == itemCard.itemId
     );
     if (filteredItemCards.length == 0) {
-      alert("invalid item card selected to edit");
+      failureToast("invalid item card selected to edit");
     }
     const editingItemCard = filteredItemCards[0];
     setEditingItemId(editingItemCard.itemId);
@@ -119,13 +120,13 @@ function AdminItemEdit() {
         requestBody
       )
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllItemCards();
         handleClose();
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   };
 

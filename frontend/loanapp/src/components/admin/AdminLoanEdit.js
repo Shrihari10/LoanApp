@@ -9,6 +9,7 @@ import { Button } from "@chakra-ui/react"
 import { SimpleGrid } from "@chakra-ui/react"
 import { Stack, HStack } from "@chakra-ui/react"
 import { EditIcon, DeleteIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons"
+import { successToast, failureToast } from "../../utils/ToastUtils";
 
 import {
   Table,
@@ -62,25 +63,25 @@ function AdminLoanEdit() {
         })
         .catch((err) => {
             console.log(err);
-            alert("Error: " + err);
+            failureToast("Error: " + err);
         });
   }
 
   const handleDelete = (loanId) => {
     deleteLoanCard(userName, loanId)
     .then((res) => {
-      alert(res.data.message);
+      successToast(res.data.message);
       fetchAllLoanCards();
     }).catch((err) => {
       console.log(err);
-      alert("Error: " + err);
+      failureToast("Error: " + err);
     });
   }
 
   const handleEdit = (loanId) => {
     const filteredLoanCards = loanCards.filter((loanCard) => loanId == loanCard.loanId);
     if (filteredLoanCards.length == 0) {
-      alert("invalid loan card selected to edit");
+      failureToast("invalid loan card selected to edit");
     }
     const editingLoanCard = filteredLoanCards[0];
     setEditingLoanId(editingLoanCard.loanId);
@@ -114,12 +115,12 @@ function AdminLoanEdit() {
       };
       editLoanCard(userName, editingLoanId, requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         fetchAllLoanCards();
         handleClose();
       }).catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   }
 

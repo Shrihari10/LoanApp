@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getAllEmployeeCards, getEmployee } from "../api/service";
+import { successToast, failureToast } from "../utils/ToastUtils";
 
 const ViewLoan = ({ loginUser }) => {
 
@@ -19,7 +20,7 @@ const ViewLoan = ({ loginUser }) => {
             })
             .catch((err) => {
                 console.log(err);
-                alert("Error: " + err);
+                failureToast("Error encountered: " + err);
             });
     }, []);
 
@@ -40,7 +41,7 @@ const ViewLoan = ({ loginUser }) => {
             })
             .catch((err) => {
                 console.log(err);
-                alert("Error: " + err);
+                failureToast("Error: " + err);
             });
     };
 

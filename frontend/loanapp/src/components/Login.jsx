@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { loginAdmin, loginEmployee } from "../api/service";
+import { successToast, failureToast } from "../utils/ToastUtils";
 
 const Login = ({ user, role, loginUser }) => {
   const [submitAdmin, setSubmitAdmin] = useState(true);
@@ -51,14 +52,14 @@ const Login = ({ user, role, loginUser }) => {
 
     loginEmployee(requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         if (res.data.message.includes("successfull")) {
           loginUser(employeeID, "user");
         }
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error encountered: " + err);
       });
   };
 
@@ -76,14 +77,14 @@ const Login = ({ user, role, loginUser }) => {
 
     loginAdmin(requestBody)
       .then((res) => {
-        alert(res.data.message);
+        successToast(res.data.message);
         if (res.data.message.includes("Successfully")) {
           loginUser(employeeID, "admin");
         }
       })
       .catch((err) => {
         console.log(err);
-        alert("Error: " + err);
+        failureToast("Error: " + err);
       });
   };
 
