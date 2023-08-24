@@ -106,6 +106,7 @@ const AdminEmployeeAdd = ({user}) => {
             placeholder="Department"
             value={userDetails.department}
             onChange={handleChanges}
+            isInvalid={errors.department}
           />
           <Form.Control.Feedback type="invalid">
             {errors.department}
