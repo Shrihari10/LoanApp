@@ -185,8 +185,6 @@ const AdminEmployeeAdd = ({user}) => {
           </Form.Group>
           <div className="text-center pt-2">
           <Button colorScheme="blue" variant="outline" type="submit">  
-          <div className="text-center pt-2">
-          <Button colorScheme="blue" variant="outline" type="submit">  
             Add
           </Button>
           
