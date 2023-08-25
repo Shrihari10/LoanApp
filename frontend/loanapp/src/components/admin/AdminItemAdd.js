@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Form,Button, Container } from 'react-bootstrap'
+import { Form, Container } from 'react-bootstrap'
 import { Link,useParams } from 'react-router-dom'
 import { addItem, getAllLoanCards } from '../../api/service';
 import { successToast, failureToast } from "../../utils/ToastUtils";
+import { Button } from "@chakra-ui/react";
 
 const AdminItemAdd = () => {
   const [username, setUsername] = useState(sessionStorage.getItem("username"));
@@ -93,7 +94,7 @@ const AdminItemAdd = () => {
   return (
     <Container className="d-flex justify-content-center align-items-center ">
       <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center form-inline" style={{ width: '50%',marginTop:'30px',borderRadius:'10px' }}>
-      <h3 className="text-warning bg-danger text-center mb-3">Add Item</h3>
+      <h3 className="text-danger text-center mb-3">Add Item</h3>
       <Form.Group controlId='itemCategory'>
 
           <Form.Label>Item Category</Form.Label>
@@ -151,9 +152,11 @@ const AdminItemAdd = () => {
             {error.itemValuationError}
           </Form.Control.Feedback>
         </Form.Group>
-        <Button type='submit' variant='primary'>
+        <div className="text-center pt-2">
+        <Button colorScheme='blue' type='submit' variant='outline'>
           Add Item
         </Button>
+        </div>
       </Form>
     </Container>
     

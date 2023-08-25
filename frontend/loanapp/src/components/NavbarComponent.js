@@ -28,7 +28,7 @@ const NavbarComponent = ({user, role, logoutUser}) =>  {
   const navItems = (role === "admin" ? adminNavItems : (role === "user" ? userNavItems : []));
 
   return (
-    <Box>
+    <Box style={{position:'sticky', top:'0',zIndex:'20'}} w='100%'>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}

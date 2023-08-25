@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Button, Form, Container } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { addLoanCard } from '../../api/service';
 import { successToast, failureToast } from "../../utils/ToastUtils";
+import { Button } from '@chakra-ui/button';
 
 function AdminLoanAdd() {
   const userName = sessionStorage.getItem("username");
@@ -60,7 +61,7 @@ function AdminLoanAdd() {
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center" style={{ width: '50%' }}>
-        <h3 className="text-warning bg-danger text-center mb-3">Add New Loan Type</h3>
+        <h3 className="text-danger text-center mb-3">Add New Loan Type</h3>
         
         
         <Form.Group controlId="loanType">
@@ -91,8 +92,8 @@ function AdminLoanAdd() {
         </Form.Group>
         
 
-        <div className="text-center">
-          <Button variant="primary" type="submit">
+        <div className="text-center pt-2">
+          <Button colorScheme="blue" variant="outline" type="submit">
             Add New Loan
           </Button>
         </div>
