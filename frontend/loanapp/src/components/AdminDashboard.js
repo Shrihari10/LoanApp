@@ -19,7 +19,7 @@ function AdminDashboard() {
   // }, [user]);
 
   return (
-    <Container className="d-flex justify-content-center align-items-center h-100">
+    <Container className="d-flex justify-content-center pt-5 mt-5 align-items-center h-100">
       <Row className="w-80 d-flex">
         <Col>
           <Card>

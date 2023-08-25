@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { loginAdmin, loginEmployee } from "../api/service";
 import { successToast, failureToast } from "../utils/ToastUtils";
+import {Button } from '@chakra-ui/react'
 
 const Login = ({ user, role, loginUser }) => {
   const [employeeID, setEmployeeID] = useState("");
@@ -86,15 +87,15 @@ const Login = ({ user, role, loginUser }) => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center text-left h-100">
+    <Container className="d-flex justify-content-center align-items-center text-left h-100 mt-5 pt-5">
       <Form
         noValidate
         validated={validated}
         className=" bg-light align-items-center"
-        style={{ width: "40%", borderRadius: "10px" }}
+        style={{ width: "37%", borderRadius: "10px" }}
       >
         <h3
-          className="text-warning bg-danger text-center  mb-3 py-2 "
+          className="text-danger text-center   py-4 "
           style={{
             width: "100%",
             borderRadius: "10px 10px 0px 0px",
@@ -103,7 +104,7 @@ const Login = ({ user, role, loginUser }) => {
         >
           Login
         </h3>
-        <div className="p-4 text-left">
+        <div className="p-4 pt-0 text-left">
           <Form.Group controlId="employeeID">
             <Form.Label
               className="w-100 text-left"
@@ -146,25 +147,27 @@ const Login = ({ user, role, loginUser }) => {
           </Form.Group>
           <div className="text-center">
             <Button
-              variant="primary"
+              variant="outline"
+              colorScheme="yellow"
               type="submit"
               onClick={(e) => handleUserLogin(e)}
             >
               Login as User
             </Button>{" "}
             <Button
-              variant="danger"
+              variant="outline"
+              colorScheme="red"
               type="submit"
               onClick={(e) => handleAdminLogin(e)}
             >
               Login as Admin
             </Button>
-            <p
+            {/* <p
               className="forgot-password text-right mt-2 "
               style={{ color: "blue", textDecoration: "underline" }}
             >
               <a href="#">Forgot password?</a>
-            </p>
+            </p> */}
           </div>
         </div>
       </Form>

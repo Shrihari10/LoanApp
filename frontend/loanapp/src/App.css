@@ -1,10 +1,64 @@
-.App{
-    background-color: lightgrey;
-    font-family: sans-serif;
-    text-align: center;
-    height: 100vh;
+.App {
+  z-index: 10;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  /* height: 100vh; */
+  min-height: 100vh;
+  height: auto;
+  /* padding-top: 100px;  */
 }
 
-.Nav{
+.AppParent {
+  position: absolute;
+  width: 100vw;
+  background-color: #d41c2c;
+  z-index: -100;
+  height: 100vh;
+}
+
+.horse {
+  z-index: -50;
+  position: absolute;
+  background-image: url("../public/yellow_horse.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-y: bottom;
+  -moz-animation: marquee 10s linear infinite;
+  -webkit-animation: marquee 10s linear infinite;
+  animation: marquee 10s linear infinite;
+  width:100vw;
+  height:100vh;
+}
+
+.Nav {
   padding-left: 0.5vw;
+}
+
+@-moz-keyframes marquee {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes marquee {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes marquee {
+  0% {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
 }

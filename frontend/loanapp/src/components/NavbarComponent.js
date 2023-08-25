@@ -28,7 +28,7 @@ const NavbarComponent = ({user, role, logoutUser}) =>  {
   const navItems = (role === "admin" ? adminNavItems : (role === "user" ? userNavItems : []));
 
   return (
-    <Box>
+    <Box style={{position:'sticky', top:'0',zIndex:'20'}} w='100%'>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -37,12 +37,16 @@ const NavbarComponent = ({user, role, logoutUser}) =>  {
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
+        justifyContent={'center'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}>
+        align={'center'} alignItems={'center'}>
+          
         <Flex
           flex={{ base: 1, md: 'auto' }}
           ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}>
+          display={{ base: 'flex', md: 'none' }}
+          alignItems={'center'}
+          >
           <IconButton
             onClick={onToggle}
             icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
@@ -50,13 +54,13 @@ const NavbarComponent = ({user, role, logoutUser}) =>  {
             aria-label={'Toggle Navigation'}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }} alignItems={'center'}>
+          {/* <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
+            color={useColorModeValue('gray.800', 'white')}> */}
             <Image src={logo} w='40px'/>
-          </Text>
+          {/* </Text> */}
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav navItems={navItems} />
@@ -124,19 +128,20 @@ const DesktopNav = ({navItems}) => {
   return (
     <Stack direction={'row'} spacing={4}>
       {navItems.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
-            <PopoverTrigger>
+        <Box key={navItem.label} >
+          <Popover trigger={'hover'} placement={'bottom-start'}  >
+            <PopoverTrigger  >
               <Box
                 as="a"
-                p={2}
+                p={1}
+                
                 href={navItem.href ?? '#'}
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
                 _hover={{
                   textDecoration: 'none',
-                  color: linkHoverColor,
+                  color: 'red',
                 }}>
                 {navItem.label}
               </Box>
@@ -147,9 +152,10 @@ const DesktopNav = ({navItems}) => {
                 border={0}
                 boxShadow={'xl'}
                 bg={popoverContentBgColor}
-                p={4}
+                p={1}
                 rounded={'xl'}
-                minW={'sm'}>
+                minW={'sm'}
+                >
                 <Stack>
                   {navItem.children.map((child) => (
                     <DesktopSubNav key={child.label} {...child} />
