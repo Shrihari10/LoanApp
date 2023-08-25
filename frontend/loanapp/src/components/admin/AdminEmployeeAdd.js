@@ -6,7 +6,15 @@ import { Button } from "@chakra-ui/react"
 import { addEmployee } from '../../api/service';
 
 const AdminEmployeeAdd = ({user}) => {
-  const [userDetails, setUserDetails] = useState([]);
+  const [userDetails, setUserDetails] = useState({
+    employeeName:"",
+    designation:"",
+    department:"",
+    gender:"",
+    doj:"",
+    dob:"",
+    password:"" 
+  });
   const userName = sessionStorage.getItem('userName');
   const [errors, setErrors] = useState({
     name: '',
@@ -44,7 +52,7 @@ const AdminEmployeeAdd = ({user}) => {
  const handleChanges = (e) => {
     setUserDetails({
       ...userDetails,
-      [e.target.name]: e.target.value
+      [e.target.id]: e.target.value
     });
   }
 
@@ -73,7 +81,7 @@ const AdminEmployeeAdd = ({user}) => {
     <Container className="d-flex justify-content-center align-items-center ">
       <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center form-inline" style={{ width: '50%',marginTop:'30px',borderRadius:'10px' }}>
         <h3 className="text-danger text-center mb-3">Add New Employee</h3>
-        <Form.Group controlId="name">
+        <Form.Group controlId="employeeName">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
