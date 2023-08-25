@@ -8,7 +8,7 @@ const API_URLS = {
     GET_ALL_LOAN_CARDS: "/loanCard/all",
     GET_EMPLOYEE: (username) => `/employee/${username}`,
     GET_ALL_EMPLOYEE_ISSUES: (username) => `/employeeIssue/${username}/all`,
-    GET_ALL_EMPLOYEE_CARDS: (username) => `/employeeCard/${username}/add`,
+    GET_ALL_EMPLOYEE_CARDS: (username) => `/employeeCard/${username}/all`,
     ADD_ITEM: (adminUsername) => `/item/add?userName=${adminUsername}`,
     ADD_LOAN_CARD: (adminUsername) => `/loanCard/add?userName=${adminUsername}`,
     GET_ALL_EMPLOYEES: (adminUsername) => `/employee/all?userName=${adminUsername}`,
