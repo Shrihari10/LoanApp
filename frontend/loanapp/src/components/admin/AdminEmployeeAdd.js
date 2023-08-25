@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Container } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { successToast, failureToast } from "../../utils/ToastUtils";
+import { Button } from "@chakra-ui/react"
 import { Button } from "@chakra-ui/react"
 import { addEmployee } from '../../api/service';
 
@@ -181,6 +183,8 @@ const AdminEmployeeAdd = ({user}) => {
             {errors.password}
           </Form.Control.Feedback>
           </Form.Group>
+          <div className="text-center pt-2">
+          <Button colorScheme="blue" variant="outline" type="submit">  
           <div className="text-center pt-2">
           <Button colorScheme="blue" variant="outline" type="submit">  
             Add
