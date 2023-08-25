@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { addEmployee } from "../api/service";
+import { Button } from "@chakra-ui/react";
 
 import {successToast, failureToast} from '../utils/ToastUtils';
 
@@ -114,7 +115,7 @@ const Register = ({ user, loginUser }) => {
 
   return (
     <>
-      <Container className="d-flex justify-content-center align-items-center h-100">
+      <Container className="d-flex justify-content-center mt-4 pt-4 align-items-center h-100">
         <Form
           noValidate
           validated={validated}
@@ -123,7 +124,7 @@ const Register = ({ user, loginUser }) => {
           style={{ width: "50%", borderRadius: "10px" }}
         >
           <h3
-            className="text-warning bg-danger text-center  mb-3 py-2 "
+            className="text-danger text-center mb-0 pt-3"
             style={{
               width: "100%",
               borderRadius: "10px 10px 0px 0px",
@@ -264,11 +265,11 @@ const Register = ({ user, loginUser }) => {
           </div>
 
           <div className="text-center">
-            <Button variant="primary" type="submit">
+            <Button colorScheme="blue" variant="outline" type="submit">
               Sign Up
             </Button>
             <p className="forgot-password mt-3">
-              Already registered? <a href="/login">Login</a>
+              Already registered? <a href="/login" style={{textDecoration: "underline"}}>Login</a>
             </p>
           </div>
         </Form>

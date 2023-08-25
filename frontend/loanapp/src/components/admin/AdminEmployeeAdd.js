@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { successToast, failureToast } from "../../utils/ToastUtils";
-
+import { Button } from "@chakra-ui/react"
 import { addEmployee } from '../../api/service';
 
 const AdminEmployeeAdd = ({user}) => {
@@ -72,7 +72,7 @@ const AdminEmployeeAdd = ({user}) => {
   return (
     <Container className="d-flex justify-content-center align-items-center ">
       <Form onSubmit={handleSubmit} className="p-3 bg-light align-items-center form-inline" style={{ width: '50%',marginTop:'30px',borderRadius:'10px' }}>
-        <h3 className="text-warning bg-danger text-center mb-3">Add New Employee</h3>
+        <h3 className="text-danger text-center mb-3">Add New Employee</h3>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -173,8 +173,8 @@ const AdminEmployeeAdd = ({user}) => {
             {errors.password}
           </Form.Control.Feedback>
           </Form.Group>
-          <div className="text-center">
-          <Button variant="primary" type="submit">  
+          <div className="text-center pt-2">
+          <Button colorScheme="blue" variant="outline" type="submit">  
             Add
           </Button>
           

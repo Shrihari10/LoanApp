@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Container } from "react-bootstrap";
+import { Form, Container } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { Navigate } from "react-router-dom";
 import { applyLoan, getAllItems, getAllLoanCards } from "../api/service";
 import {successToast, failureToast} from '../utils/ToastUtils';
+import { Button } from '@chakra-ui/react';
 
 function ApplyLoan() {
   let [loanCards, setLoanCards] = useState([]);
@@ -153,7 +154,7 @@ function ApplyLoan() {
         className="p-3 bg-light align-items-center"
         style={{ width: "50%" }}
       >
-        <h3 className="text-warning bg-danger text-center mb-3">
+        <h3 className="text-danger text-center mb-3">
           Select Product and Apply for Loan
         </h3>
 
@@ -221,8 +222,8 @@ function ApplyLoan() {
           <Form.Control type="text" value={itemValue} disabled />
         </Form.Group>
 
-        <div className="text-center">
-          <Button variant="primary" type="submit">
+        <div className="text-center pt-2">
+          <Button colorScheme="blue" variant="outline" type="submit">
             Apply Loan
           </Button>
         </div>

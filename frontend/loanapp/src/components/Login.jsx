@@ -87,7 +87,7 @@ const Login = ({ user, role, loginUser }) => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center text-left h-100">
+    <Container className="d-flex justify-content-center align-items-center text-left h-100 mt-5 pt-5">
       <Form
         noValidate
         validated={validated}
