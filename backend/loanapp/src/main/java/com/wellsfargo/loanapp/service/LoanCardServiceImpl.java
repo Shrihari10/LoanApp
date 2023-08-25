@@ -40,7 +40,12 @@ public class LoanCardServiceImpl implements LoanCardService{
 	{
 		List<LoanCardMaster> loanCardList = loanCardRepository.findAll();
 		List<LoanCardDTO> loanCardDTOList = loanCardList.stream().map(e -> modelMapper.map(e, LoanCardDTO.class)).collect(Collectors.toList());
-		return ResponseGenerator.generateResponse(HttpStatus.OK, null, loanCardDTOList);
+		String message = "";
+		if(loanCardDTOList.size() == 0)
+		{
+			message = "No loanCard present !!!";
+		}
+		return ResponseGenerator.generateResponse(HttpStatus.OK, message, loanCardDTOList);
 	}
 
 	public ResponseEntity<LoanCardDTO> saveLoanCard(String userName, LoanCardDTO loanCardDto) {
