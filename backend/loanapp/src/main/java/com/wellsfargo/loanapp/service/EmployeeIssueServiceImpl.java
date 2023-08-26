@@ -77,7 +77,7 @@ public class EmployeeIssueServiceImpl implements EmployeeIssueService{
 			String message = "";
 			if(filteredEmployeeIssueListDto.size() == 0)
 			{
-				message = "No employee issue present !!!";
+				message = "No issues items present for employee "+employeeId+"!!!";
 			}
 			return ResponseGenerator.generateResponse(HttpStatus.OK,message, filteredEmployeeIssueListDto);
 		}

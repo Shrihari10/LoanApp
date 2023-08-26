@@ -69,7 +69,7 @@ public class EmployeeCardServiceImpl implements EmployeeCardService {
 		String message = "";
 		if(filteredEmployeeCardListDto.size() == 0)
 		{
-			message = "No employee card present !!!";
+			message = "No loan cards present for employee "+employeeId+"!!!";
 		}
 		return ResponseGenerator.generateResponse(HttpStatus.OK,message, filteredEmployeeCardListDto);
 	}
