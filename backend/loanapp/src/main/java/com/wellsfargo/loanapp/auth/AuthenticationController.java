@@ -30,13 +30,21 @@ public class AuthenticationController {
     return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee added successfully !!!",response);
   }
 
-  @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> authenticate(
+  @PostMapping("/authenticate/employee")
+  public ResponseEntity<AuthenticationResponse> authenticateEmployee(
       @RequestBody LoginModel loginModel
   ) {
-    AuthenticationResponse response = service.authenticate(loginModel);
-    return ResponseGenerator.generateResponse(HttpStatus.OK, "Employee authenticated successfully !!!",response);
+    return service.authenticateEmployee(loginModel);
   }
+
+  @PostMapping("/authenticate/admin")
+  public ResponseEntity<AuthenticationResponse> authenticateAdmin(
+          @RequestBody LoginModel loginModel
+  ) {
+    return service.authenticateAdmin(loginModel);
+  }
+
+
 
   @PostMapping("/refresh-token")
   public void refreshToken(

@@ -107,6 +107,7 @@ public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(UserDetails userD
 }
 
 public ResponseEntity<EmployeeDTO> deleteEmployee(UserDetails userDetails, String employeeId) {
+		System.out.println("Hereeee");
 	if(adminService.verifyAdmin(userDetails))
 	{
 		Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);

@@ -22,7 +22,7 @@ import java.util.List;
 public class DemoController {
 
   @GetMapping
-  @PreAuthorize("hasRole('ADMIN')")
+//  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<String> sayHello(@AuthenticationPrincipal UserDetails userDetails) {
 //    String employeeId = Utils.getEmployeeIdfromAuthentication(authentication);
 //    System.out.println(employeeId);

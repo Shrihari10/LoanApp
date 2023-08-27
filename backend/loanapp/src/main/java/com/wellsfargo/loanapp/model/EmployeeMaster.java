@@ -1,8 +1,11 @@
 package com.wellsfargo.loanapp.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -57,14 +60,29 @@ public class EmployeeMaster implements UserDetails {
 
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<EmployeeCardDetails> employeeCards;
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<EmployeeCardDetails> employeeCards = new ArrayList<>();
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<EmployeeIssueDetails> employeeIssues;
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<EmployeeIssueDetails> employeeIssues = new ArrayList<>();
   
 	private Role role;
+
+	@Override
+	public String toString() {
+		return "EmployeeMaster{" +
+				"employeeID='" + employeeID + '\'' +
+				", employeeName='" + employeeName + '\'' +
+				", designation='" + designation + '\'' +
+				", department='" + department + '\'' +
+				", gender=" + gender +
+				", dateOfBirth=" + dateOfBirth +
+				", dateOfJoining=" + dateOfJoining +
+				", password='" + password + '\'' +
+				", role=" + role +
+				'}';
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
