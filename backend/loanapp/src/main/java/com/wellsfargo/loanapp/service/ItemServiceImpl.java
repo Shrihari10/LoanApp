@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wellsfargo.loanapp.dao.EmployeeIssueRepository;
+import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,8 @@ public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	ItemRepository itemRepository;
-	
+	@Autowired
+	EmployeeIssueRepository employeeIssueRepository;
 	@Autowired
 	AdminService adminService;
 	
@@ -77,6 +80,14 @@ public class ItemServiceImpl implements ItemService {
 		{
 			Optional<ItemMaster> optionalItem = itemRepository.findById(itemId);
 			if (optionalItem.isPresent()) {
+				List<EmployeeIssueDetails> employeeIssueDetails = employeeIssueRepository.customfindbyItemId(optionalItem.get().getItemId());
+
+				System.out.println(employeeIssueDetails);
+
+				if(employeeIssueDetails.size() > 0)
+				{
+					return ResponseGenerator.generateResponse(HttpStatus.NOT_ACCEPTABLE,"Item with Id "+itemId+" cannot be deleted : Loans exists with this item type",null);
+				}
 				itemRepository.delete(optionalItem.get());
 				return ResponseGenerator.generateResponse(HttpStatus.OK,"Item with Id "+itemId+" deleted successfully",null);
 			} else {
