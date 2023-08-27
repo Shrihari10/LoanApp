@@ -57,7 +57,6 @@ public class AuthenticationService {
     EmployeeMaster createdEmployee = employeeRepository.save(employee);
     var jwtToken = jwtService.generateToken(createdEmployee);
     var refreshToken = jwtService.generateRefreshToken(createdEmployee);
-//    saveUserToken(createdEmployee, jwtToken);
     EmployeeDTO createdEmployeeDto = modelMapper.map(createdEmployee,EmployeeDTO.class);
     createdEmployeeDto.setPassword("");
     return AuthenticationResponse.builder()
@@ -156,8 +155,6 @@ public class AuthenticationService {
       employeeDto.setPassword("");
       if (jwtService.isTokenValid(refreshToken, employee)) {
         var accessToken = jwtService.generateToken(employee);
-//        revokeAllUserTokens(employee);
-//        saveUserToken(employee, accessToken);
         var authResponse = AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

@@ -1,8 +1,8 @@
 const API_URLS = {
     BASE_URL: "http://localhost:8080/api/v1",
     ADD_EMPLOYEE: "/auth/register",
-    LOGIN_EMPLOYEE: "/auth/authenticate",
-    LOGIN_ADMIN: "/auth/authenticate",
+    LOGIN_EMPLOYEE: "/auth/authenticate/employee",
+    LOGIN_ADMIN: "/auth/authenticate/admin",
     APPLY_LOAN: "/loan/apply",
     GET_ALL_ITEMS: "/item/all",
     GET_ALL_LOAN_CARDS: "/loanCard/all",
