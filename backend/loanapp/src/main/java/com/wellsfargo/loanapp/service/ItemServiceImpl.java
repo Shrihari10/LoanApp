@@ -81,9 +81,6 @@ public class ItemServiceImpl implements ItemService {
 			Optional<ItemMaster> optionalItem = itemRepository.findById(itemId);
 			if (optionalItem.isPresent()) {
 				List<EmployeeIssueDetails> employeeIssueDetails = employeeIssueRepository.customfindbyItemId(optionalItem.get().getItemId());
-
-				System.out.println(employeeIssueDetails);
-
 				if(employeeIssueDetails.size() > 0)
 				{
 					return ResponseGenerator.generateResponse(HttpStatus.NOT_ACCEPTABLE,"Item with Id "+itemId+" cannot be deleted : Loans exists with this item type",null);

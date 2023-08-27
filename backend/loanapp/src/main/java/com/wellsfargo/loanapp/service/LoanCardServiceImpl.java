@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wellsfargo.loanapp.dao.EmployeeCardRepository;
+import com.wellsfargo.loanapp.model.EmployeeCardDetails;
+import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +36,9 @@ public class LoanCardServiceImpl implements LoanCardService{
 
 	@Autowired
 	EmployeeIssueService employeeIssueService;
+
+	@Autowired
+	EmployeeCardRepository employeeCardRepository;
 	
 	@Autowired
 	ModelMapper modelMapper;
@@ -90,6 +96,11 @@ public class LoanCardServiceImpl implements LoanCardService{
 		{
 			Optional<LoanCardMaster> optionalLoanCard = loanCardRepository.findById(loanCardId);
 			if (optionalLoanCard.isPresent()) {
+				List<EmployeeCardDetails> employeeCardDetails = employeeCardRepository.customfindbyLoanCardId(optionalLoanCard.get().getLoanId());
+				if(employeeCardDetails.size() > 0)
+				{
+					return ResponseGenerator.generateResponse(HttpStatus.NOT_ACCEPTABLE,"Loan Card with Id "+loanCardId+" cannot be deleted : Loans exists with this loanCard",null);
+				}
 				loanCardRepository.delete(optionalLoanCard.get());
 				return ResponseGenerator.generateResponse(HttpStatus.OK, "Loan Card with Id "+loanCardId+" deleted successfully", null);
 			} else {

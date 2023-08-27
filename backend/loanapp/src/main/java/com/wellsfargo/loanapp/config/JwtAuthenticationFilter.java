@@ -43,50 +43,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       filterChain.doFilter(request, response);
       return;
     }
-    System.out.println("Hello w!");
     final String authHeader = request.getHeader("Authorization");
     final String jwt;
     final String userName;
     if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
       filterChain.doFilter(request, response);
-      System.out.println("Hello wf!");
       return;
     }
 
     jwt = authHeader.substring(7);
 
-    System.out.println("Hello wt! "+jwt);
-
     userName = jwtService.extractUsername(jwt);
-
-    System.out.println("Hello wt! "+userName);
-
 
     if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
-      System.out.println("Hello wt4! "+userName);
-//
-//      var isTokenValid = tokenRepository.findByToken(jwt)
-//          .map(t -> !t.isExpired() && !t.isRevoked())
-//          .orElse(false);
-//      System.out.println("Hello wt5! "+isTokenValid);
       if (jwtService.isTokenValid(jwt, userDetails)) {
-        System.out.println("Hello wt5! ");
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
             userDetails,
             null,
             userDetails.getAuthorities()
         );
-        System.out.println("Hello wt6! "+authToken);
 
         authToken.setDetails(
             new WebAuthenticationDetailsSource().buildDetails(request)
         );
-        System.out.println("Hello wt7! "+authToken);
         SecurityContextHolder.getContext().setAuthentication(authToken);
       }
     }
-    System.out.println("Hello wt8! "+" "+SecurityContextHolder.getContext().getAuthentication());
     filterChain.doFilter(request, response);
   }
 }
