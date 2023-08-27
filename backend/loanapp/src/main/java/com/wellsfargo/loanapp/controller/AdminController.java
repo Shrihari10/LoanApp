@@ -14,13 +14,13 @@ import com.wellsfargo.loanapp.service.AdminService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/admin")
+@RequestMapping("/api/v1/admin")
 public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
-	@PostMapping("/login")
-	public ResponseEntity<AdminDTO> adminLogin(@RequestBody AdminDTO adminDto) {
-		return adminService.validateAdmin(adminDto);
-	}
+//	@PostMapping("/login")
+//	public ResponseEntity<AdminDTO> adminLogin(@RequestBody AdminDTO adminDto) {
+//		return adminService.validateAdmin(adminDto);
+//	}
 }

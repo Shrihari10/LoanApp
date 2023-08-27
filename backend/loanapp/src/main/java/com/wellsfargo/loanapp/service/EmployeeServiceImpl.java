@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 
@@ -57,6 +58,7 @@ public ResponseEntity<EmployeeDTO> employeeLogin(LoginModel loginModel) {
 public ResponseEntity<EmployeeDTO> getEmployeeDetails(String employeeId) {
 	// TODO Auto-generated method stub
 	Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
+	System.out.println(optionalEmployee.get());
 	if (optionalEmployee.isPresent()) {
 		EmployeeMaster employeeMaster= optionalEmployee.get();
 		EmployeeDTO employeeDto = modelMapper.map(employeeMaster, EmployeeDTO.class);
@@ -66,9 +68,9 @@ public ResponseEntity<EmployeeDTO> getEmployeeDetails(String employeeId) {
 	}
 }
 
-public ResponseEntity<EmployeeDTO> updateEmployeeDetails(String userName, String employeeId, EmployeeDTO employeeDto) {
+public ResponseEntity<EmployeeDTO> updateEmployeeDetails(UserDetails userDetails, String employeeId, EmployeeDTO employeeDto) {
 
-	if(adminService.verfiyAdminUsername(userName))
+	if(adminService.verifyAdmin(userDetails))
 	{
 		Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
 		if (optionalEmployee.isPresent()) {
@@ -89,8 +91,8 @@ public ResponseEntity<EmployeeDTO> updateEmployeeDetails(String userName, String
 	return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED,"Access Denied: Admin level access only", null);
 }
 
-public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(String userName) {
-	if(adminService.verfiyAdminUsername(userName))
+public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(UserDetails userDetails) {
+	if(adminService.verifyAdmin(userDetails))
 	{
 		List<EmployeeMaster> employees = employeeRepository.findAll();
 		List<EmployeeDTO> employeesDTO = employees.stream().map(e -> modelMapper.map(e, EmployeeDTO.class)).collect(Collectors.toList());
@@ -104,8 +106,8 @@ public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(String userName) 
 	return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED,"Access Denied: Admin level access only", null);
 }
 
-public ResponseEntity<EmployeeDTO> deleteEmployee(String userName, String employeeId) {
-	if(adminService.verfiyAdminUsername(userName))
+public ResponseEntity<EmployeeDTO> deleteEmployee(UserDetails userDetails, String employeeId) {
+	if(adminService.verifyAdmin(userDetails))
 	{
 		Optional<EmployeeMaster> optionalEmployee = employeeRepository.findById(employeeId);
 		if (optionalEmployee.isPresent()) {

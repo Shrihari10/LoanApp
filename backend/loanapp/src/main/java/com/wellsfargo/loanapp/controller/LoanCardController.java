@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ import com.wellsfargo.loanapp.service.LoanCardService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/loanCard")
+@RequestMapping("/api/v1/loanCard")
 public class LoanCardController {
 	
 	@Autowired
@@ -36,21 +38,21 @@ public class LoanCardController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<LoanCardDTO> saveLoanCard(@RequestParam String userName, @RequestBody LoanCardDTO loanCardDto)
+	public ResponseEntity<LoanCardDTO> saveLoanCard(@AuthenticationPrincipal UserDetails userDetails, @RequestBody LoanCardDTO loanCardDto)
 	{
 	
-		return loanCardService.saveLoanCard(userName,loanCardDto);
+		return loanCardService.saveLoanCard(userDetails,loanCardDto);
 	}
 	
 	@PutMapping("/{loanCardId}")
-	public ResponseEntity<LoanCardDTO> updateLoanCard(@RequestParam String userName, @PathVariable String loanCardId,@RequestBody LoanCardDTO loanCardDto) {
-		return loanCardService.updateLoanCard(userName,loanCardId,loanCardDto);
+	public ResponseEntity<LoanCardDTO> updateLoanCard(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String loanCardId,@RequestBody LoanCardDTO loanCardDto) {
+		return loanCardService.updateLoanCard(userDetails,loanCardId,loanCardDto);
 		
 	}
 
 	@DeleteMapping("/{loanCardId}")
-	public ResponseEntity<LoanCardDTO> deleteLoanCard(@RequestParam String userName, @PathVariable String loanCardId) {
-		return loanCardService.deleteLoanCard(userName,loanCardId);
+	public ResponseEntity<LoanCardDTO> deleteLoanCard(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String loanCardId) {
+		return loanCardService.deleteLoanCard(userDetails,loanCardId);
 		
 	}
 

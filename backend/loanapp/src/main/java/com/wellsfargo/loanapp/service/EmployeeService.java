@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.wellsfargo.loanapp.dto.EmployeeDTO;
 import com.wellsfargo.loanapp.model.LoginModel;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface EmployeeService {
 
@@ -15,10 +16,10 @@ public interface EmployeeService {
 
 	ResponseEntity<EmployeeDTO> getEmployeeDetails(String employeeId);
 
-	ResponseEntity<EmployeeDTO> updateEmployeeDetails(String userName, String employeeId, EmployeeDTO employeeDto);
+	ResponseEntity<EmployeeDTO> updateEmployeeDetails(UserDetails userDetails, String employeeId, EmployeeDTO employeeDto);
 
-	ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(String userName);
+	ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(UserDetails userDetails);
 
-	ResponseEntity<EmployeeDTO> deleteEmployee(String userName, String employeeId);
+	ResponseEntity<EmployeeDTO> deleteEmployee(UserDetails userDetails, String employeeId);
 
 }

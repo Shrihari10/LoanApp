@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.LoanCardRepository;
@@ -48,8 +49,8 @@ public class LoanCardServiceImpl implements LoanCardService{
 		return ResponseGenerator.generateResponse(HttpStatus.OK, message, loanCardDTOList);
 	}
 
-	public ResponseEntity<LoanCardDTO> saveLoanCard(String userName, LoanCardDTO loanCardDto) {
-		if(adminService.verfiyAdminUsername(userName))
+	public ResponseEntity<LoanCardDTO> saveLoanCard(UserDetails userDetails, LoanCardDTO loanCardDto) {
+		if(adminService.verifyAdmin(userDetails))
 		{
 			loanCardDto.setLoanId(Utils.generateUniqueId());
 			LoanCardMaster loanCard = modelMapper.map(loanCardDto, LoanCardMaster.class);
@@ -61,8 +62,8 @@ public class LoanCardServiceImpl implements LoanCardService{
 	}
 
 	@Transactional
-	public ResponseEntity<LoanCardDTO> updateLoanCard(String userName, String loanCardId, LoanCardDTO loanCardDto) {
-		if(adminService.verfiyAdminUsername(userName))
+	public ResponseEntity<LoanCardDTO> updateLoanCard(UserDetails userDetails, String loanCardId, LoanCardDTO loanCardDto) {
+		if(adminService.verifyAdmin(userDetails))
 		{
 			Optional<LoanCardMaster> optionalLoanCard = loanCardRepository.findById(loanCardId);
 			if (optionalLoanCard.isPresent()) {
@@ -84,8 +85,8 @@ public class LoanCardServiceImpl implements LoanCardService{
 		return  ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Unauthorized Access: Invalid Admin username", null);
 	}
 
-	public ResponseEntity<LoanCardDTO> deleteLoanCard(String userName, String loanCardId) {
-		if(adminService.verfiyAdminUsername(userName))
+	public ResponseEntity<LoanCardDTO> deleteLoanCard(UserDetails userDetails, String loanCardId) {
+		if(adminService.verifyAdmin(userDetails))
 		{
 			Optional<LoanCardMaster> optionalLoanCard = loanCardRepository.findById(loanCardId);
 			if (optionalLoanCard.isPresent()) {
