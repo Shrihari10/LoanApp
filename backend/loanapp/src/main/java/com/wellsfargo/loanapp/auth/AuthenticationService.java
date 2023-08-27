@@ -81,7 +81,7 @@ public class AuthenticationService {
     Optional<EmployeeMaster> optionalEmployee = authenticate(loginModel);
     if(optionalEmployee.isEmpty() || !optionalEmployee.get().getRole().equals(Role.EMPLOYEE))
     {
-      return ResponseGenerator.generateResponse(HttpStatus.OK, "Invalid Credentials: No Employee Found !!!",null);
+      return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Invalid Credentials: No Employee Found !!!",null);
     }
     var jwtToken = jwtService.generateToken(optionalEmployee.get());
     var refreshToken = jwtService.generateRefreshToken(optionalEmployee.get());
@@ -99,7 +99,7 @@ public class AuthenticationService {
     Optional<EmployeeMaster> optionalEmployee = authenticate(loginModel);
     if(optionalEmployee.isEmpty() || !optionalEmployee.get().getRole().equals(Role.ADMIN))
     {
-      return ResponseGenerator.generateResponse(HttpStatus.OK, "Invalid Credentials: No Admin Found!!!",null);
+      return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED, "Invalid Credentials: No Admin Found!!!",null);
     }
     var jwtToken = jwtService.generateToken(optionalEmployee.get());
     var refreshToken = jwtService.generateRefreshToken(optionalEmployee.get());

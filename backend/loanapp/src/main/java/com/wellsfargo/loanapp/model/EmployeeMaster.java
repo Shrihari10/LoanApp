@@ -77,8 +77,8 @@ public class EmployeeMaster implements UserDetails {
 				", designation='" + designation + '\'' +
 				", department='" + department + '\'' +
 				", gender=" + gender +
-				", dateOfBirth=" + dateOfBirth +
-				", dateOfJoining=" + dateOfJoining +
+				", dateOfBirth=" + (dateOfBirth != null ? dateOfBirth.toString() : "null") +
+				", dateOfJoining=" + (dateOfJoining != null ? dateOfJoining.toString() : "null") +
 				", password='" + password + '\'' +
 				", role=" + role +
 				'}';
