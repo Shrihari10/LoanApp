@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wellsfargo.loanapp.utils.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -95,6 +96,7 @@ public ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(UserDetails userD
 	if(adminService.verifyAdmin(userDetails))
 	{
 		List<EmployeeMaster> employees = employeeRepository.findAll();
+		employees = employees.stream().filter((e) -> e.getRole() == Role.EMPLOYEE).toList();
 		List<EmployeeDTO> employeesDTO = employees.stream().map(e -> modelMapper.map(e, EmployeeDTO.class)).collect(Collectors.toList());
 		String message = "";
 		if(employeesDTO.size() == 0)
