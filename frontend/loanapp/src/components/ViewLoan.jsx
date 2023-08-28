@@ -82,7 +82,7 @@ const ViewLoan = ({ loginUser }) => {
 
     //     </table>
     // </div>
-    <div style={{ padding: "2rem",  }}>
+    <div style={{ padding: "2rem" }}>
       <Card
         direction={{ base: "column", sm: "row" }}
         variant="outline"
@@ -166,7 +166,7 @@ const ViewLoan = ({ loginUser }) => {
             overflow="hidden"
             variant="outline"
           >
-            <CardHeader fontSize="md" fondWeight="bold">
+            <CardHeader fontSize="md" fondWeight="bold" width={"7rem"}>
               {loan.loanCard.loanId}
             </CardHeader>
             <CardBody fontSize="md" fondWeight="bold">
