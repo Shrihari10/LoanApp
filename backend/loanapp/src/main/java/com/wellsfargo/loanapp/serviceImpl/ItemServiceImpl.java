@@ -1,4 +1,4 @@
-package com.wellsfargo.loanapp.service;
+package com.wellsfargo.loanapp.serviceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import com.wellsfargo.loanapp.dao.EmployeeIssueRepository;
 import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
+import com.wellsfargo.loanapp.service.AdminService;
+import com.wellsfargo.loanapp.service.ItemService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.ItemRepository;
-import com.wellsfargo.loanapp.dto.EmployeeDTO;
 import com.wellsfargo.loanapp.dto.ItemDTO;
 import com.wellsfargo.loanapp.model.ItemMaster;
 import com.wellsfargo.loanapp.utils.Utils;

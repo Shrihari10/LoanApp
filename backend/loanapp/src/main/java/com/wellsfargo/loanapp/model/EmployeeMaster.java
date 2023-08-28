@@ -32,7 +32,6 @@ public class EmployeeMaster implements UserDetails {
 
 	@Id
 	@Column(length = 6)
-//	@jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
 	private String employeeID;
 	
 	@Column(length = 20)
@@ -54,8 +53,7 @@ public class EmployeeMaster implements UserDetails {
 	@Column()
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private LocalDate dateOfJoining;
-	
-//	@Column()
+
 	private String password;
 
 

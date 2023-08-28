@@ -1,10 +1,11 @@
-package com.wellsfargo.loanapp.service;
+package com.wellsfargo.loanapp.serviceImpl;
 
-import java.lang.ModuleLayer.Controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wellsfargo.loanapp.service.AdminService;
+import com.wellsfargo.loanapp.service.EmployeeService;
 import com.wellsfargo.loanapp.utils.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	ModelMapper modelMapper;
 
 	@Autowired
-	AdminService adminService;
+    AdminService adminService;
 
 	public ResponseEntity<EmployeeDTO> saveEmployee(EmployeeDTO employeeDto)
 	{

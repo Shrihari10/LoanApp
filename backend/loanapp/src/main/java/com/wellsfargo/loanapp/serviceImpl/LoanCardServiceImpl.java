@@ -1,4 +1,4 @@
-package com.wellsfargo.loanapp.service;
+package com.wellsfargo.loanapp.serviceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import com.wellsfargo.loanapp.dao.EmployeeCardRepository;
 import com.wellsfargo.loanapp.model.EmployeeCardDetails;
-import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
+import com.wellsfargo.loanapp.service.AdminService;
+import com.wellsfargo.loanapp.service.EmployeeIssueService;
+import com.wellsfargo.loanapp.service.LoanCardService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,18 +17,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.loanapp.dao.LoanCardRepository;
-import com.wellsfargo.loanapp.dto.ItemDTO;
 import com.wellsfargo.loanapp.dto.LoanCardDTO;
 import com.wellsfargo.loanapp.model.LoanCardMaster;
 import com.wellsfargo.loanapp.utils.Utils;
 
-import ch.qos.logback.core.model.Model;
-
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
 
 @Service
-public class LoanCardServiceImpl implements LoanCardService{
+public class LoanCardServiceImpl implements LoanCardService {
 	
 	@Autowired
 	LoanCardRepository loanCardRepository;

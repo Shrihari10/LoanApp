@@ -2,7 +2,6 @@ package com.wellsfargo.loanapp.dao;
 
 import java.util.List;
 
-import com.wellsfargo.loanapp.model.ItemMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

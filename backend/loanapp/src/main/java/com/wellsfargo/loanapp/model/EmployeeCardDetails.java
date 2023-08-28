@@ -27,7 +27,6 @@ public class EmployeeCardDetails {
 	private String employeeCardId;
 	
 	@ManyToOne(
-//			cascade = CascadeType.ALL,
 			fetch = FetchType.EAGER
 	)
 	@JoinColumn(
@@ -37,7 +36,6 @@ public class EmployeeCardDetails {
 	private EmployeeMaster employee;
 	
 	@ManyToOne(
-//			cascade = CascadeType.ALL,
 			fetch = FetchType.EAGER
 	)
 	@JoinColumn(

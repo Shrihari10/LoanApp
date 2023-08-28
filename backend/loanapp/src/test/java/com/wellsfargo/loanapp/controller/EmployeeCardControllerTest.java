@@ -10,13 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wellsfargo.loanapp.config.SecurityConfiguration;
 import com.wellsfargo.loanapp.config.TestSecurityConfiguration;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -24,15 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wellsfargo.loanapp.dto.EmployeeCardDTO;
-import com.wellsfargo.loanapp.model.EmployeeCardDetails;
 import com.wellsfargo.loanapp.service.EmployeeCardService;
-import com.wellsfargo.loanapp.service.ResponseGenerator;
+import com.wellsfargo.loanapp.serviceImpl.ResponseGenerator;
 
 @WebMvcTest(EmployeeCardController.class)
 @ContextConfiguration(classes = TestSecurityConfiguration.class)

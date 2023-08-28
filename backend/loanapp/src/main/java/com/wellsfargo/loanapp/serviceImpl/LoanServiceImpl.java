@@ -1,5 +1,8 @@
-package com.wellsfargo.loanapp.service;
+package com.wellsfargo.loanapp.serviceImpl;
 
+import com.wellsfargo.loanapp.service.EmployeeCardService;
+import com.wellsfargo.loanapp.service.EmployeeIssueService;
+import com.wellsfargo.loanapp.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +14,7 @@ import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
 import jakarta.transaction.Transactional;
 
 @Service
-public class LoanServiceImpl implements LoanService{
+public class LoanServiceImpl implements LoanService {
 	
 	@Autowired
 	private EmployeeCardService employeeCardService;

@@ -1,4 +1,4 @@
-package com.wellsfargo.loanapp.service;
+package com.wellsfargo.loanapp.serviceImpl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

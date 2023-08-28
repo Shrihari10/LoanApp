@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.loanapp.dto.LoanCardDTO;
-import com.wellsfargo.loanapp.model.EmployeeMaster;
-import com.wellsfargo.loanapp.model.ItemMaster;
-import com.wellsfargo.loanapp.model.LoanCardMaster;
 import com.wellsfargo.loanapp.service.LoanCardService;
 
 @RestController

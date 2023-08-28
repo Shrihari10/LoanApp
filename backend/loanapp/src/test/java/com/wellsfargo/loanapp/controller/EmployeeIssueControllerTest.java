@@ -25,11 +25,8 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wellsfargo.loanapp.dto.EmployeeIssueDTO;
-import com.wellsfargo.loanapp.model.EmployeeCardDetails;
-import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
-import com.wellsfargo.loanapp.service.EmployeeCardService;
 import com.wellsfargo.loanapp.service.EmployeeIssueService;
-import com.wellsfargo.loanapp.service.ResponseGenerator;
+import com.wellsfargo.loanapp.serviceImpl.ResponseGenerator;
 
 @WebMvcTest(EmployeeIssueController.class)
 @ContextConfiguration(classes = TestSecurityConfiguration.class)

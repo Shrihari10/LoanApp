@@ -1,26 +1,22 @@
-package com.wellsfargo.loanapp.service;
+package com.wellsfargo.loanapp.serviceImpl;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wellsfargo.loanapp.service.EmployeeIssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.wellsfargo.loanapp.dao.EmployeeCardRepository;
 import com.wellsfargo.loanapp.dao.EmployeeIssueRepository;
 import com.wellsfargo.loanapp.dao.EmployeeRepository;
 import com.wellsfargo.loanapp.dao.ItemRepository;
 import com.wellsfargo.loanapp.dao.LoanCardRepository;
-import com.wellsfargo.loanapp.dto.EmployeeCardDTO;
 import com.wellsfargo.loanapp.dto.EmployeeIssueDTO;
-import com.wellsfargo.loanapp.model.EmployeeCardDetails;
 import com.wellsfargo.loanapp.model.EmployeeIssueDetails;
 import com.wellsfargo.loanapp.model.EmployeeMaster;
 import com.wellsfargo.loanapp.model.ItemMaster;
@@ -28,7 +24,7 @@ import com.wellsfargo.loanapp.model.LoanCardMaster;
 import com.wellsfargo.loanapp.utils.Utils;
 
 @Service
-public class EmployeeIssueServiceImpl implements EmployeeIssueService{
+public class EmployeeIssueServiceImpl implements EmployeeIssueService {
 		
 		@Autowired
 		private EmployeeIssueRepository employeeIssueRepository;

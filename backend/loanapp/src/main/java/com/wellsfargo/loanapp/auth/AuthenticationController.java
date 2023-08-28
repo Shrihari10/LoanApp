@@ -2,7 +2,7 @@ package com.wellsfargo.loanapp.auth;
 
 import com.wellsfargo.loanapp.dto.EmployeeDTO;
 import com.wellsfargo.loanapp.model.LoginModel;
-import com.wellsfargo.loanapp.service.ResponseGenerator;
+import com.wellsfargo.loanapp.serviceImpl.ResponseGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
