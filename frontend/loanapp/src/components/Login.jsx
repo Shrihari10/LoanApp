@@ -58,7 +58,7 @@ const Login = ({ user, role, loginUser }) => {
         loginUser(employeeID, "user");        
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
         failureToast("Error encountered: " + err.response.data.message);
       });
   };

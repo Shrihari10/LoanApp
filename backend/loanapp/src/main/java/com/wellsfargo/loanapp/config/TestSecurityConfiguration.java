@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //@Import(SecurityAutoConfiguration.class)
 public class TestSecurityConfiguration {
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain testSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and()
                 .csrf()

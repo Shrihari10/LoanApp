@@ -11,8 +11,8 @@ const AdminEmployeeAdd = ({user}) => {
     designation:"",
     department:"",
     gender:"",
-    doj:"",
-    dob:"",
+    dateOfJoining:"",
+    dateOfBirth:"",
     password:"" 
   });
   const userName = sessionStorage.getItem('userName');
@@ -36,10 +36,10 @@ const AdminEmployeeAdd = ({user}) => {
     if (!userDetails.department || userDetails.department === '') {
       newErrors['department'] = 'Department cannot be empty';
     }
-    if(!userDetails.dob || userDetails.dob === '' || new Date(userDetails.dob) > new Date()) {
+    if(!userDetails.dateOfBirth || userDetails.dateOfBirth === '' || new Date(userDetails.dateOfBirth) > new Date()) {
       newErrors['dob']='Please enter a valid date of birth'
     }
-    if(!userDetails.doj || userDetails.doj === '' || new Date(userDetails.doj) > new Date()) {
+    if(!userDetails.dateOfJoining || userDetails.dateOfJoining === '' || new Date(userDetails.dateOfJoining) > new Date()) {
       newErrors['doj']='Please enter a valid date of joining'
     }
     if(!userDetails.password || userDetails.password === '' || userDetails.password.length < 8) {
@@ -60,13 +60,12 @@ const AdminEmployeeAdd = ({user}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errorsVal = validateFields();
-    console.log(errorsVal);
     if(!errorsVal) {
       return;
     }
     addEmployee(userDetails)
       .then((res) => {
-        successToast("Employee created with ID: " + res.data.body.employeeID);
+        successToast("Employee created with ID: " + res.data.body.employee.employeeID);
         navigate("/admin/employee/edit");
         console.log(JSON.stringify(res.data));
       })
@@ -143,11 +142,11 @@ const AdminEmployeeAdd = ({user}) => {
             />
           </div>
           </Form.Group>
-          <Form.Group controlId="dob">
+          <Form.Group controlId="dateOfBirth">
           <Form.Label>Date of Birth</Form.Label>
           <Form.Control
             type="date"
-            value={userDetails.dob}
+            value={userDetails.dateOfBirth}
             onChange={handleChanges}
             isInvalid={errors.dob}
           />
@@ -155,12 +154,12 @@ const AdminEmployeeAdd = ({user}) => {
             {errors.dob}
           </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="doj">
+          <Form.Group controlId="dateOfJoining">
           <Form.Label>Date of Joining</Form.Label>
           <Form.Control
 
             type="date"
-            value={userDetails.doj}
+            value={userDetails.dateOfJoining}
             onChange={handleChanges}
             isInvalid={errors.doj}
           />
