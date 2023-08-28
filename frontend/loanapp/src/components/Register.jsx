@@ -103,7 +103,7 @@ const Register = ({ user, loginUser }) => {
 
     addEmployee(requestBody)
       .then((res) => {
-        successToast("Registered new employee with Id: " + res.data.body.employeeID);
+        successToast("Registered new employee with Id: " + res.data.body.employee.employeeID);
         navigate("/login");
         console.log(JSON.stringify(res.data.body));
       })

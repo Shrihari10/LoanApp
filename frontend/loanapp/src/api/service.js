@@ -91,7 +91,7 @@ export const refreshAccessToken = async () => {
         localStorage.setItem("access_token", newAccessToken);
         localStorage.setItem("refresh_token", newRefreshToken);
 
-        successToast('refreshed token successfully');
+        successToast('Refreshed token successfully');
 
         return newAccessToken;
     } catch (error) {

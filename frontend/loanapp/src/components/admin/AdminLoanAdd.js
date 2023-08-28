@@ -42,7 +42,7 @@ function AdminLoanAdd() {
       loanType,
       durationOfYears
     }).then((res) => {
-      successToast("new loan type created with id " + res.data.body.loanId);
+      successToast("New loan type created with ID: " + res.data.body.loanId);
       navigate("/admin/loan/edit");
     }).catch((err) => {
       failureToast("Error encountered: " + err.response.data.message);
