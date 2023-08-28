@@ -26,26 +26,53 @@ public class ItemController {
 	
 	@Autowired
 	public ItemService itemService;
-	
+
+	/**
+	 * API Endpoint to get all items
+	 *
+	 * @return response entity object with all items, response status code and message
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<List<ItemDTO>> getAllItems()
 	{
 		return itemService.getAllItems();
 	}
-	
+
+	/**
+	 * API Endpoint to add item by admin
+	 *
+	 * @param userDetails - authenticated user details injected by SecurityContextHolder
+	 * @param itemDto - details of item to be added
+	 * @return response entity object with added item, response status code and message
+	 */
 	@PostMapping("/add")
 	public ResponseEntity<ItemDTO> saveItem(@AuthenticationPrincipal UserDetails userDetails, @RequestBody ItemDTO itemDto)
 	{
 	
 		return itemService.saveItem(userDetails, itemDto);
 	}
-	
+
+	/**
+	 * API Endpoint to update item with id itemId
+	 *
+	 * @param userDetails - authenticated user details injected by SecurityContextHolder
+	 * @param itemId - id of the item to be updated
+	 * @param itemDto - updated details of item
+	 * @return response entity object with updated item with id itemId, response status code and message
+	 */
 	@PutMapping("/{itemId}")
 	public ResponseEntity<ItemDTO> updateItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String itemId,@RequestBody ItemDTO itemDto) {
 		return itemService.updateItem(userDetails,itemId,itemDto);
 		
 	}
-	
+
+	/**
+	 * API Endpoint to delete item with id itemId
+	 *
+	 * @param userDetails - authenticated user details injected by SecurityContextHolder
+	 * @param itemId - id of the item to be deleted
+	 * @return response entity object with response status code and message
+	 */
 	@DeleteMapping("/{itemId}")
 	public ResponseEntity<ItemDTO> deleteItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String itemId) {
 		return itemService.deleteItem(userDetails,itemId);

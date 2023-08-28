@@ -21,6 +21,12 @@ public class EmployeeIssueController {
 	@Autowired
 	private EmployeeIssueService employeeIssueService;
 
+	/**
+	 * API Endpoint to get list of all employee issues for particular employee
+	 *
+	 * @param employeeId - id of the employee
+	 * @return response entity object with list of all employee issues for employee with id employeeId, response status code and message
+	 */
 	@GetMapping("/{employeeId}/all")
 	public ResponseEntity<List<EmployeeIssueDTO>> getAllEmployeeIssue(@PathVariable("employeeId") String employeeId)
 	{

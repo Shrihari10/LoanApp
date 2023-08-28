@@ -20,13 +20,13 @@ public class EmployeeCardController {
 	
 	@Autowired
 	private EmployeeCardService employeeCardService;
-	
-//	@PostMapping("/add")
-//	public EmployeeCardDetails addEmployeeCard(String employeeId, String loanCardId)
-//	{
-//		return employeeCardService.addEmployeeCard(employeeId,loanCardId);
-//	}
-	
+
+	/**
+	 * API Endpoint to get list of all employee cards for particular employee
+	 *
+	 * @param employeeId - id of the employee
+	 * @return response entity object with list of all Employee Card for employee with id employeeId, response status code and message
+	 */
 	@GetMapping("/{employeeId}/all")
 	public ResponseEntity<List<EmployeeCardDTO>> getAllEmployeeCard(@PathVariable("employeeId") String employeeId)
 	{
