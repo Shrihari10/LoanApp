@@ -132,15 +132,14 @@ public class AuthenticationService {
     tokenRepository.saveAll(validUserTokens);
   }
 
-  public void refreshToken(
-          HttpServletRequest request,
-          HttpServletResponse response
+  public ResponseEntity<AuthenticationResponse> refreshToken(
+          HttpServletRequest request
   ) throws IOException {
     final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
     final String refreshToken;
     final String employeeId;
     if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-      return;
+      return null;
     }
     refreshToken = authHeader.substring(7);
     employeeId = jwtService.extractUsername(refreshToken);
@@ -156,8 +155,9 @@ public class AuthenticationService {
                 .refreshToken(refreshToken)
                 .employee(employeeDto)
                 .build();
-        new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+        return ResponseGenerator.generateResponse(HttpStatus.OK,"Token refreshed successfully !",authResponse);
       }
     }
+    return ResponseGenerator.generateResponse(HttpStatus.UNAUTHORIZED,"Invalid JWT Token!",null);
   }
 }
