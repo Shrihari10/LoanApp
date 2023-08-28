@@ -155,6 +155,7 @@ const DesktopNav = ({navItems}) => {
                 p={1}
                 rounded={'xl'}
                 minW={'sm'}
+                zindex={"999"}
                 >
                 <Stack>
                   {navItem.children.map((child) => (
@@ -179,16 +180,17 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
       display={'block'}
       p={2}
       rounded={'md'}
+      
       _hover={{ bg: useColorModeValue('red.50', 'gray.900') }}>
-      <Stack direction={'row'} align={'center'}>
-        <Box>
+      <Stack zIndex={"999"} direction={'row'} align={'center'}>
+        <Box zIndex={"999"}>
           <Text
             transition={'all .3s ease'}
             _groupHover={{ color: 'red.400' }}
             fontWeight={500}>
             {label}
           </Text>
-          <Text fontSize={'sm'}>{subLabel}</Text>
+          <Text zIndex={"999"} fontSize={'sm'}>{subLabel}</Text>
         </Box>
         <Flex
           transition={'all .3s ease'}
@@ -197,7 +199,8 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
           _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
           justify={'flex-end'}
           align={'center'}
-          flex={1}>
+          flex={1}
+          zIndex={"999"}>
           <Icon color={'red.400'} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>

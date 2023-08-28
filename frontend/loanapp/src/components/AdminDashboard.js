@@ -28,7 +28,7 @@ function AdminDashboard() {
               <Card.Title>
                 <Card.Text>Customer Data Management</Card.Text>
               </Card.Title>
-              <Link to="/admin/employee/add" style={{ padding: "10px" }}>
+              <Link to="/admin/employee/add" style={{ padding: "10px"}}>
                 <Button variant="success">Add Employee</Button>
               </Link>
               <Link to="/admin/employee/edit" style={{ padding: "10px" }}>

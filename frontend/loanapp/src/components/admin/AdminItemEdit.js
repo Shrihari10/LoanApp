@@ -3,7 +3,7 @@ import { Modal, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //import chakra ui
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/react";
 import { Card, CardBody, CardFooter, CardHeader } from "@chakra-ui/react";
@@ -139,7 +139,7 @@ function AdminItemEdit() {
 
   return (
     <>
-      <Modal show={showEditForm} onHide={handleClose} zIndex="2">
+      <Modal show={showEditForm} onHide={handleClose} zIndex="299">
         <Modal.Header closeButton>
           <Modal.Title>Edit Item</Modal.Title>
         </Modal.Header>
@@ -219,12 +219,12 @@ function AdminItemEdit() {
       {/* card */}
       <div
         className="d-flex justify-content-center align-items-center "
-        style={{ paddingTop: "2em", padding: "2rem" }}
+        style={{ paddingTop: "2em", width: "100%" }}
       >
         <SimpleGrid columns={1} spacing={2}>
           <Card
             borderBottomWidth="10px"
-            align="flex-start"
+            
             borderRadius="lg"
             textAlign="left"
             direction={{ base: "column", sm: "row" }}
@@ -232,39 +232,19 @@ function AdminItemEdit() {
             variant="outline"
             position="sticky"
             top="1"
-            zIndex="1"
-            padding="0.5em"
+            zIndex="199"
             boxShadow="lg"
             backgroundColor="gray.100"
           >
-            <CardHeader fontSize="md" fontWeight="bold" width="10em">
-              Item ID
-            </CardHeader>
-            <CardHeader fontSize="md" fontWeight="bold" width="10em">
-              {" "}
-              Description
-            </CardHeader>
-            <CardBody paddingInline={10} textAlign="left">
-              <HStack spacing={10} align="start">
-                <Text fontSize="md" width="10em">
-                  Category
-                </Text>
-                <Text fontSize="md" width="10em">
-                  Make
-                </Text>
-                <Text fontSize="md" width="10em">
-                  {" "}
-                  Valuation
-                </Text>
-              </HStack>
-            </CardBody>
-            <CardFooter paddingInline={10}>
-              <Stack direction="row" spacing={6} align="center">
-                <Text fontSize="md" width="10em">
-                  Actions
-                </Text>
-              </Stack>
-            </CardFooter>
+            {/* evenly spaced hstack */}
+            <Flex >
+              <Text fontSize="md" fontWeight="bold" width="10em"> Item ID</Text>
+              <Text fontSize="md" fontWeight="bold" width="10em"> Item Description</Text>
+              <Text fontSize="md" fontWeight="bold" width="10em"> Item Category</Text>
+              <Text fontSize="md" fontWeight="bold" width="10em"> Item Make</Text>
+              <Text fontSize="md" fontWeight="bold" width="10em"> Item Valuation</Text>
+              <Text fontSize="md" fontWeight="bold" width="10em"> Actions</Text>
+            </Flex>
           </Card>
           {itemCards.map((itemCard) => (
             <Card
@@ -276,46 +256,23 @@ function AdminItemEdit() {
               overflow="hidden"
               variant="outline"
             >
-              <CardHeader width="10em">{itemCard.itemId}</CardHeader>
+              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemId}</CardHeader>
+              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemDescription}</CardHeader>
+              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemCategory}</CardHeader>
+              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemMake}</CardHeader>
+              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemValuation}</CardHeader>
               <CardHeader fontSize="md" fontWeight="bold" width="10em">
-                {itemCard.itemDescription}{" "}
-              </CardHeader>
-              <CardBody paddingInline={10} textAlign="left">
-                <HStack spacing={10} align="start">
-                  <Text fontSize="md" width="10em">
-                    {itemCard.itemCategory}
-                  </Text>
-                  <Text fontSize="md" width="10em">
-                    {itemCard.itemMake}
-                  </Text>
-                  <Text fontSize="md" width="10em">
-                    {itemCard.itemValuation}
-                  </Text>
-                </HStack>
-              </CardBody>
-
-              <CardFooter paddingInline={10}>
-                <Stack direction="row" spacing={6} align="center">
-                  <Button
-                    colorScheme="blue"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleEdit(itemCard.itemId)}
-                  >
+                <HStack spacing="24px">
+                  <Button variant="ghost" colorScheme="green" onClick={() => handleEdit(itemCard.itemId)}>
                     <EditIcon />
                     Edit
                   </Button>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDelete(itemCard.itemId)}
-                  >
+                  <Button variant="ghost" colorScheme="red" onClick={() => handleDelete(itemCard.itemId)}>
                     <DeleteIcon />
                     Delete
                   </Button>
-                </Stack>
-              </CardFooter>
+                </HStack>
+              </CardHeader>
             </Card>
           ))}
         </SimpleGrid>

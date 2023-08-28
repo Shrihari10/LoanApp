@@ -277,7 +277,7 @@ function AdminEmployeeEdit() {
          </Modal.Footer>
       </Modal>
 
-      <div className=" justify-content-center align-items-center"style={{ paddingTop: '2em',paddingLeft:'1rem',width: '90%' }}>
+      <div className=" justify-content-center align-items-center"style={{ paddingTop: '2em',paddingLeft:'1rem',width: '90%',marginTop:"1rem" }}>
         <SimpleGrid columns={1} spacing={1} >
         <Card borderBottomWidth="1px" align="flex-start" borderRadius="lg" textAlign="left" direction={{ base: 'column', sm: 'row' }}
           overflow='hidden'
