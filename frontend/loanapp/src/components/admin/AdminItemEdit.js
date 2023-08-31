@@ -3,10 +3,9 @@ import { Modal, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //import chakra ui
-import { ChakraProvider, Flex } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/react";
-import { Card, CardBody, CardFooter, CardHeader } from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, CardHeader, Box } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 
 import { SimpleGrid } from "@chakra-ui/react";
@@ -36,9 +35,8 @@ function AdminItemEdit() {
     getAllItems()
       .then((res) => {
         // console.log(res.data);
-        if(res.data.body.length == 0)
-        {
-          successToast(res.data.message)
+        if (res.data.body.length == 0) {
+          successToast(res.data.message);
         }
         setItemCards(res.data.body);
       })
@@ -86,23 +84,26 @@ function AdminItemEdit() {
       itemMake: "",
       itemValuation: "",
     };
-  
+
     if (!editingItemDescription) {
       newErrors.itemDescription = "Item description cannot be empty.";
     }
-  
+
     if (!editingItemMake) {
       newErrors.itemMake = "Item make cannot be empty.";
     }
-  
+
     if (!editingItemValuation) {
       newErrors.itemValuation = "Item valuation cannot be empty.";
-    } else if (isNaN(editingItemValuation) || Number(editingItemValuation) <= 0) {
+    } else if (
+      isNaN(editingItemValuation) ||
+      Number(editingItemValuation) <= 0
+    ) {
       newErrors.itemValuation = "Item valuation must be a positive number.";
     }
-  
+
     setErrors(newErrors);
-    return Object.values(newErrors).every(error => error === "");
+    return Object.values(newErrors).every((error) => error === "");
   };
 
   const handleEditSubmit = () => {
@@ -118,11 +119,7 @@ function AdminItemEdit() {
       itemMake: editingItemMake,
       itemValuation: editingItemValuation,
     };
-    editItem(
-        userName,
-        editingItemId,
-        requestBody
-      )
+    editItem(userName, editingItemId, requestBody)
       .then((res) => {
         successToast(res.data.message);
         fetchAllItemCards();
@@ -166,7 +163,9 @@ function AdminItemEdit() {
                 onChange={(e) => setEditingItemDescription(e.target.value)}
                 isInvalid={errors.itemDescription}
               />
-              <Form.Control.Feedback type="invalid">{errors.itemDescription}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                {errors.itemDescription}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="Item">
               <Form.Label>Item Category</Form.Label>
@@ -186,7 +185,9 @@ function AdminItemEdit() {
                 isInvalid={errors.itemMake}
                 onChange={(e) => setEditingItemMake(e.target.value)}
               />
-              <Form.Control.Feedback type="invalid">{errors.itemMake}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                {errors.itemMake}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="Item">
               <Form.Label>Item Valuation</Form.Label>
@@ -197,7 +198,9 @@ function AdminItemEdit() {
                 isInvalid={errors.itemValuation}
                 onChange={(e) => setEditingItemValuation(e.target.value)}
               />
-              <Form.Control.Feedback type="invalid">{errors.itemValuation}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                {errors.itemValuation}
+              </Form.Control.Feedback>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -224,7 +227,6 @@ function AdminItemEdit() {
         <SimpleGrid columns={1} spacing={2}>
           <Card
             borderBottomWidth="10px"
-            
             borderRadius="lg"
             textAlign="left"
             direction={{ base: "column", sm: "row" }}
@@ -237,44 +239,108 @@ function AdminItemEdit() {
             backgroundColor="gray.100"
           >
             {/* evenly spaced hstack */}
-            <Flex >
-              <Text fontSize="md" fontWeight="bold" width="10em"> Item ID</Text>
-              <Text fontSize="md" fontWeight="bold" width="10em"> Item Description</Text>
-              <Text fontSize="md" fontWeight="bold" width="10em"> Item Category</Text>
-              <Text fontSize="md" fontWeight="bold" width="10em"> Item Make</Text>
-              <Text fontSize="md" fontWeight="bold" width="10em"> Item Valuation</Text>
-              <Text fontSize="md" fontWeight="bold" width="10em"> Actions</Text>
+            <Flex>
+              <Text fontSize="md" fontWeight="bold" width="10em">
+                {" "}
+                Item ID
+              </Text>
+              <Text fontSize="md" fontWeight="bold" width="10em">
+                {" "}
+                Item Description
+              </Text>
+              <Text fontSize="md" fontWeight="bold" width="10em">
+                {" "}
+                Item Category
+              </Text>
+              <Text fontSize="md" fontWeight="bold" width="10em">
+                {" "}
+                Item Make
+              </Text>
+              <Text fontSize="md" fontWeight="bold" width="10em">
+                {" "}
+                Item Valuation
+              </Text>
+              <Text fontSize="md" fontWeight="bold" width="10em">
+                {" "}
+                Actions
+              </Text>
             </Flex>
           </Card>
-          {itemCards.map((itemCard) => (
-            <Card
-              key={itemCard.itemId}
-              borderWidth="1px"
-              align="flex-start"
-              borderRadius="sm"
-              direction={{ base: "column", sm: "row" }}
-              overflow="hidden"
-              variant="outline"
-            >
-              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemId}</CardHeader>
-              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemDescription}</CardHeader>
-              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemCategory}</CardHeader>
-              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemMake}</CardHeader>
-              <CardHeader fontSize="md" fontWeight="bold" width="10em"> {itemCard.itemValuation}</CardHeader>
-              <CardHeader fontSize="md" fontWeight="bold" width="10em">
-                <HStack spacing="24px">
-                  <Button variant="ghost" colorScheme="green" onClick={() => handleEdit(itemCard.itemId)}>
-                    <EditIcon />
-                    Edit
-                  </Button>
-                  <Button variant="ghost" colorScheme="red" onClick={() => handleDelete(itemCard.itemId)}>
-                    <DeleteIcon />
-                    Delete
-                  </Button>
-                </HStack>
-              </CardHeader>
-            </Card>
-          ))}
+          <Box
+            height={500}
+            overflowY="auto"
+            css={{
+              "&::-webkit-scrollbar": {
+                marginLeft: "4px",
+                width: "8px",
+              },
+              "&::-webkit-scrollbar-track": {
+                marginLeft: "4px",
+                backgroundColor: "gray",
+                width: "8px",
+                borderRadius: "24px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "white",
+                borderRadius: "24px",
+              },
+            }}
+          >
+            {itemCards.map((itemCard) => (
+              <Card
+                key={itemCard.itemId}
+                marginTop={1}
+                marginRight={2}
+                borderWidth="1px"
+                align="flex-start"
+                borderRadius="sm"
+                direction={{ base: "column", sm: "row" }}
+                overflow="hidden"
+                variant="outline"
+              >
+                <CardHeader fontSize="md" fontWeight="bold" width="10em">
+                  {" "}
+                  {itemCard.itemId}
+                </CardHeader>
+                <CardHeader fontSize="md" fontWeight="bold" width="10em">
+                  {" "}
+                  {itemCard.itemDescription}
+                </CardHeader>
+                <CardHeader fontSize="md" fontWeight="bold" width="10em">
+                  {" "}
+                  {itemCard.itemCategory}
+                </CardHeader>
+                <CardHeader fontSize="md" fontWeight="bold" width="10em">
+                  {" "}
+                  {itemCard.itemMake}
+                </CardHeader>
+                <CardHeader fontSize="md" fontWeight="bold" width="10em">
+                  {" "}
+                  {itemCard.itemValuation}
+                </CardHeader>
+                <CardHeader fontSize="md" fontWeight="bold" width="10em">
+                  <HStack spacing="24px">
+                    <Button
+                      variant="ghost"
+                      colorScheme="green"
+                      onClick={() => handleEdit(itemCard.itemId)}
+                    >
+                      <EditIcon />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      colorScheme="red"
+                      onClick={() => handleDelete(itemCard.itemId)}
+                    >
+                      <DeleteIcon />
+                      Delete
+                    </Button>
+                  </HStack>
+                </CardHeader>
+              </Card>
+            ))}
+          </Box>
         </SimpleGrid>
       </div>
     </>
