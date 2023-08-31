@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wellsfargo.loanapp.exception.NoDataFoundException;
 import com.wellsfargo.loanapp.model.ApplyLoanInputModel;
 import com.wellsfargo.loanapp.service.LoanService;
 
@@ -30,7 +31,7 @@ public class LoanController {
 	 * @return response entity with response status code and message
 	 */
 	@PostMapping("/apply")
-	public ResponseEntity<String> applyLoan(@RequestBody ApplyLoanInputModel applyLoanInputModel)
+	public ResponseEntity<String> applyLoan(@RequestBody ApplyLoanInputModel applyLoanInputModel) throws NoDataFoundException
 	{
 		String employeeId = applyLoanInputModel.getEmployeeId();
 		String loanCardId = applyLoanInputModel.getLoanCardId();
